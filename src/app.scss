@@ -1,0 +1,16 @@
+.nav{
+    width: 1600px;
+    padding: 96px 49px;
+    display: flex;
+    .nav__left{
+        width: 20%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0px;
+    }
+    .nav__right{
+        width: 56%;
+    }
+
+}
