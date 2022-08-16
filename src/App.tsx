@@ -1,16 +1,10 @@
 import './app.scss';
+import HomePage from './pages/home/HomePage';
 
 function App() {
 
   return (
-    <div>
-      {/* <div className='nav__left'>
-          chào các bạn
-      </div>
-      <div className='nav__right'>
-        hay quá
-      </div> */}
-    </div>
+    <HomePage />
   );
 }
 

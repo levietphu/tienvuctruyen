@@ -1,0 +1,143 @@
+header {
+  width: 100%;
+  height: 60px;
+  background-color: #fdfbfb;
+  position: fixed;
+  top: 0;
+  z-index: 30;
+
+  .header {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header__left {
+      display: flex;
+      align-items: center;
+      .header__left--logo {
+        display: flex;
+        align-items: center;
+        img {
+          max-width: 1.75rem;
+          max-height: 1.75rem;
+        }
+        span {
+          font-size: 2rem;
+          margin-left: 5px;
+          font-weight: 600;
+          text-transform: capitalize;
+          color: #357376;
+        }
+      }
+      .header__left--cate,
+      .header__left--list {
+        color: #484848;
+        text-transform: capitalize;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: relative;
+        span {
+          margin-right: 10px;
+        }
+        i {
+          color: #357376;
+          font-size: 1rem;
+        }
+      }
+      .header__left--cate:hover,
+      .header__left--list:hover {
+        color: #357376;
+      }
+      .header__left--cate {
+        margin: 0 25px;
+      }
+    }
+  }
+}
+.header__right--mobile {
+  display: none;
+  width: 60px;
+  height: 60px;
+  background: #e7e3e3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  i {
+    font-size: 1.25rem;
+  }
+}
+.header__right--menu {
+  position: absolute;
+  z-index: 30;
+  background: #fdfbfb;
+  width: 100%;
+  min-height: 120px;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+.header__right--cate,
+.header__right--list {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 25px;
+  cursor: pointer;
+  margin: 5px -27px;
+  span {
+    font-size: 1.1rem;
+    color: #357376;
+    text-transform: capitalize;
+  }
+  i {
+    color: #357376;
+  }
+}
+.menu__cate,
+.menu__list {
+  position: absolute;
+  top: 48px;
+  background: #fdfbfb;
+  border-radius: 5px;
+  padding: 0;
+  text-transform: capitalize;
+  font-size: 1rem;
+  li {
+    margin: 10px 15px;
+    a {
+      color: #484848;
+    }
+    a:hover {
+      color: #1e1e1e;
+    }
+  }
+}
+.menu__cate {
+  flex-wrap: wrap;
+  width: 500px;
+  left: 270px;
+  display: flex;
+}
+.header__right--menucate {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 0;
+  li {
+    margin: 10px 85px 10px 10px;
+    a {
+      color: #484848;
+      font-size: 1rem;
+      text-transform: capitalize;
+    }
+  }
+}
+.header__right--menulist {
+  padding: 0;
+  li {
+    margin: 10px 0 20px 0;
+    a {
+      color: #484848;
+      font-size: 1rem;
+      text-transform: capitalize;
+    }
+  }
+}
