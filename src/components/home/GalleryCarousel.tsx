@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { isBuffer } from "util";
+import React, { useEffect, useRef, useState } from "react";
 import home1 from "../../assets/1.jpg";
 import home2 from "../../assets/2.png";
 import home3 from "../../assets/3.jpg";
@@ -7,14 +6,19 @@ import home4 from "../../assets/4.jpg";
 
 const GalleryCarousel = () => {
   const [countSlider, setCountSlider] = useState(0);
-  const [check, setCheck] = useState(-1200);
 
-  // useEffect(() => {
-  //   let a= setTimeout(() => {
-  //     countSlider === 3 ? setCountSlider(0) : setCountSlider(countSlider + 1);
-  //   }, 3000);
-  // return () => clearTimeout(a)
-  // }, [countSlider]);
+  useEffect(() => {
+    let a: any;
+    if (countSlider === 4) {
+      a = setTimeout(() => {
+        setCountSlider(0);
+      }, 1000);
+    } else {
+      a = setTimeout(() => {
+        setCountSlider(countSlider + 1);
+      }, 3000);
+    }
+  }, [countSlider]);
 
   const hanlderMouse = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -23,12 +27,16 @@ const GalleryCarousel = () => {
   return (
     <div className="carousel" onMouseDown={hanlderMouse}>
       <div
-        className="carousel__annimation"
-        style={{ transform: `translate3d(${countSlider * check}px,0px,0px)` }}
+        className={countSlider === 0 ? "" : "carousel__annimation"}
+        style={{ transform: `translate3d(${countSlider * -1147}px,0px,0px)` }}
       >
         <div className="carousel-item">
           <a href="">
-            <img src={home1} alt="" />
+            <img
+              className={countSlider === 0 ? "img__active" : ""}
+              src={home1}
+              alt=""
+            />
           </a>
         </div>
         <div className="carousel-item">
@@ -43,34 +51,18 @@ const GalleryCarousel = () => {
         </div>
         <div className="carousel-item">
           <a href="">
-            <img src={home4} alt="" />
+            <img src={home4} alt="" style={{ width: "1148px" }} />
           </a>
         </div>
         <div className="carousel-item">
           <a href="">
-            <img src={home1} alt="" />
+            <img
+              src={home1}
+              alt=""
+              style={{ width: "100%", height: "382px" }}
+            />
           </a>
         </div>
-      </div>
-      <div
-        style={{ position: "absolute", top: "180px", right: "43px" }}
-        onClick={() => {
-          countSlider === 3
-            ? setCountSlider(0)
-            : setCountSlider((prev) => prev + 1);
-        }}
-      >
-        <h1>Next</h1>
-      </div>
-      <div
-        style={{ position: "absolute", top: "180px", left: "43px" }}
-        onClick={() => {
-          countSlider === 0
-            ? setCountSlider(3)
-            : setCountSlider((prev) => prev - 1);
-        }}
-      >
-        <h1>Prev</h1>
       </div>
     </div>
   );
