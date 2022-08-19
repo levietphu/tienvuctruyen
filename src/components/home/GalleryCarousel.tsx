@@ -18,6 +18,7 @@ const GalleryCarousel = () => {
         setCountSlider(countSlider + 1);
       }, 3000);
     }
+    return () => clearTimeout(a);
   }, [countSlider]);
 
   const hanlderMouse = (
