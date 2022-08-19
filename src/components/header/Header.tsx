@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./header.scss";
 import logo from "../../assets/android-chrome-192x192.png";
 
@@ -10,6 +10,31 @@ const Header = () => {
   const [toogleMenuMobileCate, setToogleMenuMobileCate] = useState(false);
   const [toogleMenuMobileList, setToogleMenuMobileList] = useState(false);
 
+  const cateRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  function assertIsNode(e: EventTarget | null): asserts e is Node {
+    if (!e || !("nodeType" in e)) {
+      throw new Error(`Node expected`);
+    }
+  }
+
+  useEffect(() => {
+    const handlerSideOut = ({ target }: MouseEvent): void => {
+      assertIsNode(target);
+      if (!cateRef.current?.contains(target)) {
+        setToogleMenuCate(false);
+      }
+      if (!listRef.current?.contains(target)) {
+        setToogleMenuList(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlerSideOut);
+
+    return () => document.removeEventListener("mousedown", handlerSideOut);
+  }, []);
+
   return (
     <>
       <div className="screen-85 header">
@@ -20,12 +45,10 @@ const Header = () => {
               <span>tiên vực</span>
             </a>
           </div>
-          <div>
+          <div ref={cateRef}>
             <div
               className="header__left--cate"
               onClick={() => setToogleMenuCate(!toogleMenuCate)}
-              tabIndex={0}
-              onBlur={() => setToogleMenuCate(false)}
             >
               <span>Thể loại</span>
               {!toogleMenuCate ? (
@@ -123,12 +146,10 @@ const Header = () => {
               </ul>
             )}
           </div>
-          <div>
+          <div ref={listRef}>
             <div
               className="header__left--list"
               onClick={() => setToogleMenuList(!toogleMenuList)}
-              tabIndex={0}
-              onBlur={() => setToogleMenuList(false)}
             >
               <span>Danh sách</span>
               {!toogleMenuList ? (
