@@ -12,6 +12,8 @@ const Header = () => {
 
   const cateRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const cateRefMobile = useRef<HTMLDivElement>(null);
+  const listRefMobile = useRef<HTMLDivElement>(null);
 
   function assertIsNode(e: EventTarget | null): asserts e is Node {
     if (!e || !("nodeType" in e)) {
@@ -27,6 +29,12 @@ const Header = () => {
       }
       if (!listRef.current?.contains(target)) {
         setToogleMenuList(false);
+      }
+      if (!cateRefMobile.current?.contains(target)) {
+        setToogleMenuMobileCate(false);
+      }
+      if (!listRefMobile.current?.contains(target)) {
+        setToogleMenuMobileList(false);
       }
     };
 
@@ -200,12 +208,10 @@ const Header = () => {
       {toogleMenuMobile && (
         <div className="header__right--menu">
           <div className="screen-85">
-            <div>
+            <div ref={cateRefMobile}>
               <div
                 className="header__right--cate"
                 onClick={() => setToogleMenuMobileCate(!toogleMenuMobileCate)}
-                tabIndex={0}
-                onBlur={() => setToogleMenuMobileCate(false)}
                 style={{
                   background: `${toogleMenuMobileCate ? "#e7e3e3" : "#fdfbfb"}`,
                 }}
@@ -302,12 +308,10 @@ const Header = () => {
                 </ul>
               )}
             </div>
-            <div>
+            <div ref={listRefMobile}>
               <div
                 className="header__right--list"
                 onClick={() => setToogleMenuMobileList(!toogleMenuMobileList)}
-                tabIndex={0}
-                onBlur={() => setToogleMenuMobileList(false)}
                 style={{
                   background: `${toogleMenuMobileList ? "#e7e3e3" : "#fdfbfb"}`,
                 }}
