@@ -6,40 +6,91 @@ import home4 from "../../assets/4.jpg";
 
 const GalleryCarousel = () => {
   const [countSlider, setCountSlider] = useState(1);
-
-  // const checkIndex = () => {
-  //   Ref.current?.classList.remove("active");
-  //   if (countSlider === 0) {
-  //     setCountSlider(4);
-  //   }
-  //   if (countSlider === 5) {
-  //     setCountSlider(1);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   let a: any;
-
-  //   if (Ref) {
-  //     Ref.current?.addEventListener("transitionend", checkIndex);
-  //     a = setTimeout(() => {
-  //       Ref.current?.classList.add("active");
-  //       setCountSlider(countSlider + 1);
-  //     }, 3000);
-  //     return () => {
-  //       Ref.current?.removeEventListener("transitionend", checkIndex);
-  //       clearTimeout(a);
-  //     };
-  //   }
-  // }, [countSlider]);
-
+  const [posChange, setPosChange] = useState(-1147);
+  const [position, setPosition] = useState(-1147);
   const Ref = useRef<HTMLDivElement>(null);
+
+  let posX1: any;
+  let posX2: any;
+  let posInitial: any;
+  let posFinal: any;
+
+  useEffect(() => {
+    let a: any;
+    if (Ref) {
+      a = setTimeout(() => {
+        handlerClick("Next");
+      }, 3000);
+      Ref.current?.addEventListener("transitionend", checkIndex);
+      return () => {
+        Ref.current?.removeEventListener("transitionend", checkIndex);
+        clearTimeout(a);
+      };
+    }
+  }, [countSlider]);
+
+  const checkIndex = () => {
+    Ref.current?.classList.remove("active");
+    if (countSlider === 0) {
+      setPosChange(4 * -1147);
+      setCountSlider(4);
+      setPosition(4 * -1147);
+    }
+    if (countSlider === 5) {
+      setPosChange(-1147);
+      setPosition(-1147);
+      setCountSlider(1);
+    }
+  };
+
+  const handlerClick = (arg: string) => {
+    Ref.current?.classList.add("active");
+    if (arg === "Next") {
+      setPosChange((countSlider + 1) * -1147);
+      setPosition((countSlider + 1) * -1147);
+      setCountSlider(countSlider + 1);
+    } else {
+      setPosChange((countSlider - 1) * -1147);
+      setPosition((countSlider - 1) * -1147);
+      setCountSlider(countSlider - 1);
+    }
+  };
+
+  const dragStart = (e: any) => {
+    e.preventDefault();
+    posX1 = e.clientX;
+    posInitial = Ref.current?.offsetLeft;
+    document.onmouseup = dragEnd;
+    document.onmousemove = dragMove;
+  };
+
+  const dragMove = (e: any) => {
+    posX2 = posX1 - e.clientX;
+    posX1 = e.clientX;
+    let posCurrent: any = Ref.current?.offsetLeft;
+    setPosChange(posCurrent - posX2);
+  };
+
+  const dragEnd = () => {
+    posFinal = Ref.current?.offsetLeft;
+    if (posFinal - position < -500) {
+      handlerClick("Next");
+    } else if (posFinal - position > 500) {
+      handlerClick("Prev");
+    } else {
+      setPosChange(position);
+    }
+    document.onmousemove = null;
+    document.onmouseup = null;
+  };
+
   return (
     <div className="carousel">
       <div
         className={`carousel__annimation`}
-        style={{ transform: `translate3d(${countSlider * -1147}px,0px,0px)` }}
+        style={{ left: `${posChange}px` }}
         ref={Ref}
+        onMouseDown={dragStart}
       >
         <div className="carousel-item">
           <a href="">

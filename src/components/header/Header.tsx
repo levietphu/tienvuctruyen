@@ -341,7 +341,7 @@ const Header = () => {
                 đăng ký
               </a>
               <a href="" className="btn btn__user--login">
-                đăng nhập
+                Đăng nhập
               </a>
             </div>
           </div>
