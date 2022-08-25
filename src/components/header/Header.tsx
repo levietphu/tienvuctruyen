@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import "./header.scss";
 import logo from "../../assets/android-chrome-192x192.png";
+import { useOutSide } from "../../hookCustom/useOutSide";
 
 const Header = () => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
@@ -10,38 +11,10 @@ const Header = () => {
   const [toogleMenuMobileCate, setToogleMenuMobileCate] = useState(false);
   const [toogleMenuMobileList, setToogleMenuMobileList] = useState(false);
 
-  const cateRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const cateRefMobile = useRef<HTMLDivElement>(null);
-  const listRefMobile = useRef<HTMLDivElement>(null);
-
-  function assertIsNode(e: EventTarget | null): asserts e is Node {
-    if (!e || !("nodeType" in e)) {
-      throw new Error(`Node expected`);
-    }
-  }
-
-  useEffect(() => {
-    const handlerSideOut = ({ target }: MouseEvent): void => {
-      assertIsNode(target);
-      if (!cateRef.current?.contains(target)) {
-        setToogleMenuCate(false);
-      }
-      if (!listRef.current?.contains(target)) {
-        setToogleMenuList(false);
-      }
-      if (!cateRefMobile.current?.contains(target)) {
-        setToogleMenuMobileCate(false);
-      }
-      if (!listRefMobile.current?.contains(target)) {
-        setToogleMenuMobileList(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handlerSideOut);
-
-    return () => document.removeEventListener("mousedown", handlerSideOut);
-  }, []);
+  const cateRef = useOutSide(() => setToogleMenuCate(false));
+  const listRef = useOutSide(() => setToogleMenuList(false));
+  const cateRefMobile = useOutSide(() => setToogleMenuMobileCate(false));
+  const listRefMobile = useOutSide(() => setToogleMenuMobileList);
 
   return (
     <>
