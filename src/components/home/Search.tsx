@@ -5,7 +5,6 @@ import { useOutSide } from "../../hookCustom/useOutSide";
 const Search = () => {
   const [check, setCheck] = useState(false);
   const [keyword, setKeyword] = useState("");
-
   const Ref = useOutSide(() => setCheck(false));
 
   return (
@@ -14,7 +13,6 @@ const Search = () => {
         className={`search__container ${
           check ? "search__container--active" : ""
         }`}
-        onClick={() => setCheck(!check)}
       >
         <div className="search__icon">
           <i
@@ -29,7 +27,18 @@ const Search = () => {
           placeholder="Tìm kiếm truyện..."
           value={keyword}
           onChange={(e: any) => setKeyword(e.target.value)}
+          onClick={() => setCheck(!check)}
         />
+        {keyword && (
+          <div
+            className="close__icon"
+            onClick={() => {
+              setKeyword("");
+            }}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        )}
       </div>
       {check && (
         <div className="search__menu screen-85">
