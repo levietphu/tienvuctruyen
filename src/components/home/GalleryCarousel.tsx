@@ -44,12 +44,12 @@ const GalleryCarousel = () => {
   // Xử lý slider
   const checkIndex = () => {
     Ref.current?.classList.remove("active");
-    if (countSlider === 0) {
+    if (countSlider <= 0) {
       setPosChange(4 * -1147);
       setCountSlider(4);
       setPosition(4 * -1147);
     }
-    if (countSlider === 5) {
+    if (countSlider >= 5) {
       setPosChange(-1147);
       setPosition(-1147);
       setCountSlider(1);
@@ -107,10 +107,10 @@ const GalleryCarousel = () => {
 
   const checkNotification = () => {
     notificationRef.current?.classList.remove("active");
-    if (countNotification === 5) {
+    if (countNotification >= 5) {
       setCountNotification(1);
     }
-    if (countNotification === 0) {
+    if (countNotification <= 0) {
       setCountNotification(4);
     }
   };

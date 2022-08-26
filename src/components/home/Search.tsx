@@ -14,7 +14,7 @@ const Search = () => {
           check ? "search__container--active" : ""
         }`}
       >
-        <div className="search__icon">
+        <div className="search__icon" onClick={() => setCheck(!check)}>
           <i
             className="fa-solid fa-magnifying-glass"
             style={{ color: `${check ? "black" : ""}` }}

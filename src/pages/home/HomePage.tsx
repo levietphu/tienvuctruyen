@@ -3,14 +3,17 @@ import "./home.scss";
 import MainLayout from "../../layouts/MainLayout";
 import GalleryCarousel from "../../components/home/GalleryCarousel";
 import Search from "../../components/home/Search";
-import RecommendedStory from "../../components/home/RecommendedStory";
+import DragStory from "../../components/home/DragStory";
 
 const HomePage = () => {
   return (
     <MainLayout>
       <GalleryCarousel />
       <Search />
-      <RecommendedStory />
+      <div className="recomended__story">
+        <h1>Truyện đề cử</h1>
+        <DragStory />
+      </div>
     </MainLayout>
   );
 };

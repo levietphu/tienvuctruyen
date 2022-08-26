@@ -73,6 +73,8 @@
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    min-height: 50px;
+    max-height: 100vh;
     .search__icon {
       position: absolute;
       top: 0;
@@ -128,6 +130,7 @@
     margin-top: 3px;
     border-radius: 5px;
     overflow: hidden;
+    z-index: 99;
     span {
       line-height: 35px;
       font-size: 1.1rem;
@@ -170,6 +173,89 @@
           }
         }
       }
+    }
+  }
+}
+
+.recomended__story {
+  h1 {
+    font-size: 2.25rem;
+    color: #3c3c3c;
+  }
+}
+
+.drag__story {
+  overflow: hidden;
+  .drag__story--slider {
+    width: 100%;
+    display: flex;
+    position: relative;
+
+    left: 0;
+    .story__slider--item {
+      margin-right: 25px;
+      position: relative;
+      .btn__vip {
+        padding: 3px 5px;
+        background: #f5f593;
+        text-transform: uppercase;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      a {
+        .image__story {
+          width: 200px;
+          height: 300px;
+          img {
+            width: 100%;
+            border-radius: 5px;
+          }
+        }
+        .hover__story {
+          position: absolute;
+          width: 200px;
+          height: 300px;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          transition: 0.3s;
+          border-radius: 3px;
+          background: rgba(54, 54, 54, 0.9);
+          .hover__story--name {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+          }
+          span {
+            text-align: center;
+            padding: 4px 6px;
+            background: white;
+            color: #605e5e;
+            text-transform: capitalize;
+            font-size: 13px;
+            border-radius: 3px;
+          }
+          .border-top {
+            border-top: 1px solid white;
+            width: 60px;
+            margin-left: 10px;
+          }
+          .discount__story {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 25px;
+          }
+        }
+      }
+    }
+    .story__slider--item:hover .hover__story {
+      opacity: 1;
     }
   }
 }
