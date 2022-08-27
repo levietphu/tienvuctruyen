@@ -186,12 +186,12 @@
 
 .drag__story {
   overflow: hidden;
+  position: relative;
   .drag__story--slider {
     width: 100%;
     display: flex;
     position: relative;
-
-    left: 0;
+    top: 0;
     .story__slider--item {
       margin-right: 25px;
       position: relative;
@@ -223,7 +223,7 @@
           left: 0;
           opacity: 0;
           transition: 0.3s;
-          border-radius: 3px;
+          border-radius: 5px;
           background: rgba(54, 54, 54, 0.9);
           .hover__story--name {
             color: white;

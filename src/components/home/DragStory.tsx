@@ -4,6 +4,7 @@ import imageStory from "../../store";
 const DragStory = () => {
   const [countSlider, setCountSlider] = useState(0);
   const [posCurrent, setPosCurrent] = useState(0);
+  const [postion, setPostion] = useState(0);
 
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -12,36 +13,59 @@ const DragStory = () => {
   let posInitial: any;
   let posFinal: any;
 
-  // useEffect(() => {
-  //   if(dragRef) {
-  //     dragRef.current?.addEventListener("transitionend",check)
-  //   }
-  // },[])
+  useEffect(() => {
+    if (dragRef) {
+      dragRef.current?.addEventListener("transitionend", () =>
+        dragRef.current?.classList.remove("active")
+      );
+      return () =>
+        dragRef.current?.removeEventListener("transitionend", () =>
+          dragRef.current?.classList.remove("active")
+        );
+    }
+  }, [countSlider]);
 
   const moveStory = (params: any) => {
     dragRef.current?.classList.add("active");
     if (params === "next") {
       setCountSlider(countSlider + 1);
-      setPosCurrent((countSlider + 1) * -500);
+      setPosCurrent((countSlider + 1) * posX1);
+      setPostion((countSlider + 1) * posX1);
     } else {
       setCountSlider(countSlider - 1);
-      setPosCurrent((countSlider - 1) * -500);
+      setPosCurrent((countSlider - 1) * posX1);
+      setPostion((countSlider - 1) * posX1);
     }
   };
 
   const dragStart = (e: any) => {
+    e.preventDefault();
+    dragRef.current?.classList.add("active");
     posX1 = e.clientX;
+    posInitial = dragRef.current?.offsetLeft;
     document.onmousemove = dragMove;
     document.onmouseup = dragEnd;
   };
 
   const dragMove = (e: any) => {
-    e.preventDefault();
     posX2 = posX1 - e.clientX;
     posX1 = e.clientX;
+    let posInitial: any = dragRef.current?.offsetLeft;
+    setPosCurrent(posInitial - posX2);
   };
 
-  const dragEnd = () => {};
+  const dragEnd = () => {
+    posFinal = dragRef.current?.offsetLeft;
+    if (posFinal - postion < -200) {
+      moveStory("next");
+    } else if (posFinal - postion > 200) {
+      moveStory("prev");
+    } else {
+      setPosCurrent(postion);
+    }
+    document.onmousemove = null;
+    document.onmouseup = null;
+  };
 
   return (
     <div className="drag__story">
