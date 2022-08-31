@@ -1,4 +1,7 @@
 @media screen and (max-width: 768px) {
+  .screen-85 {
+    width: 95% !important;
+  }
   .header__left--cate,
   .header__left--list,
   .header__right {
@@ -6,6 +9,34 @@
   }
   .header__right--mobile {
     display: flex !important;
+  }
+  .main__content {
+    display: block !important;
+  }
+  .story__newupdate {
+    width: 100% !important;
+  }
+  .list__story--newupdate {
+    margin-right: 0 !important;
+    .image__story {
+      width: 120px !important;
+      height: 130px !important;
+    }
+    .story__newupdate--right {
+      display: block !important;
+      .name__story {
+        width: 100% !important;
+      }
+      .cate__story {
+        width: 100% !important;
+      }
+      .chapter__story {
+        width: 100% !important;
+      }
+    }
+  }
+  .story__full {
+    width: 100% !important;
   }
 }
 
@@ -43,6 +74,9 @@ a {
 }
 .mr-15 {
   margin-right: 15px;
+}
+.mr-10 {
+  margin-right: 10px;
 }
 .center {
   display: flex;

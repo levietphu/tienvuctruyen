@@ -1,10 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import imageStory from "../../store";
 
-const DragStory = () => {
-  const [countSlider, setCountSlider] = useState(0);
+const DragStory = ({ imageStory }: any) => {
+  console.log(imageStory);
   const [posCurrent, setPosCurrent] = useState(0);
-  const [postion, setPostion] = useState(0);
 
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -23,20 +21,7 @@ const DragStory = () => {
           dragRef.current?.classList.remove("active")
         );
     }
-  }, [countSlider]);
-
-  const moveStory = (params: any) => {
-    dragRef.current?.classList.add("active");
-    if (params === "next") {
-      setCountSlider(countSlider + 1);
-      setPosCurrent((countSlider + 1) * posX1);
-      setPostion((countSlider + 1) * posX1);
-    } else {
-      setCountSlider(countSlider - 1);
-      setPosCurrent((countSlider - 1) * posX1);
-      setPostion((countSlider - 1) * posX1);
-    }
-  };
+  }, [posCurrent]);
 
   const dragStart = (e: any) => {
     e.preventDefault();
@@ -56,12 +41,10 @@ const DragStory = () => {
 
   const dragEnd = () => {
     posFinal = dragRef.current?.offsetLeft;
-    if (posFinal - postion < -200) {
-      moveStory("next");
-    } else if (posFinal - postion > 200) {
-      moveStory("prev");
-    } else {
-      setPosCurrent(postion);
+    if (posFinal > 0) {
+      setPosCurrent(0);
+    } else if (posFinal < imageStory.length * -200 + 310) {
+      setPosCurrent(imageStory.length * -200 + 310);
     }
     document.onmousemove = null;
     document.onmouseup = null;
@@ -75,7 +58,7 @@ const DragStory = () => {
         ref={dragRef}
         onMouseDown={dragStart}
       >
-        {imageStory.map((item, index) => {
+        {imageStory.map((item: any, index: any) => {
           return (
             <div className="story__slider--item" key={item.id}>
               <span className="btn__vip">vip</span>
