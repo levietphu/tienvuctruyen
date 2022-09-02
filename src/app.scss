@@ -15,28 +15,49 @@
   }
   .story__newupdate {
     width: 100% !important;
-  }
-  .list__story--newupdate {
-    margin-right: 0 !important;
-    .image__story {
-      width: 120px !important;
-      height: 130px !important;
+    .list__story--newupdate {
+      margin-right: 0 !important;
+      .image__story {
+        width: 120px !important;
+        height: 130px !important;
+      }
+      .story__newupdate--right {
+        display: block !important;
+        .name__story {
+          width: 100% !important;
+        }
+        .cate__story {
+          width: 100% !important;
+        }
+        .chapter__story {
+          width: 100% !important;
+        }
+      }
     }
-    .story__newupdate--right {
-      display: block !important;
-      .name__story {
-        width: 100% !important;
-      }
-      .cate__story {
-        width: 100% !important;
-      }
-      .chapter__story {
-        width: 100% !important;
-      }
-    }
   }
+
   .story__full {
     width: 100% !important;
+  }
+  .cate-content {
+    .list__story--newupdate {
+      margin-right: 0 !important;
+      .image__story {
+        height: 130px !important;
+      }
+      .story__newupdate--right {
+        display: block !important;
+        .name__story {
+          width: 100% !important;
+        }
+        .cate__story {
+          width: 100% !important;
+        }
+        .chapter__story {
+          width: 100% !important;
+        }
+      }
+    }
   }
 }
 

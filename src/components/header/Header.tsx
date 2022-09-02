@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./header.scss";
 import logo from "../../assets/android-chrome-192x192.png";
 import { useOutSide } from "../../hookCustom/useOutSide";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
@@ -21,10 +22,10 @@ const Header = () => {
       <div className="screen-85 header">
         <div className="header__left">
           <div className="center">
-            <a className="header__left--logo" href="">
+            <Link className="header__left--logo" to="/">
               <img src={logo} alt="" />
               <span>tiên vực</span>
-            </a>
+            </Link>
           </div>
           <div ref={cateRef}>
             <div
@@ -41,7 +42,7 @@ const Header = () => {
             {toogleMenuCate && (
               <ul className="menu__cate">
                 <li>
-                  <a href="">tiên hiệp</a>
+                  <Link to="/the-loai/tien-hiep">tiên hiệp</Link>
                 </li>
                 <li>
                   <a href="">tiên hiệp</a>
@@ -195,7 +196,7 @@ const Header = () => {
               {toogleMenuMobileCate && (
                 <ul className="header__right--menucate">
                   <li>
-                    <a href="">tiên hiệp</a>
+                    <Link to="/the-loai/tien-hiep">tiên hiệp</Link>
                   </li>
                   <li>
                     <a href="">tiên hiệp</a>

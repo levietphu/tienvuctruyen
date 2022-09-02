@@ -1,0 +1,44 @@
+.cate__page {
+  .cate-title {
+    text-transform: capitalize;
+    margin: 0 0 20px 0;
+  }
+  .cate-title.top {
+    text-align: center;
+  }
+  .cate-content {
+    .list__story--newupdate {
+      margin-right: 0;
+      .item__story--newupdate {
+        .image__story {
+          width: 83px;
+          height: 120px;
+          border-radius: 5px;
+          overflow: hidden;
+          cursor: pointer;
+          position: relative;
+          img {
+            width: 100%;
+          }
+          .top__story {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            background-color: yellow;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+          }
+        }
+        .story__newupdate--right {
+          display: flex;
+          flex: 1;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import image1 from "../../assets/dtl-hoang-de.jpeg";
 import { newUpdateStory } from "../../store";
 
@@ -10,7 +10,9 @@ const NewUpdateStory = () => {
           <div className="item__story--newupdate" key={index}>
             <div className="image__story mr-10">
               <img src={item.image} alt="" />
+              <div className="top__story">Top {index + 1}</div>
             </div>
+
             <div className="story__newupdate--right">
               <div className="name__story mr-10">
                 <a className="mr-5" href="">
