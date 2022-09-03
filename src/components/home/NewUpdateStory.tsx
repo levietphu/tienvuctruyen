@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import image1 from "../../assets/dtl-hoang-de.jpeg";
 import { newUpdateStory } from "../../store";
+import { Link } from "react-router-dom";
 
 const NewUpdateStory = () => {
   return (
@@ -15,9 +16,9 @@ const NewUpdateStory = () => {
 
             <div className="story__newupdate--right">
               <div className="name__story mr-10">
-                <a className="mr-5" href="">
+                <Link className="mr-5" to="/dieu-thap-lam-hoang-de">
                   <span>{item.name}</span>
-                </a>
+                </Link>
                 <span className="cate btn__vip">vip</span>
                 <p>{item.author}</p>
               </div>

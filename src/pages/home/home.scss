@@ -360,24 +360,7 @@
           color: black;
         }
       }
-      .cate__story {
-        width: 35%;
 
-        a {
-          margin: 0 5px 5px 0;
-          border-radius: 5px;
-          display: inline-flex;
-          align-items: center;
-          padding: 4px 10px;
-          background: #3e8ed0;
-          color: white;
-          text-transform: capitalize;
-          font-size: 14px;
-        }
-        a:hover {
-          text-decoration: underline;
-        }
-      }
       .chapter__story {
         width: 35%;
         a {
@@ -398,5 +381,22 @@
         }
       }
     }
+  }
+}
+
+.cate__story {
+  a {
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: #3e8ed0;
+    color: white;
+    text-transform: capitalize;
+    font-size: 14px;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 }

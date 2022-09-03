@@ -14,28 +14,28 @@ const HomePage = () => {
       <GalleryCarousel />
       <Search />
       <div className="story">
-        <h1>Truyện đề cử</h1>
+        <h1 style={{ margin: "0.67em 0" }}>Truyện đề cử</h1>
         <DragStory imageStory={imageStory} />
       </div>
       <div className="story">
-        <h1>Truyện yêu thích mỗi tuần</h1>
+        <h1 style={{ margin: "0.67em 0" }}>Truyện yêu thích mỗi tuần</h1>
         <DragStory imageStory={imageStory} />
       </div>
       <div className="story">
-        <h1>Bảng xếp hạng truyện vip</h1>
+        <h1 style={{ margin: "0.67em 0" }}>Bảng xếp hạng truyện vip</h1>
         <DragStory imageStory={imageStory} />
       </div>
       <div className="story">
-        <h1>Truyện hot mới ra lò</h1>
+        <h1 style={{ margin: "0.67em 0" }}>Truyện hot mới ra lò</h1>
         <DragStory imageStory={imageStory} />
       </div>
       <div className="main__content">
         <div className="story__newupdate">
-          <h1>truyện mới cập nhật</h1>
+          <h1 style={{ margin: "0.67em 0" }}>truyện mới cập nhật</h1>
           <NewUpdateStory />
         </div>
         <div className="story__full">
-          <h1>truyện đã full</h1>
+          <h1 style={{ margin: "0.67em 0" }}>truyện đã full</h1>
           <FullStory />
         </div>
       </div>
