@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
 const DragStory = ({ imageStory }: any) => {
-  console.log(imageStory);
   const [posCurrent, setPosCurrent] = useState(0);
 
   const dragRef = useRef<HTMLDivElement>(null);

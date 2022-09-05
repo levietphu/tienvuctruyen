@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./story.scss";
 import MainLayout from "../../layouts/MainLayout";
 import image1 from "../../assets/dtl-hoang-de.jpeg";
+import Pagination from "../../components/cate/Pagination";
+import chicken from "../../assets/chicken.png";
 
 const Story = () => {
+  const [position, setPosition] = useState(0);
+  const Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    console.log(Ref.current?.translate);
+  });
+
   return (
     <MainLayout>
       <div className="header__story">
@@ -35,7 +44,7 @@ const Story = () => {
           <p className="header__story--translator">
             <span>dịch giả: </span>{" "}
             <a href="">
-              <span>
+              <span className="person">
                 <i className="fa-solid fa-person"></i>
               </span>{" "}
               <span>mrtriman555</span>
@@ -77,7 +86,154 @@ const Story = () => {
           </div>
         </div>
       </div>
-      <div className="main__story"></div>
+      <div className="main__story">
+        <div className="chapter__donate">
+          <div className="list__chapter__donate">
+            <div
+              className={`main__story--chapter center ${
+                position === 0 ? "active__chapter__donate" : ""
+              }`}
+              onClick={() => setPosition(0)}
+            >
+              Ds Chương <span>975</span>
+            </div>
+            <div
+              className={`main__story--donate center ${
+                position === -698 ? "active__chapter__donate" : ""
+              }`}
+              onClick={() => setPosition(-698)}
+            >
+              Ủng hộ
+            </div>
+          </div>
+          <div
+            className="center__chapter"
+            style={{ transform: `translateX(${position}px)` }}
+            ref={Ref}
+          >
+            <div className="center__chapter--left">
+              <div className="sort__search">
+                <button>
+                  <i className="fa-solid fa-arrow-up-9-1"></i>
+                </button>
+                <div className="search">
+                  <div className={`search__container`}>
+                    <div className="search__icon">
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <input
+                      className="search-input"
+                      type="text"
+                      placeholder="Tìm theo số chương, tên chương..."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="center__chapter--list">
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+              </div>
+              <Pagination />
+            </div>
+            <div className="center__chapter--right">
+              <h2>Danh sách ủng hộ</h2>
+              <div className="donate__story center">
+                <div>
+                  <div className="image__donate">
+                    <img src={chicken} alt="" />
+                  </div>
+                  <p>
+                    Hãy bấm vào nút Ủng hộ truyện ở trên để ủng hộ dịch giả nhé!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="story__comment">
+          <div className="head__story__comment">
+            <p>Bình luận</p>
+          </div>
+          <div className="comment__text">
+            {/* <textarea
+              name=""
+              id=""
+              rows={5}
+              placeholder="Hãy để lại bình luận của bạn"
+            ></textarea>
+            <div className="click__comment">
+              <button className="active__comment__button">Bình luận</button>
+            </div> */}
+            <div className="login__here">
+              Hãy <a href="">Đăng nhập</a> và để lại bình luận của bạn
+            </div>
+          </div>
+          <div className="story__comment--list">
+            <div className="story__comment--item">
+              <div className="comment--item">
+                <p>
+                  <span className="account__name">catdan05</span> •
+                  <span className="time__update"> 3 tuần trước</span>
+                </p>
+                <p className="comment">free sao tính tuền thế ad</p>
+                <a>0 trả lời</a>
+              </div>
+              <div className="recomment--item">
+                <p>
+                  <span className="account__name">catdan05</span> •
+                  <span className="time__update"> 3 tuần trước</span>
+                </p>
+                <p className="comment">free sao tính tuền thế ad</p>
+              </div>
+              <div className="reply">
+                <input type="text" className="" />
+                <i
+                  className="fa-solid fa-paper-plane"
+                  style={{ opacity: "1" }}
+                ></i>
+                <a>trả lời</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </MainLayout>
   );
 };
