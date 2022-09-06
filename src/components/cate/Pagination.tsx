@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import "./pagination.scss";
 
 const Pagination = () => {
   return (
-    <div className="pagination">
+    <div className={`pagination`}>
       <div className="pagination__left">
         <ul className="pagination__left--list">
           <li className="active">
@@ -35,4 +35,4 @@ const Pagination = () => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);

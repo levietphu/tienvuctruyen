@@ -101,8 +101,7 @@
     flex: 2.5;
     border-radius: 5px;
     overflow: hidden;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    box-shadow: 1px 0px 8px 0px #738a8b;
     .list__chapter__donate {
       display: flex;
       font-size: 1.25rem;
@@ -141,8 +140,6 @@
     }
     .center__chapter {
       display: flex;
-      min-height: 200px;
-      transform: translateX(-716px);
       transition: 0.5s;
       .center__chapter--left {
         flex-shrink: 0;
@@ -203,6 +200,8 @@
           justify-content: flex-start;
           margin: 0;
           padding: 10px;
+          position: sticky;
+          bottom: 0;
         }
       }
       .center__chapter--right {
@@ -238,6 +237,8 @@
     border-radius: 5px;
     overflow: hidden;
     background: white;
+    align-self: baseline;
+    box-shadow: 1px 0px 8px 0px #738a8b;
     .head__story__comment {
       width: 100%;
       height: 50px;
@@ -301,6 +302,7 @@
     margin: auto;
     margin-top: 10px;
     .story__comment--item {
+      margin-bottom: 10px;
       .comment--item,
       .recomment--item {
         background: #f3eded;
@@ -372,4 +374,9 @@
   border-bottom-right-radius: 0;
   background: #357376 !important;
   color: white;
+}
+
+.ghim {
+  position: sticky;
+  bottom: 0;
 }

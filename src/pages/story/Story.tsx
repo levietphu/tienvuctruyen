@@ -7,11 +7,8 @@ import chicken from "../../assets/chicken.png";
 
 const Story = () => {
   const [position, setPosition] = useState(0);
-  const Ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    console.log(Ref.current?.translate);
-  });
+  const Ref = useRef<HTMLDivElement>(null);
 
   return (
     <MainLayout>
@@ -108,8 +105,10 @@ const Story = () => {
           </div>
           <div
             className="center__chapter"
-            style={{ transform: `translateX(${position}px)` }}
-            ref={Ref}
+            style={{
+              transform: `translateX(${position}px)`,
+              maxHeight: `${position === -698 ? "360px" : "100%"}`,
+            }}
           >
             <div className="center__chapter--left">
               <div className="sort__search">
@@ -130,6 +129,123 @@ const Story = () => {
                 </div>
               </div>
               <div className="center__chapter--list">
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
+                <div className="center__chapter--item">
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </div>
                 <div className="center__chapter--item">
                   <p>
                     <span className="number__chapter">chương 1.</span>
