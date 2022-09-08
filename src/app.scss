@@ -92,14 +92,20 @@
       }
     }
   }
+  .screen-80 {
+    width: 100% !important;
+  }
+  .setting__chapter {
+    display: none;
+  }
 }
 
 body {
-  background-color: #e7e3e3;
   min-height: 100vh;
   margin: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 ul {
   list-style: none;
@@ -148,6 +154,7 @@ main {
   padding: 60px 0 60px 0;
   box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
+  background: #e7e3e3;
 }
 .screen-85 {
   width: 85%;
@@ -196,4 +203,17 @@ h1 {
 .bg-vip {
   background-color: #ffe08a !important;
   color: black !important;
+}
+
+.light {
+  background-color: #e7e3e3;
+}
+
+.dark {
+  background-color: #4a4a4a;
+  color: white;
+}
+
+.hidden__scroll {
+  overflow: hidden;
 }

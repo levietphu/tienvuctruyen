@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import "./story.scss";
 import MainLayout from "../../layouts/MainLayout";
 import image1 from "../../assets/dtl-hoang-de.jpeg";
 import Pagination from "../../components/cate/Pagination";
 import chicken from "../../assets/chicken.png";
+import { Link } from "react-router-dom";
 
 const Story = () => {
   const [position, setPosition] = useState(0);
-
-  const Ref = useRef<HTMLDivElement>(null);
 
   return (
     <MainLayout>
@@ -129,7 +128,10 @@ const Story = () => {
                 </div>
               </div>
               <div className="center__chapter--list">
-                <div className="center__chapter--item">
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -141,8 +143,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -154,8 +159,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -167,8 +175,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -180,8 +191,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -193,8 +207,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -206,8 +223,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -219,8 +239,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -232,8 +255,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -245,8 +271,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -258,8 +287,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -271,8 +303,11 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
-                <div className="center__chapter--item">
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
                   <p>
                     <span className="number__chapter">chương 1.</span>
                     <span className="name__chapter">
@@ -284,7 +319,135 @@ const Story = () => {
                     <span>Cập nhật: </span>
                     <span>1 tháng trước</span>
                   </i>
-                </div>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
+                <Link
+                  to="/dieu-thap-lam-hoang-de/chuong-1"
+                  className="center__chapter--item"
+                >
+                  <p>
+                    <span className="number__chapter">chương 1.</span>
+                    <span className="name__chapter">
+                      {" "}
+                      Thế giới này có gì đó sai sai
+                    </span>
+                  </p>
+                  <i>
+                    <span>Cập nhật: </span>
+                    <span>1 tháng trước</span>
+                  </i>
+                </Link>
               </div>
               <Pagination />
             </div>

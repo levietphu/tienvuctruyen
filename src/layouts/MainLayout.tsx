@@ -1,12 +1,19 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import { useParams } from "react-router-dom";
+import { SettingContext } from "../context/SettingContextProvider";
+import Popup from "../pages/chapter/Popup";
+import ListChapter from "../components/chapter/ListChapter";
 
 export interface Props {
   children?: ReactNode;
 }
 
 const MainLayout = ({ children }: Props) => {
+  const params = useParams();
+  const { togglePopup }: any = useContext(SettingContext);
+
   return (
     <>
       <header>
@@ -15,9 +22,14 @@ const MainLayout = ({ children }: Props) => {
       <main>
         <div className="screen-85">{children}</div>
       </main>
-      <footer className="center">
-        <Footer />
-      </footer>
+      {!params.slugchapter && (
+        <footer className="center">
+          <Footer />
+        </footer>
+      )}
+      {params.slugchapter && <ListChapter />}
+
+      {togglePopup && <Popup />}
     </>
   );
 };
