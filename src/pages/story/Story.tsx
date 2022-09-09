@@ -10,6 +10,7 @@ const Story = () => {
   const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
   const [checkComment, setCheckComment] = useState(false);
+  const [checkReply, setCheckReply] = useState(false);
 
   return (
     <MainLayout>
@@ -512,7 +513,12 @@ const Story = () => {
                 <p className="comment">free sao tính tuền thế ad</p>
               </div>
               <div className="reply">
-                <input type="text" className="" />
+                <input
+                  type="text"
+                  className={checkReply ? "comment__text--active" : ""}
+                  onClick={() => setCheckReply(!checkReply)}
+                  onBlur={() => setCheckReply(false)}
+                />
                 <i
                   className="fa-solid fa-paper-plane"
                   style={{ opacity: "1" }}
