@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from "react";
+import { ReactNode, useContext } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { useParams } from "react-router-dom";
@@ -12,14 +12,22 @@ export interface Props {
 
 const MainLayout = ({ children }: Props) => {
   const params = useParams();
-  const { togglePopup }: any = useContext(SettingContext);
+  const { togglePopup, theme }: any = useContext(SettingContext);
 
   return (
     <>
       <header>
         <Header />
       </header>
-      <main>
+      <main
+        className={`${
+          theme === "dark" && params.slugchapter
+            ? "dark"
+            : theme === "book" && params.slugchapter
+            ? "book"
+            : ""
+        }`}
+      >
         <div className="screen-85">{children}</div>
       </main>
       {!params.slugchapter && (

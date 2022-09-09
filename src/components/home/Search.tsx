@@ -1,14 +1,12 @@
 import { useState } from "react";
 import image1 from "../../assets/quy-bi-chi-chu.jpeg";
-import { useOutSide } from "../../hookCustom/useOutSide";
 
 const Search = () => {
   const [check, setCheck] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const Ref = useOutSide(() => setCheck(false));
 
   return (
-    <div className="search" ref={Ref}>
+    <div className="search">
       <div
         className={`search__container ${
           check ? "search__container--active" : ""
@@ -28,6 +26,7 @@ const Search = () => {
           value={keyword}
           onChange={(e: any) => setKeyword(e.target.value)}
           onClick={() => setCheck(!check)}
+          onBlur={() => setCheck(false)}
         />
         {keyword && (
           <div

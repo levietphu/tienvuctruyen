@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 
 const Story = () => {
   const [position, setPosition] = useState(0);
+  const [checkInput, setCheckInput] = useState(false);
+  const [checkComment, setCheckComment] = useState(false);
 
   return (
     <MainLayout>
@@ -115,7 +117,11 @@ const Story = () => {
                   <i className="fa-solid fa-arrow-up-9-1"></i>
                 </button>
                 <div className="search">
-                  <div className={`search__container`}>
+                  <div
+                    className={`search__container ${
+                      checkInput ? "search__container--active" : ""
+                    }`}
+                  >
                     <div className="search__icon">
                       <i className="fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -123,6 +129,8 @@ const Story = () => {
                       className="search-input"
                       type="text"
                       placeholder="Tìm theo số chương, tên chương..."
+                      onClick={() => setCheckInput(!checkInput)}
+                      onBlur={() => setCheckInput(false)}
                     />
                   </div>
                 </div>
@@ -473,9 +481,11 @@ const Story = () => {
           <div className="comment__text">
             {/* <textarea
               name=""
-              id=""
+              className={checkComment ? "comment__text--active" : ""}
               rows={5}
               placeholder="Hãy để lại bình luận của bạn"
+              onClick={() => setCheckComment(!checkComment)}
+              onBlur={() => setCheckComment(false)}
             ></textarea>
             <div className="click__comment">
               <button className="active__comment__button">Bình luận</button>

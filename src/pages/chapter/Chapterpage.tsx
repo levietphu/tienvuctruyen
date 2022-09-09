@@ -7,7 +7,8 @@ const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState(true);
   const [bookMark, setBookMark] = useState(false);
 
-  const { setTogglePopup }: any = useContext(SettingContext);
+  const { setTogglePopup, setTheme, theme, size, setSize }: any =
+    useContext(SettingContext);
 
   return (
     <MainLayout>
@@ -32,7 +33,13 @@ const Chapterpage = () => {
           </div>
         </div>
         <div className="content__chapter">
-          <div className="main__content">
+          <div
+            className="main__content"
+            style={{
+              fontSize: `${size}rem`,
+              lineHeight: `${(size * 100) / 75}rem`,
+            }}
+          >
             Điệu thấp làm hoàng đế giới thiệu vắn tắt: www.uukanshu.com Tam
             hoàng tử Lý Chính là tiếp thụ qua chủ nghĩa xã hội giáo dục người,
             cảm thấy có làm hay không hoàng đế cũng không đáng kể. Nhưng mà hắn
@@ -119,17 +126,33 @@ const Chapterpage = () => {
           </div>
           <div className="interfce">
             <p className="name">Giao diện</p>
-            <i className="fa-solid fa-lightbulb light active"></i>
-            <i className="fa-solid fa-moon"></i>
-            <i className="fa-solid fa-book-open"></i>
+            <i
+              className={`fa-solid fa-lightbulb light ${
+                theme === "light" ? "active__theme" : ""
+              }`}
+              onClick={() => setTheme("light")}
+              style={{ color: `${theme === "dark" ? "black" : ""}` }}
+            ></i>
+            <i
+              className={`fa-solid fa-moon ${
+                theme === "dark" ? "active__theme" : ""
+              }`}
+              onClick={() => setTheme("dark")}
+            ></i>
+            <i
+              className={`fa-solid fa-book-open ${
+                theme === "book" ? "active__theme" : ""
+              }`}
+              onClick={() => setTheme("book")}
+            ></i>
           </div>
           <div className="fontsize-container">
             <p>Cỡ chữ</p>
-            <div className="fontsize__up">
+            <div className="fontsize__up" onClick={() => setSize(size + 0.1)}>
               <i className="fa-solid fa-a"></i>
               <i className="fa-solid fa-arrow-up"></i>
             </div>
-            <div className="fontsize__down">
+            <div className="fontsize__down" onClick={() => setSize(size - 0.1)}>
               <i className="fa-solid fa-a"></i>
               <i className="fa-solid fa-arrow-down"></i>
             </div>

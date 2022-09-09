@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SettingContext } from "../../context/SettingContextProvider";
 
 const ListChapter = () => {
   const { togglePopup }: any = useContext(SettingContext);
+  const [checkSearchChapter, setCheckSearchChapter] = useState(false);
 
   return (
     <div
@@ -18,7 +19,11 @@ const ListChapter = () => {
             <i className="fa-solid fa-arrow-up-9-1"></i>
           </button>
           <div className="search">
-            <div className={`search__container`}>
+            <div
+              className={`search__container ${
+                checkSearchChapter ? "search__chapter--active" : ""
+              }`}
+            >
               <div className="search__icon">
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>
@@ -26,6 +31,8 @@ const ListChapter = () => {
                 className="search-input"
                 type="text"
                 placeholder="Tìm theo số chương, tên chương..."
+                onClick={() => setCheckSearchChapter(!checkSearchChapter)}
+                onBlur={() => setCheckSearchChapter(false)}
               />
             </div>
           </div>

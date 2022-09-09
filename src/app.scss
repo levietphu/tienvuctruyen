@@ -206,12 +206,56 @@ h1 {
 }
 
 .light {
-  background-color: #e7e3e3;
+  background: #e7e3e3;
 }
 
 .dark {
-  background-color: #4a4a4a;
-  color: white;
+  background: #4a4a4a;
+  .header__chapter {
+    color: white;
+  }
+  .content__chapter {
+    background: #2a2a2a;
+    color: white;
+  }
+  .main__setting {
+    background: #2a2a2a;
+    color: white;
+  }
+  .setting__chapter {
+    background: #2a2a2a;
+    color: white;
+  }
+  .forbidden {
+    i {
+      background: #2a2a2a !important;
+    }
+  }
+  .setting,
+  .change__story,
+  .list__chapter,
+  .tick__chapter,
+  .prev__chapter,
+  .next__chapter {
+    i:hover {
+      background: #4a4a4a !important;
+    }
+  }
+  .setting__close {
+    i:hover {
+      background-color: #4a4a4a !important;
+    }
+  }
+  .fontsize__down:hover,
+  .fontsize__up:hover {
+    background-color: #4a4a4a !important;
+  }
+}
+.book {
+  background: #cead76;
+  .content__chapter {
+    background: #efcd93;
+  }
 }
 
 .hidden__scroll {

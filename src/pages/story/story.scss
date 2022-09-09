@@ -173,6 +173,9 @@
                 text-indent: 25px;
               }
             }
+            .search__container--active {
+              box-shadow: 0px 0px 5px 0px #357375;
+            }
           }
         }
         .center__chapter--list {
@@ -261,6 +264,10 @@
       width: 95%;
       margin: auto;
       margin-top: 10px;
+      .comment__text--active {
+        border: 1px solid black;
+        box-shadow: 0px 0px 5px 0px #357375;
+      }
       textarea {
         width: 99%;
         border: none;

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 interface AppContextInterface {
   name: string;
@@ -10,6 +10,10 @@ export const SettingContext = createContext<AppContextInterface | null>(null);
 
 const SettingContextProvider = ({ children }: any) => {
   const [togglePopup, setTogglePopup] = useState(false);
+  const saveTheme = JSON.parse(localStorage.getItem("theme") || "light");
+  const saveSize = JSON.parse(localStorage.getItem("size") || "1.2");
+  const [theme, setTheme] = useState(saveTheme);
+  const [size, setSize] = useState(saveSize);
 
   useEffect(() => {
     if (togglePopup) {
@@ -19,9 +23,20 @@ const SettingContextProvider = ({ children }: any) => {
     }
   }, [togglePopup]);
 
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(theme));
+  }, [theme]);
+  useEffect(() => {
+    localStorage.setItem("size", JSON.stringify(size));
+  }, [size]);
+
   const setting: any = {
     togglePopup,
     setTogglePopup,
+    setTheme,
+    theme,
+    size,
+    setSize,
   };
 
   return (
