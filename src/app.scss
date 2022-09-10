@@ -9,6 +9,9 @@
   }
   .header__right--mobile {
     display: flex !important;
+    .personal__logout {
+      width: 100%;
+    }
   }
   .main__content {
     display: block !important;
@@ -115,6 +118,9 @@
         left: 13px !important;
       }
     }
+  }
+  .login .login__center .login__container {
+    width: 90% !important;
   }
 }
 

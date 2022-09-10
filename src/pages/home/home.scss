@@ -68,6 +68,7 @@
 }
 
 .search {
+  box-sizing: border-box;
   .search__container {
     display: flex;
     position: relative;
@@ -75,6 +76,7 @@
     overflow: hidden;
     min-height: 50px;
     max-height: 100vh;
+
     .search__icon {
       position: absolute;
       top: 0;
@@ -95,10 +97,8 @@
     .search-input {
       width: 100%;
       border: none;
-
       outline: 0;
       padding: 15px 15px;
-      box-sizing: border-box;
       font-size: 1.25rem;
       background: #f7f6f6;
       color: black;

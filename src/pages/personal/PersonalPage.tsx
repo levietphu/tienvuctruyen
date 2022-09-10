@@ -1,11 +1,10 @@
+import { useState } from "react";
+import { Outlet, Link } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
-import { newUpdateStory } from "../../store";
-import imageStory from "../../store";
-import { useState } from "react";
 
 const PersonalPage = () => {
-  const [changeRoute, setChangeRoute] = useState("bookcase");
+  const [isActive, setIsActive] = useState("bookcase");
 
   return (
     <MainLayout>
@@ -19,77 +18,45 @@ const PersonalPage = () => {
             </p>
           </div>
           <div className="personal__left--list">
-            <a className="personal__item active__personal" href="">
+            <Link
+              className={
+                isActive === "bookcase"
+                  ? "personal__item active__personal"
+                  : "personal__item"
+              }
+              to="/account"
+              onClick={() => setIsActive("bookcase")}
+            >
               <i className="fa-regular fa-bookmark"></i>
               <span>tủ sách</span>
-            </a>
-            <a className="personal__item" href="">
+            </Link>
+            <Link
+              className={
+                isActive === "vipbuy"
+                  ? "personal__item active__personal"
+                  : "personal__item"
+              }
+              to="/account/vipbuy"
+              onClick={() => setIsActive("vipbuy")}
+            >
               <i className="fa-sharp fa-solid fa-money-bill"></i>
               <span>truyện vip đã mua</span>
-            </a>
-            <a className="personal__item" href="">
+            </Link>
+            <Link
+              className="personal__item"
+              to=""
+              onClick={() => setIsActive("coin")}
+            >
               <i className="fa-solid fa-coins"></i>
               <span>nạp xu</span>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="personal__right">
           <div className="bookcase">
-            <h1>Truyện vip đã mua</h1>
+            <h1>Tủ sách của bạn</h1>
           </div>
-          {/* <div className="list__bookcase">
-            {newUpdateStory.map((item, index) => {
-              if (index < 8) {
-                return (
-                  <a className="item__bookcase" href="" key={index}>
-                    <div className="item">
-                      <div className="height__full">
-                        <div className="image__bookcase">
-                          <img src={item.image} alt="" />
-                        </div>
-                        <div className="title__book">
-                          <p className="name__book">{item.name}</p>
-                          <p className="save__chapter">
-                            <i>đọc tiếp chương 5</i>{" "}
-                          </p>
-                        </div>
-                        <i className="fa-sharp fa-solid fa-xmark close"></i>
-                      </div>
-                    </div>
-                  </a>
-                );
-              }
-            })}
-          </div> */}
-          <div className="drag__story">
-            <div className="drag__story--slider">
-              {imageStory.map((item: any, index: any) => {
-                if (index < 6) {
-                  return (
-                    <div className="story__slider--item center" key={item.id}>
-                      <span className="btn__vip">vip</span>
-                      <a href="">
-                        <div className="image__story">
-                          <img src={item.image} alt="" />
-                        </div>
-                        <div className="hover__story">
-                          <p className="hover__story--name ml-10 mr-15">
-                            {item.name}
-                          </p>
-                          <span className="ml-10 mr-15">huyền huyễn</span>
-                          <p className="border-top"></p>
-                          <p className="ml-10 mr-15 discount__story">
-                            Giảm 15% khi mua tối thiếu 500c Khe hở ...
-                          </p>
-                        </div>
-                      </a>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-          </div>
-          {/* <div className="">Tủ sách của bạn</div> */}
+          <Outlet />
         </div>
       </div>
     </MainLayout>
