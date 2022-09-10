@@ -13,7 +13,9 @@ const routes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/:slug" element={<Story />} />
         <Route path="/:slugtruyen/:slugchapter" element={<Chapterpage />} />
-        <Route path="/account" element={<PersonalPage />} />
+        <Route path="/account" element={<PersonalPage />}>
+          <Route path="" />
+        </Route>
       </Routes>
     </Router>
   );

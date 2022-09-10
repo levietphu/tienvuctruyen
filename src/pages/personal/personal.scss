@@ -123,9 +123,14 @@
       flex-wrap: wrap;
       .story__slider--item {
         width: 20%;
-        margin-right: 20px;
+        margin-right: 0;
         .image__story {
-          width: 100%;
+          width: 152px;
+        }
+        .hover__story {
+          width: 152px;
+          height: 100%;
+          left: 8px;
         }
       }
     }

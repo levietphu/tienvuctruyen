@@ -2,8 +2,11 @@ import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
 import { newUpdateStory } from "../../store";
 import imageStory from "../../store";
+import { useState } from "react";
 
 const PersonalPage = () => {
+  const [changeRoute, setChangeRoute] = useState("bookcase");
+
   return (
     <MainLayout>
       <div className="personal">
@@ -34,7 +37,7 @@ const PersonalPage = () => {
           <div className="bookcase">
             <h1>Truyện vip đã mua</h1>
           </div>
-          <div className="list__bookcase">
+          {/* <div className="list__bookcase">
             {newUpdateStory.map((item, index) => {
               if (index < 8) {
                 return (
@@ -57,13 +60,13 @@ const PersonalPage = () => {
                 );
               }
             })}
-          </div>
-          {/* <div className="drag__story">
+          </div> */}
+          <div className="drag__story">
             <div className="drag__story--slider">
               {imageStory.map((item: any, index: any) => {
-                if (index < 5) {
+                if (index < 6) {
                   return (
-                    <div className="story__slider--item" key={item.id}>
+                    <div className="story__slider--item center" key={item.id}>
                       <span className="btn__vip">vip</span>
                       <a href="">
                         <div className="image__story">
@@ -76,8 +79,7 @@ const PersonalPage = () => {
                           <span className="ml-10 mr-15">huyền huyễn</span>
                           <p className="border-top"></p>
                           <p className="ml-10 mr-15 discount__story">
-                            Giảm 15% khi mua tối thiếu 500c Khe hở thời không
-                            thông tới dị giới, thời đại võ đạo...
+                            Giảm 15% khi mua tối thiếu 500c Khe hở ...
                           </p>
                         </div>
                       </a>
@@ -86,7 +88,7 @@ const PersonalPage = () => {
                 }
               })}
             </div>
-          </div> */}
+          </div>
           {/* <div className="">Tủ sách của bạn</div> */}
         </div>
       </div>
