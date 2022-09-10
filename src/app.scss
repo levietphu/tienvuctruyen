@@ -5,7 +5,10 @@
   .header__left--cate,
   .header__left--list,
   .header__right {
-    display: none;
+    display: none !important;
+  }
+  .header__right--menu {
+    display: block !important;
   }
   .header__right--mobile {
     display: flex !important;
