@@ -12,13 +12,15 @@ const Header = () => {
   const [toogleMenuMobileCate, setToogleMenuMobileCate] = useState(false);
   const [toogleMenuMobileList, setToogleMenuMobileList] = useState(false);
   const [tooglePersonalLogout, setTooglePersonalLogout] = useState(false);
+  const [tooglePersonalLogoutMoblie, setTooglePersonalLogoutMolie] =
+    useState(false);
 
   const cateRef = useOutSide(() => setToogleMenuCate(false));
   const listRef = useOutSide(() => setToogleMenuList(false));
   const cateRefMobile = useOutSide(() => setToogleMenuMobileCate(false));
   const listRefMobile = useOutSide(() => setToogleMenuMobileList(false));
   const menuRefPerLog = useOutSide(() => setTooglePersonalLogout(false));
-
+  const PersonRef = useOutSide(() => setTooglePersonalLogoutMolie(false));
   return (
     <>
       <div className="screen-85 header">
@@ -204,9 +206,6 @@ const Header = () => {
               <div
                 className="header__right--cate"
                 onClick={() => setToogleMenuMobileCate(!toogleMenuMobileCate)}
-                style={{
-                  background: `${toogleMenuMobileCate ? "#e7e3e3" : "#fdfbfb"}`,
-                }}
               >
                 <span>thể loại</span>
                 <i className="fa-solid fa-angle-down"></i>
@@ -304,9 +303,6 @@ const Header = () => {
               <div
                 className="header__right--list"
                 onClick={() => setToogleMenuMobileList(!toogleMenuMobileList)}
-                style={{
-                  background: `${toogleMenuMobileList ? "#e7e3e3" : "#fdfbfb"}`,
-                }}
               >
                 <span>danh sách</span>
                 <i className="fa-solid fa-angle-down"></i>
@@ -328,35 +324,40 @@ const Header = () => {
                 </ul>
               )}
             </div>
-            <div className="mt-20 mb-20">
-              <a href="" className="btn btn__user--register">
-                đăng ký
-              </a>
-              <a href="" className="btn btn__user--login">
-                Đăng nhập
-              </a>
-              {/* <div
+            <div className="person__page" ref={PersonRef}>
+              <div
                 className="header__right--list"
-                style={{
-                  background: `${toogleMenuMobileList ? "#e7e3e3" : "#fdfbfb"}`,
-                }}
+                onClick={() =>
+                  setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
+                }
               >
                 <span>
                   Hi, <strong>tieu_nam_phong</strong>
                 </span>
                 <i className="fa-solid fa-angle-down"></i>
               </div>
-              <div className="personal__logout">
-                <Link to="/account" className="person">
-                  <i className="fa-solid fa-user"></i>
-                  <span>Trang cá nhân</span>
-                </Link>
-                <Link to="/logout" className="logout">
-                  <i className="fa-solid fa-right-from-bracket"></i>
-                  <span>Đăng xuất</span>
-                </Link>
-              </div> */}
+              {tooglePersonalLogoutMoblie && (
+                <div className="personal__logout">
+                  <Link to="/account" className="person">
+                    <i className="fa-solid fa-user"></i>
+                    <span>Trang cá nhân</span>
+                  </Link>
+                  <Link to="/logout" className="logout">
+                    <i className="fa-solid fa-right-from-bracket"></i>
+                    <span>Đăng xuất</span>
+                  </Link>
+                </div>
+              )}
             </div>
+
+            {/* <div className="mt-20 mb-20">
+              <a href="" className="btn btn__user--register">
+                đăng ký
+              </a>
+              <a href="" className="btn btn__user--login">
+                Đăng nhập
+              </a>
+            </div> */}
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@ const ListChapter = () => {
   return (
     <div
       className="popup__list__container"
-      style={{ left: `${togglePopup ? "0" : "-25%"}` }}
+      style={{ left: `${togglePopup ? "0px" : "-25%"}` }}
     >
       <div className="header__list">
         <div className="list">

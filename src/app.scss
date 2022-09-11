@@ -1,6 +1,48 @@
 @media screen and (max-width: 768px) {
   .screen-85 {
     width: 95% !important;
+    .story {
+      .drag__story .drag__story--slider .story__slider--item {
+        margin-right: 10px;
+        position: relative;
+        margin-top: 20px;
+      }
+      .drag__story .drag__story--slider .story__slider--item a .image__story {
+        width: 100px;
+        height: 150px;
+      }
+      .drag__story .drag__story--slider .story__slider--item a .hover__story {
+        width: 100px;
+        height: 150px;
+      }
+      .drag__story
+        .drag__story--slider
+        .story__slider--item
+        a
+        .hover__story
+        .discount__story {
+        font-size: 10px;
+        line-height: 10px;
+      }
+      .drag__story
+        .drag__story--slider
+        .story__slider--item
+        a
+        .hover__story
+        .border-top {
+        margin-top: 10px;
+      }
+      .hover__story {
+        .hover__story--name {
+          font-size: 14px !important;
+          margin-bottom: 0 !important;
+          margin-top: 10px !important;
+        }
+        span {
+          font-size: 10px !important;
+        }
+      }
+    }
   }
   .header__left--cate,
   .header__left--list,
@@ -125,6 +167,32 @@
   .login .login__center .login__container {
     width: 90% !important;
   }
+  .popup__list__container {
+    width: 90% !important;
+  }
+  .setting__chapter {
+    width: 100% !important;
+    background: white;
+    top: unset !important;
+    bottom: -1px !important;
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 0 !important;
+  }
+  .setting__chapter .setting,
+  .setting__chapter .change__story,
+  .setting__chapter .list__chapter,
+  .setting__chapter .tick__chapter,
+  .setting__chapter .prev__chapter,
+  .setting__chapter .next__chapter {
+    margin-bottom: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .setting__chapter .next__chapter i {
+    margin-bottom: 0 !important;
+  }
 }
 
 body {
@@ -179,7 +247,6 @@ a {
 main {
   margin-top: 60px;
   padding: 60px 0 60px 0;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   background: #e7e3e3;
 }

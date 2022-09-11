@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./story.scss";
 import MainLayout from "../../layouts/MainLayout";
 import image1 from "../../assets/dtl-hoang-de.jpeg";
@@ -11,6 +11,17 @@ const Story = () => {
   const [checkInput, setCheckInput] = useState(false);
   const [checkComment, setCheckComment] = useState(false);
   const [checkReply, setCheckReply] = useState(false);
+  const [saveRef, setSaveRef]: any = useState();
+
+  const Ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (Ref.current) {
+      setSaveRef(Ref.current);
+    }
+    const change = () => setPosition(-saveRef?.clientWidth);
+    window.addEventListener("resize", change);
+    return () => window.removeEventListener("resize", change);
+  });
 
   return (
     <MainLayout>
@@ -98,9 +109,11 @@ const Story = () => {
             </div>
             <div
               className={`main__story--donate center ${
-                position === -698 ? "active__chapter__donate" : ""
+                position === -saveRef?.clientWidth
+                  ? "active__chapter__donate"
+                  : ""
               }`}
-              onClick={() => setPosition(-698)}
+              onClick={() => setPosition(-saveRef?.clientWidth)}
             >
               Ủng hộ
             </div>
@@ -109,7 +122,9 @@ const Story = () => {
             className="center__chapter"
             style={{
               transform: `translateX(${position}px)`,
-              maxHeight: `${position === -698 ? "360px" : "100%"}`,
+              maxHeight: `${
+                position === -saveRef?.clientWidth ? "360px" : "100%"
+              }`,
             }}
           >
             <div className="center__chapter--left">
@@ -136,7 +151,7 @@ const Story = () => {
                   </div>
                 </div>
               </div>
-              <div className="center__chapter--list">
+              <div className="center__chapter--list" ref={Ref}>
                 <Link
                   to="/dieu-thap-lam-hoang-de/chuong-1"
                   className="center__chapter--item"

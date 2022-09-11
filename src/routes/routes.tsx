@@ -13,7 +13,7 @@ const routes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/the-loai/:slug" element={<CatePage />} />
+        <Route path="/the-loai/:slugcate" element={<CatePage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

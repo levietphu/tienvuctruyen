@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import image1 from "../../assets/dtl-hoang-de.jpeg";
 import { newUpdateStory } from "../../store";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const NewUpdateStory = () => {
+  const params = useParams();
+
   return (
     <div className="list__story--newupdate">
       {newUpdateStory.map((item, index) => {
@@ -11,7 +11,9 @@ const NewUpdateStory = () => {
           <div className="item__story--newupdate" key={index}>
             <div className="image__story mr-10">
               <img src={item.image} alt="" />
-              <div className="top__story">Top {index + 1}</div>
+              {params.slugcate && (
+                <div className="top__story">Top {index + 1}</div>
+              )}
             </div>
 
             <div className="story__newupdate--right">
