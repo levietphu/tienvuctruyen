@@ -35,6 +35,7 @@
         text-transform: capitalize;
         color: black;
         display: flex;
+        position: relative;
         i {
           flex: 1;
         }
@@ -56,7 +57,7 @@
     .list__bookcase {
       display: flex;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin: 20px -10px 0 -10px;
       .item__bookcase {
         width: 25%;
         .item {
@@ -69,7 +70,7 @@
             height: 100%;
             padding: 0;
             background: white;
-            border-radius: 5px;
+            border-radius: 8px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             overflow: hidden;
@@ -119,18 +120,24 @@
         opacity: 1;
       }
     }
-    .drag__story--slider {
-      flex-wrap: wrap;
-      .story__slider--item {
-        width: 20%;
-        margin-right: 0;
-        .image__story {
-          width: 152px;
-        }
-        .hover__story {
-          width: 152px;
-          height: 100%;
-          left: 8px;
+    .drag__story {
+      margin: 20px -10px 0 -10px;
+      .drag__story--slider {
+        flex-wrap: wrap;
+        .story__slider--item {
+          width: 20%;
+          margin-right: 0;
+          .btn__vip {
+            left: 20px;
+          }
+          .image__story {
+            width: 152px;
+          }
+          .hover__story {
+            width: 152px;
+            height: 100%;
+            left: 11px;
+          }
         }
       }
     }

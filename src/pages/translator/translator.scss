@@ -1,0 +1,43 @@
+.translator__header {
+  margin-bottom: 100px;
+  div {
+    i {
+      font-size: 5rem;
+      border-radius: 50%;
+      background: rgb(201, 197, 197);
+      padding: 20px 25px;
+      color: rgb(151, 148, 148);
+    }
+    .translator__name {
+      text-align: center;
+    }
+  }
+}
+.translator__story {
+  .drag__story {
+    margin: 20px -10px 0 -10px;
+    .drag__story--slider {
+      flex-wrap: wrap;
+      .story__slider--item {
+        margin-right: 0;
+        margin-top: 0;
+        box-sizing: border-box;
+        width: 16.66666674%;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .btn__vip {
+          left: 20px;
+        }
+        .image__story {
+          width: 172px;
+        }
+        .hover__story {
+          width: 172px;
+          left: 10px;
+        }
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ const Footer = () => {
         <img src={logo} alt="" />
         <span>tiên vực</span>
       </div>
-      <p style={{ textAlign: "center" }}>
+      <p>
         Webtruyen đọc truyện dịch nhanh nhất, ổn định nhất, đọc truyện KHÔNG
         quảng cáo.
       </p>

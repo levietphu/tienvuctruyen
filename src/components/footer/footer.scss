@@ -16,6 +16,12 @@ footer {
         text-transform: capitalize;
       }
     }
+    p {
+      text-align: center;
+      font-size: 1.25rem;
+      margin: 10px 0;
+      color: rgb(49, 49, 49);
+    }
     .footer__download {
       img {
         width: 102px;

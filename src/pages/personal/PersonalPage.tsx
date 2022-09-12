@@ -43,8 +43,12 @@ const PersonalPage = () => {
               <span>truyện vip đã mua</span>
             </Link>
             <Link
-              className="personal__item"
-              to=""
+              className={
+                isActive === "coin"
+                  ? "personal__item active__personal"
+                  : "personal__item"
+              }
+              to="/account/coin"
               onClick={() => setIsActive("coin")}
             >
               <i className="fa-solid fa-coins"></i>
@@ -54,7 +58,13 @@ const PersonalPage = () => {
         </div>
         <div className="personal__right">
           <div className="bookcase">
-            <h1>Tủ sách của bạn</h1>
+            <h1>
+              {isActive === "bookcase"
+                ? "Tủ sách của bạn"
+                : isActive === "vipbuy"
+                ? "Truyện vip đã mua"
+                : "Nạp xu"}
+            </h1>
           </div>
           <Outlet />
         </div>
