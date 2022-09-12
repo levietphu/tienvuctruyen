@@ -53,12 +53,12 @@ const Story = () => {
           </p>
           <p className="header__story--translator">
             <span>dịch giả: </span>{" "}
-            <a href="">
+            <Link to="/dich-gia/mocmeo">
               <span className="person">
                 <i className="fa-solid fa-person"></i>
               </span>{" "}
               <span>mrtriman555</span>
-            </a>
+            </Link>
           </p>
           <div className="header__story--view">
             <span className="boder-right">Lượt xem</span>

@@ -1,4 +1,5 @@
 import imageStory from "../../store";
+import { Link } from "react-router-dom";
 
 const VipBuy = () => {
   return (
@@ -9,7 +10,7 @@ const VipBuy = () => {
             return (
               <div className="story__slider--item center" key={item.id}>
                 <span className="btn__vip">vip</span>
-                <a href="">
+                <Link to="/dieu-thap-lam-hoang-de">
                   <div className="image__story">
                     <img src={item.image} alt="" />
                   </div>
@@ -23,7 +24,7 @@ const VipBuy = () => {
                       Giảm 15% khi mua tối thiếu 500c Khe hở ...
                     </p>
                   </div>
-                </a>
+                </Link>
               </div>
             );
           }

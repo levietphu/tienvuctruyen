@@ -1,4 +1,5 @@
 import { newUpdateStory } from "../../store";
+import { Link } from "react-router-dom";
 
 const BookCase = () => {
   return (
@@ -6,7 +7,11 @@ const BookCase = () => {
       {newUpdateStory.map((item, index) => {
         if (index < 8) {
           return (
-            <a className="item__bookcase" href="" key={index}>
+            <Link
+              className="item__bookcase"
+              to="/dieu-thap-lam-hoang-de"
+              key={index}
+            >
               <div className="item">
                 <div className="height__full">
                   <div className="image__bookcase">
@@ -21,7 +26,7 @@ const BookCase = () => {
                   <i className="fa-sharp fa-solid fa-xmark close"></i>
                 </div>
               </div>
-            </a>
+            </Link>
           );
         }
       })}
