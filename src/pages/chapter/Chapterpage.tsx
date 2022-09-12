@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import "./chapter.scss";
 import { SettingContext } from "../../context/SettingContextProvider";
@@ -98,7 +98,12 @@ const Chapterpage = () => {
           <div className="change__story">
             <i className="fa-solid fa-book"></i>
           </div>
-          <div className="list__chapter" onClick={() => setTogglePopup(true)}>
+          <div
+            className="list__chapter"
+            onClick={() => {
+              setTogglePopup(true);
+            }}
+          >
             <i className="fa-solid fa-list"></i>
           </div>
           <div className="tick__chapter" onClick={() => setBookMark(!bookMark)}>
@@ -126,35 +131,42 @@ const Chapterpage = () => {
           </div>
           <div className="interfce">
             <p className="name">Giao diện</p>
-            <i
-              className={`fa-solid fa-lightbulb light ${
-                theme === "light" ? "active__theme" : ""
-              }`}
-              onClick={() => setTheme("light")}
-              style={{ color: `${theme === "dark" ? "black" : ""}` }}
-            ></i>
-            <i
-              className={`fa-solid fa-moon ${
-                theme === "dark" ? "active__theme" : ""
-              }`}
-              onClick={() => setTheme("dark")}
-            ></i>
-            <i
-              className={`fa-solid fa-book-open ${
-                theme === "book" ? "active__theme" : ""
-              }`}
-              onClick={() => setTheme("book")}
-            ></i>
+            <div>
+              <i
+                className={`fa-solid fa-lightbulb light ${
+                  theme === "light" ? "active__theme" : ""
+                }`}
+                onClick={() => setTheme("light")}
+                style={{ color: `${theme === "dark" ? "black" : ""}` }}
+              ></i>
+              <i
+                className={`fa-solid fa-moon ${
+                  theme === "dark" ? "active__theme" : ""
+                }`}
+                onClick={() => setTheme("dark")}
+              ></i>
+              <i
+                className={`fa-solid fa-book-open ${
+                  theme === "book" ? "active__theme" : ""
+                }`}
+                onClick={() => setTheme("book")}
+              ></i>
+            </div>
           </div>
           <div className="fontsize-container">
             <p>Cỡ chữ</p>
-            <div className="fontsize__up" onClick={() => setSize(size + 0.1)}>
-              <i className="fa-solid fa-a"></i>
-              <i className="fa-solid fa-arrow-up"></i>
-            </div>
-            <div className="fontsize__down" onClick={() => setSize(size - 0.1)}>
-              <i className="fa-solid fa-a"></i>
-              <i className="fa-solid fa-arrow-down"></i>
+            <div>
+              <div className="fontsize__up" onClick={() => setSize(size + 0.1)}>
+                <i className="fa-solid fa-a"></i>
+                <i className="fa-solid fa-arrow-up"></i>
+              </div>
+              <div
+                className="fontsize__down"
+                onClick={() => setSize(size - 0.1)}
+              >
+                <i className="fa-solid fa-a"></i>
+                <i className="fa-solid fa-arrow-down"></i>
+              </div>
             </div>
           </div>
         </div>

@@ -207,7 +207,11 @@ const Header = () => {
                 className="header__right--cate"
                 onClick={() => setToogleMenuMobileCate(!toogleMenuMobileCate)}
               >
-                <span>thể loại</span>
+                <span
+                  style={{ color: `${toogleMenuMobileCate ? "#357376" : ""}` }}
+                >
+                  thể loại
+                </span>
                 <i className="fa-solid fa-angle-down"></i>
               </div>
               {toogleMenuMobileCate && (
@@ -304,7 +308,11 @@ const Header = () => {
                 className="header__right--list"
                 onClick={() => setToogleMenuMobileList(!toogleMenuMobileList)}
               >
-                <span>danh sách</span>
+                <span
+                  style={{ color: `${toogleMenuMobileList ? "#357376" : ""}` }}
+                >
+                  danh sách
+                </span>
                 <i className="fa-solid fa-angle-down"></i>
               </div>
               {toogleMenuMobileList && (
@@ -331,7 +339,11 @@ const Header = () => {
                   setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
                 }
               >
-                <span>
+                <span
+                  style={{
+                    color: `${tooglePersonalLogoutMoblie ? "#357376" : ""}`,
+                  }}
+                >
                   Hi, <strong>tieu_nam_phong</strong>
                 </span>
                 <i className="fa-solid fa-angle-down"></i>

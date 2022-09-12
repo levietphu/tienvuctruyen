@@ -167,9 +167,7 @@
   .login .login__center .login__container {
     width: 90% !important;
   }
-  .popup__list__container {
-    width: 90% !important;
-  }
+
   .setting__chapter {
     width: 100% !important;
     background: white;
@@ -192,6 +190,12 @@
   }
   .setting__chapter .next__chapter i {
     margin-bottom: 0 !important;
+  }
+  .main__setting {
+    width: 100% !important;
+    top: unset !important;
+    bottom: 0 !important;
+    border-radius: 0 !important;
   }
 }
 
