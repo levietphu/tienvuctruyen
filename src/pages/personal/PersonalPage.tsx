@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, NavLink, useLocation } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
 
 const PersonalPage = () => {
-  const [isActive, setIsActive] = useState("bookcase");
+  const { pathname } = useLocation();
 
   return (
     <MainLayout>
@@ -18,50 +18,47 @@ const PersonalPage = () => {
             </p>
           </div>
           <div className="personal__left--list">
-            <Link
+            <NavLink
               className={
-                isActive === "bookcase"
+                pathname === "/account"
                   ? "personal__item active__personal"
                   : "personal__item"
               }
               to="/account"
-              onClick={() => setIsActive("bookcase")}
             >
               <i className="fa-regular fa-bookmark"></i>
               <span>tủ sách</span>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               className={
-                isActive === "vipbuy"
+                pathname === "/account/vipbuy"
                   ? "personal__item active__personal"
                   : "personal__item"
               }
               to="/account/vipbuy"
-              onClick={() => setIsActive("vipbuy")}
             >
               <i className="fa-sharp fa-solid fa-money-bill"></i>
               <span>truyện vip đã mua</span>
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               className={
-                isActive === "coin"
+                pathname === "/account/coin"
                   ? "personal__item active__personal"
                   : "personal__item"
               }
               to="/account/coin"
-              onClick={() => setIsActive("coin")}
             >
               <i className="fa-solid fa-coins"></i>
               <span>nạp xu</span>
-            </Link>
+            </NavLink>
           </div>
         </div>
         <div className="personal__right">
           <div className="bookcase">
             <h1>
-              {isActive === "bookcase"
+              {pathname === "/account"
                 ? "Tủ sách của bạn"
-                : isActive === "vipbuy"
+                : pathname === "/account/vipbuy"
                 ? "Truyện vip đã mua"
                 : "Nạp xu"}
             </h1>
