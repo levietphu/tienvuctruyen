@@ -137,14 +137,17 @@ header {
 .menu__cate,
 .menu__list {
   position: absolute;
-  top: 48px;
+  top: 46px;
   background: #fdfbfb;
   border-radius: 5px;
   padding: 0;
   text-transform: capitalize;
   font-size: 1rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   li {
-    margin: 10px 15px;
+    width: calc(500px / 3);
+    height: 30px;
     a {
       color: #484848;
     }
@@ -156,8 +159,13 @@ header {
 .menu__cate {
   flex-wrap: wrap;
   width: 500px;
-  left: 270px;
+  left: 290px;
   display: flex;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.menu__list {
+  padding: 10px 0 0 20px;
 }
 .header__right--menucate {
   display: flex;

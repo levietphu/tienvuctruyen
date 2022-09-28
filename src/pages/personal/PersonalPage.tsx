@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Outlet, Link, NavLink, useLocation } from "react-router-dom";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
 

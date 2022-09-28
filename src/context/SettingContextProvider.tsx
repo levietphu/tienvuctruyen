@@ -10,10 +10,19 @@ export const SettingContext = createContext<AppContextInterface | null>(null);
 
 const SettingContextProvider = ({ children }: any) => {
   const [togglePopup, setTogglePopup] = useState(false);
-  const saveTheme = JSON.parse(localStorage.getItem("theme") || "light");
-  const saveSize = JSON.parse(localStorage.getItem("size") || "1.2");
-  const [theme, setTheme] = useState(saveTheme);
-  const [size, setSize] = useState(saveSize);
+  const value = localStorage.getItem("theme");
+  const value2 = localStorage.getItem("size");
+  let saveTheme: any;
+  let saveSize: any;
+  if (typeof value === "string") {
+    saveTheme = JSON.parse(value);
+  }
+  if (typeof value2 === "string") {
+    saveSize = JSON.parse(value2);
+  }
+
+  const [theme, setTheme] = useState(saveTheme || "light");
+  const [size, setSize] = useState(saveSize || 1.2);
 
   useEffect(() => {
     if (togglePopup) {
