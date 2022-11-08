@@ -1,10 +1,11 @@
-import { ReactNode, useContext, useRef } from "react";
+import { ReactNode, useContext } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { SettingContext } from "../context/SettingContextProvider";
 import Popup from "../pages/chapter/Popup";
 import ListChapter from "../components/chapter/ListChapter";
+import { LayoutContext } from "../context/LayoutContextProvider";
 
 export interface Props {
   children?: ReactNode;
@@ -13,11 +14,15 @@ export interface Props {
 const MainLayout = ({ children }: Props) => {
   const params = useParams();
   const { togglePopup, theme }: any = useContext(SettingContext);
+  const { dataLayout }: any = useContext(LayoutContext);
 
   return (
     <>
       <header>
-        <Header />
+        <Header
+          cates={dataLayout && dataLayout.cates}
+          logo={dataLayout && dataLayout.logo_header}
+        />
       </header>
       <main
         className={`${
@@ -32,7 +37,12 @@ const MainLayout = ({ children }: Props) => {
       </main>
       {!params.slugchapter && (
         <footer className="center">
-          <Footer />
+          <Footer
+            catalog={dataLayout && dataLayout.khau_hieu}
+            logo={dataLayout && dataLayout.logo_footer}
+            link_apple={dataLayout && dataLayout.link_apple}
+            link_androi={dataLayout && dataLayout.link_androi}
+          />
         </footer>
       )}
       {params.slugchapter && <ListChapter />}

@@ -39,7 +39,7 @@ const Login = () => {
               />
             </div>
             <Link to="">Quên mật khẩu?</Link>
-            <button className="forbiden">Đăng nhập</button>
+            <button className="">Đăng nhập</button>
           </div>
           <div className="change__register">
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>

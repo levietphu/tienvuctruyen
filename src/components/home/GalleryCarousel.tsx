@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
-import home1 from "../../assets/1.jpg";
-import home2 from "../../assets/2.png";
-import home3 from "../../assets/3.jpg";
-import home4 from "../../assets/4.jpg";
+import { Link } from "react-router-dom";
 
-const GalleryCarousel = () => {
+const GalleryCarousel = ({ banners, loaderHome }: any) => {
   const [countSlider, setCountSlider] = useState(1);
-  const [posChange, setPosChange] = useState(-1147);
-  const [position, setPosition] = useState(-1147);
+  const [posChange, setPosChange] = useState<number>(0);
+  const [position, setPosition] = useState<number>(0);
   const [countNotification, setCountNotification] = useState(1);
 
   const Ref = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  let posX1: any;
-  let posX2: any;
-  let posInitial: any;
-  let posFinal: any;
+  // let posX1: any;
+  // let posX2: any;
+  // let posInitial: any;
+  // let posFinal: any;
 
   useEffect(() => {
     let a: any;
@@ -41,61 +39,70 @@ const GalleryCarousel = () => {
     }
   }, [countSlider]);
 
+  useEffect(() => {
+    if (banners && carouselRef?.current) {
+      setPosChange(-carouselRef.current.offsetWidth);
+      setPosition(-carouselRef.current.offsetWidth);
+    }
+  }, [banners]);
+
   // Xử lý slider
   const checkIndex = () => {
     Ref.current?.classList.remove("active");
+    if (!carouselRef?.current) return;
     if (countSlider <= 0) {
-      setPosChange(4 * -1147);
+      setPosChange(4 * -carouselRef.current.offsetWidth);
       setCountSlider(4);
-      setPosition(4 * -1147);
+      setPosition(4 * -carouselRef.current.offsetWidth);
     }
     if (countSlider >= 5) {
-      setPosChange(-1147);
-      setPosition(-1147);
+      setPosChange(-carouselRef.current.offsetWidth);
+      setPosition(-carouselRef.current.offsetWidth);
       setCountSlider(1);
     }
   };
 
   const handlerClick = (arg: string) => {
     Ref.current?.classList.add("active");
+    if (!carouselRef?.current) return;
     if (arg === "Next") {
-      setPosChange((countSlider + 1) * -1147);
-      setPosition((countSlider + 1) * -1147);
+      setPosChange((countSlider + 1) * -carouselRef.current.offsetWidth);
+      setPosition((countSlider + 1) * -carouselRef.current.offsetWidth);
       setCountSlider(countSlider + 1);
     } else {
-      setPosChange((countSlider - 1) * -1147);
-      setPosition((countSlider - 1) * -1147);
+      setPosChange((countSlider - 1) * -carouselRef.current.offsetWidth);
+      setPosition((countSlider - 1) * -carouselRef.current.offsetWidth);
       setCountSlider(countSlider - 1);
     }
   };
 
-  const dragStart = (e: any) => {
-    e.preventDefault();
-    posX1 = e.clientX;
-    posInitial = Ref.current?.offsetLeft;
-    document.onmouseup = dragEnd;
-    document.onmousemove = dragMove;
-  };
+  // const dragStart = (e: any) => {
+  //   e.preventDefault();
+  //   posX1 = e.clientX;
+  //   posInitial = Ref.current?.offsetWidth;
+  //   document.onmouseup = dragEnd;
+  //   document.onmousemove = dragMove;
+  // };
 
-  const dragMove = (e: any) => {
-    posX2 = posX1 - e.clientX;
-    posX1 = e.clientX;
-    let posCurrent: any = Ref.current?.offsetLeft;
-    setPosChange(posCurrent - posX2);
-  };
+  // const dragMove = (e: any) => {
+  //   posX2 = posX1 - e.clientX;
+  //   posX1 = e.clientX;
+  //   let posCurrent: any = Ref.current?.offsetWidth;
+  //   setPosChange(posCurrent - posX2);
+  // };
 
-  const dragEnd = () => {
-    posFinal = Ref.current?.offsetLeft;
-    if (posFinal - position < -500) {
-      handlerClick("Next");
-    } else if (posFinal - position > 500) {
-      handlerClick("Prev");
-    } else {
-      setPosChange(position);
-    }
-    document.onmousemove = null;
-    document.onmouseup = null;
-  };
+  // const dragEnd = () => {
+  //   posFinal = Ref.current?.offsetWidth;
+  //   if (posFinal - position < -500) {
+  //     handlerClick("Next");
+  //   } else if (posFinal - position > 500) {
+  //     handlerClick("Prev");
+  //   } else {
+  //     setPosChange(position);
+  //   }
+  //   document.onmousemove = null;
+  //   document.onmouseup = null;
+  // };
 
   // Xử lý phần notification
   const handlerNotification = (params: string) => {
@@ -114,54 +121,63 @@ const GalleryCarousel = () => {
       setCountNotification(4);
     }
   };
+
   return (
     <>
       <div className="carousel mb-20">
-        <div
-          className={`carousel__annimation`}
-          style={{ left: `${posChange}px` }}
-          ref={Ref}
-          onMouseDown={dragStart}
-        >
-          <div className="carousel-item">
-            <a href="">
-              <img src={home4} alt="" style={{ width: "1148px" }} />
-            </a>
+        {loaderHome ? (
+          <div
+            className={`carousel__annimation`}
+            style={{
+              transform: `translateX(${posChange != 0 && posChange}px)`,
+            }}
+            ref={Ref}
+            // onMouseDown={dragStart}
+          >
+            <div className="carousel-item" ref={carouselRef}>
+              <Link to={`/${banners?.[3]?.slugtruyen}`}>
+                <img
+                  src={
+                    banners &&
+                    `${process.env.REACT_APP_UPLOADS}${banners[3]?.image}`
+                  }
+                  alt=""
+                />
+              </Link>
+            </div>
+            {banners &&
+              banners.map((value: any) => {
+                return (
+                  <div className="carousel-item" key={value.id}>
+                    <Link to={`/${value.slugtruyen}`}>
+                      <img
+                        src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                );
+              })}
+            <div className="carousel-item">
+              <Link to={`/${banners?.[0]?.slugtruyen}`}>
+                <img
+                  src={
+                    banners &&
+                    `${process.env.REACT_APP_UPLOADS}${banners[0]?.image}`
+                  }
+                  alt=""
+                  style={{ width: "100%", height: "382px" }}
+                />
+              </Link>
+            </div>
           </div>
-          <div className="carousel-item">
-            <a href="">
-              <img
-                className={countSlider === 0 ? "img__active" : ""}
-                src={home1}
-                alt=""
-              />
-            </a>
+        ) : (
+          <div className="box2" style={{ width: "100%" }}>
+            <div className="gallery">
+              <div className="skeleton4"></div>
+            </div>
           </div>
-          <div className="carousel-item">
-            <a href="">
-              <img src={home2} alt="" />
-            </a>
-          </div>
-          <div className="carousel-item">
-            <a href="">
-              <img src={home3} alt="" />
-            </a>
-          </div>
-          <div className="carousel-item">
-            <a href="">
-              <img src={home4} alt="" style={{ width: "1148px" }} />
-            </a>
-          </div>
-          <div className="carousel-item">
-            <a href="">
-              <img
-                src={home1}
-                alt=""
-                style={{ width: "100%", height: "383px" }}
-              />
-            </a>
-          </div>
-        </div>
+        )}
       </div>
       <div className="notification mb-20">
         <div className="notification__bell">

@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect } from "react";
 
-interface AppContextInterface {
+export interface AppContextInterface {
   name: string;
   author: string;
   url: string;

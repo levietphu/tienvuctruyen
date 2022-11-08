@@ -2,16 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import SettingContextProvider from "./context/SettingContextProvider";
+import HomeContextProvider from "./context/HomeContextProvider";
 import reportWebVitals from "./reportWebVitals";
+import LayoutContextProvider from "./context/LayoutContextProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <SettingContextProvider>
-      <App />
-    </SettingContextProvider>
+    <LayoutContextProvider>
+      <SettingContextProvider>
+        <HomeContextProvider>
+          <App />
+        </HomeContextProvider>
+      </SettingContextProvider>
+    </LayoutContextProvider>
   </React.StrictMode>
 );
 

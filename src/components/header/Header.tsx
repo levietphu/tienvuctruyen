@@ -1,10 +1,9 @@
 import { useState } from "react";
 import "./header.scss";
-import logo from "../../assets/android-chrome-192x192.png";
 import { useOutSide } from "../../hookCustom/useOutSide";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ cates, logo }: any) => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
   const [toogleMenuList, setToogleMenuList] = useState(false);
   const [toogleMenuMobile, setToogleMenuMobile] = useState(false);
@@ -27,7 +26,10 @@ const Header = () => {
         <div className="header__left">
           <div className="center">
             <Link className="header__left--logo" to="/">
-              <img src={logo} alt="" />
+              <img
+                src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
+                alt=""
+              />
               <span>tiên vực</span>
             </Link>
           </div>
@@ -43,92 +45,15 @@ const Header = () => {
                 <i className="fa-solid fa-angle-up"></i>
               )}
             </div>
-            {toogleMenuCate && (
+            {toogleMenuCate && cates && (
               <ul className="menu__cate">
-                <li>
-                  <Link to="/the-loai/tien-hiep">tiên hiệp</Link>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
-                <li>
-                  <a href="">tiên hiệp</a>
-                </li>
+                {cates.map((value: any) => {
+                  return (
+                    <li key={value?.id}>
+                      <Link to={`/the-loai/${value?.slug}`}>{value?.name}</Link>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
@@ -147,16 +72,16 @@ const Header = () => {
             {toogleMenuList && (
               <ul className="menu__list">
                 <li>
-                  <a href="">bảng xếp hạng</a>
+                  <Link to="/danh-sach/truyen-vip">bảng xếp hạng</Link>
                 </li>
                 <li>
-                  <a href="">truyện miễn phí</a>
+                  <Link to="/danh-sach/truyen-mien-phi">truyện miễn phí</Link>
                 </li>
                 <li>
-                  <a href="">truyện đã hoàn</a>
+                  <Link to="/danh-sach/truyen-full">truyện đã hoàn</Link>
                 </li>
                 <li>
-                  <a href="">truyện mới cập nhật</a>
+                  <Link to="/danh-sach/truyen-moi">truyện mới cập nhật</Link>
                 </li>
               </ul>
             )}

@@ -1,12 +1,21 @@
 import { useState } from "react";
 import "./user.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
   const [checkInputEmail, setCheckInputEmail] = useState(false);
-  const [checkRules, setCheckRules] = useState(true);
+  const [checkRules, setCheckRules] = useState(false);
+  const [dataRegister, setDataRegister] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [data, setData] = useState<any>();
+
+  const register = () => {};
 
   return (
     <div className="login">
@@ -28,6 +37,11 @@ const Register = () => {
                 placeholder="Tên tài khoản từ 5-20 ký tự bao gồm a-z, 0-9 và _"
                 onClick={() => setCheckInputName(!checkInputName)}
                 onBlur={() => setCheckInputName(false)}
+                name="name"
+                value={dataRegister.name}
+                onChange={(e: any) =>
+                  setDataRegister({ ...dataRegister, name: e.target.value })
+                }
               />
             </div>
             <div className="name__login">
@@ -38,6 +52,11 @@ const Register = () => {
                 placeholder="vidu@gmail.com"
                 onClick={() => setCheckInputEmail(!checkInputEmail)}
                 onBlur={() => setCheckInputEmail(false)}
+                name="email"
+                value={dataRegister.email}
+                onChange={(e: any) =>
+                  setDataRegister({ ...dataRegister, email: e.target.value })
+                }
               />
             </div>
             <div className="password__login">
@@ -48,12 +67,18 @@ const Register = () => {
                 placeholder="*********"
                 onClick={() => setCheckInputPass(!checkInputPass)}
                 onBlur={() => setCheckInputPass(false)}
+                name="password"
+                value={dataRegister.password}
+                onChange={(e: any) =>
+                  setDataRegister({ ...dataRegister, password: e.target.value })
+                }
               />
             </div>
             <div className="check">
               <input
                 type="checkbox"
-                onClick={(e) => setCheckRules(!checkRules)}
+                onChange={() => setCheckRules(!checkRules)}
+                checked={checkRules}
               />
               <span>
                 {" "}
@@ -61,7 +86,12 @@ const Register = () => {
                 <a href="">chính sách</a> của tiên vực
               </span>
             </div>
-            <button className={checkRules ? "forbiden" : ""}>Đăng ký</button>
+            <button
+              className={!checkRules ? "forbiden" : ""}
+              onClick={register}
+            >
+              Đăng ký
+            </button>
           </div>
           <div className="change__register">
             Bạn chưa có tài khoản? <Link to="/login">Đăng nhập</Link>

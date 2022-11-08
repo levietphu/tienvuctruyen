@@ -1,25 +1,24 @@
 import React from "react";
 import "./footer.scss";
-import logo from "../../assets/android-chrome-192x192.png";
 import androi from "../../assets/google-play-badge.0dbdf26.png";
 import ios from "../../assets/app-store-badge.fba0f3f.png";
 
-const Footer = () => {
+const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
   return (
     <div className="footer">
       <div className="footer__logo center">
-        <img src={logo} alt="" />
+        <img
+          src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
+          alt=""
+        />
         <span>tiên vực</span>
       </div>
-      <p>
-        Webtruyen đọc truyện dịch nhanh nhất, ổn định nhất, đọc truyện KHÔNG
-        quảng cáo.
-      </p>
+      <p>{catalog?.value}</p>
       <div className="footer__download center">
-        <a href="" className="mr-5">
+        <a href={link_androi?.value} className="mr-5">
           <img src={androi} alt="" />
         </a>
-        <a href="">
+        <a href={link_apple?.value}>
           <img src={ios} alt="" />
         </a>
       </div>

@@ -16,6 +16,7 @@ const routes = () => {
     <Router>
       <Routes>
         <Route path="/the-loai/:slugcate" element={<CatePage />} />
+        <Route path="/danh-sach/:sluglist" element={<CatePage />} />
         <Route path="/dich-gia/:slugdichgia" element={<Transalator />} />
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<Login />} />

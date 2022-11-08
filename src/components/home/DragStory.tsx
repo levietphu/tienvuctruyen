@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
-const DragStory = ({ imageStory }: any) => {
+const DragStory = ({ data, imageStory }: any) => {
   const [posCurrent, setPosCurrent] = useState(0);
 
   const dragRef = useRef<HTMLDivElement>(null);
@@ -57,27 +58,43 @@ const DragStory = ({ imageStory }: any) => {
         ref={dragRef}
         onMouseDown={dragStart}
       >
-        {imageStory.map((item: any, index: any) => {
-          return (
-            <div className="story__slider--item" key={item.id}>
-              <span className="btn__vip">vip</span>
-              <a href="">
-                <div className="image__story">
-                  <img src={item.image} alt="" />
-                </div>
-                <div className="hover__story">
-                  <p className="hover__story--name ml-10 mr-15">{item.name}</p>
-                  <span className="ml-10 mr-15">huyền huyễn</span>
-                  <p className="border-top"></p>
-                  <p className="ml-10 mr-15 discount__story">
-                    Giảm 15% khi mua tối thiếu 500c Khe hở thời không thông tới
-                    dị giới, thời đại võ đạo...
-                  </p>
-                </div>
-              </a>
-            </div>
-          );
-        })}
+        {data &&
+          data.map((item: any) => {
+            return (
+              <div className="story__slider--item" key={item.id}>
+                {item.vip === 1 && <span className="btn__vip">vip</span>}
+                {item.full === 1 && <span className="btn__full">full</span>}
+
+                <Link to={`/${item.slug}`}>
+                  <div className="image__story">
+                    <img
+                      src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
+                      alt={item.name}
+                    />
+                  </div>
+                  <div className="hover__story">
+                    <p className="hover__story--name ml-10 mr-15">
+                      {item.name.length > 35
+                        ? item.name.slice(0, 35) + "...."
+                        : item.name}
+                    </p>
+                    <span className="ml-10 mr-15">
+                      {item.nameTheloai ? item.nameTheloai : item.theloais.name}
+                    </span>
+                    <p className="border-top"></p>
+                    <p
+                      className="ml-10 mr-15 discount__story"
+                      dangerouslySetInnerHTML={{
+                        __html: item.discount
+                          ? item.discount
+                          : "Truyện chưa có giảm giá",
+                      }}
+                    ></p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
