@@ -22,7 +22,7 @@ const routes = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="/:slug" element={<Story />} />
-        <Route path="/:slugtruyen/:slugchapter" element={<Chapterpage />} />
+        <Route path="/:slugstory/:slugchapter" element={<Chapterpage />} />
         <Route path="account" element={<PersonalPage />}>
           <Route path="" element={<BookCase />} />
           <Route path="vipbuy" element={<VipBuy />} />

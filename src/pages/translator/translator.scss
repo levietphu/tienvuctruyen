@@ -2,11 +2,14 @@
   margin-bottom: 100px;
   div {
     i {
-      font-size: 5rem;
+      font-size: 3rem;
       border-radius: 50%;
       background: rgb(201, 197, 197);
-      padding: 20px 25px;
+      padding: 50px 20px;
       color: rgb(151, 148, 148);
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
     .translator__name {
       text-align: center;

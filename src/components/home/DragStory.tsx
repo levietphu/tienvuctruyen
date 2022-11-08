@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-const DragStory = ({ data, imageStory }: any) => {
+const DragStory = ({ data }: any) => {
   const [posCurrent, setPosCurrent] = useState(0);
 
   const dragRef = useRef<HTMLDivElement>(null);
@@ -43,8 +43,8 @@ const DragStory = ({ data, imageStory }: any) => {
     posFinal = dragRef.current?.offsetLeft;
     if (posFinal > 0) {
       setPosCurrent(0);
-    } else if (posFinal < imageStory.length * -200 + 310) {
-      setPosCurrent(imageStory.length * -200 + 310);
+    } else if (posFinal < data.length * -200 + 310) {
+      setPosCurrent(data.length * -200 + 310);
     }
     document.onmousemove = null;
     document.onmouseup = null;

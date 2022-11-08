@@ -215,7 +215,7 @@ const StoryCate = () => {
                             ...
                           </a>
                         </li>
-                        `
+
                         <li
                           className={
                             dataCate.items.last_page ===
