@@ -10,15 +10,13 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <LayoutContextProvider>
-      <SettingContextProvider>
-        <HomeContextProvider>
-          <App />
-        </HomeContextProvider>
-      </SettingContextProvider>
-    </LayoutContextProvider>
-  </React.StrictMode>
+  <LayoutContextProvider>
+    <SettingContextProvider>
+      <HomeContextProvider>
+        <App />
+      </HomeContextProvider>
+    </SettingContextProvider>
+  </LayoutContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
 import "./story.scss";
 import MainLayout from "../../layouts/MainLayout";
-
 import { Link, useParams, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import CommentStory from "../../components/story/CommentStory";
 import ChapterStory from "../../components/story/ChapterStory";
+import Loader from "../../components/story/Loader";
 
 const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>("");
+  const [orderby, setOrderby] = useState<string>("asc");
+
+  const checkStoryAddView = JSON.parse(
+    localStorage.getItem("checkStoryAddView") || "[]"
+  );
 
   const params = useParams();
   const navigate = useNavigate();
@@ -19,7 +24,7 @@ const Story = () => {
   const callApi = async (page: number) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}`
+        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}`
       )
       .then((res) => {
         setStory(res.data.data.items);
@@ -27,13 +32,43 @@ const Story = () => {
       });
   };
 
+  const addViewStory = async () => {
+    await axios.get(`${process.env.REACT_APP_API}addview?slug=${params.slug}`);
+  };
+
   useEffect(() => {
     callApi(1);
+    setLoader(true);
+    if (checkStoryAddView.length === 0) {
+      localStorage.setItem("checkStoryAddView", JSON.stringify([params.slug]));
+      addViewStory();
+    } else {
+      if (!checkStoryAddView.includes(params.slug)) {
+        localStorage.setItem(
+          "checkStoryAddView",
+          JSON.stringify([...checkStoryAddView, params.slug])
+        );
+        addViewStory();
+      } else {
+        let id = setTimeout(() => {
+          addViewStory();
+        }, 30000);
+        return () => clearTimeout(id);
+      }
+    }
   }, [params.slug]);
+
+  useEffect(() => {
+    callApi(1);
+  }, [keyword]);
+
+  useEffect(() => {
+    callApi(1);
+  }, [orderby]);
 
   return (
     <MainLayout>
-      {!loader && story && (
+      {!loader ? (
         <>
           <div className="header__story">
             <div className="header__story--left">
@@ -110,10 +145,19 @@ const Story = () => {
             </div>
           </div>
           <div className="main__story">
-            <ChapterStory story={story} callApi={callApi} />
+            <ChapterStory
+              story={story}
+              callApi={callApi}
+              setKeyword={setKeyword}
+              keyword={keyword}
+              orderby={orderby}
+              setOrderby={setOrderby}
+            />
             <CommentStory />
           </div>
         </>
+      ) : (
+        <Loader />
       )}
     </MainLayout>
   );

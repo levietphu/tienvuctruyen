@@ -4,7 +4,14 @@ import Moment from "react-moment";
 import "moment/locale/vi";
 import { Link, useParams } from "react-router-dom";
 
-const ChapterStory = ({ story, callApi }: any) => {
+const ChapterStory = ({
+  story,
+  callApi,
+  setKeyword,
+  keyword,
+  orderby,
+  setOrderby,
+}: any) => {
   const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
   const [saveRef, setSaveRef]: any = useState();
@@ -87,9 +94,16 @@ const ChapterStory = ({ story, callApi }: any) => {
       >
         <div className="center__chapter--left">
           <div className="sort__search">
-            <button>
-              <i className="fa-solid fa-arrow-up-9-1"></i>
-            </button>
+            {orderby === "asc" ? (
+              <button onClick={() => setOrderby("desc")}>
+                <i className="fa-solid fa-arrow-up-9-1"></i>
+              </button>
+            ) : (
+              <button onClick={() => setOrderby("asc")}>
+                <i className="fa-solid fa-arrow-down-1-9"></i>
+              </button>
+            )}
+
             <div className="search">
               <div
                 className={`search__container ${
@@ -105,17 +119,19 @@ const ChapterStory = ({ story, callApi }: any) => {
                   placeholder="Tìm theo số chương, tên chương..."
                   onClick={() => setCheckInput(!checkInput)}
                   onBlur={() => setCheckInput(false)}
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                 />
               </div>
             </div>
           </div>
           <div className="center__chapter--list" ref={Ref}>
-            {story.chuongs.data.map((value: any) => {
+            {story.chuongs.data.map((value: any, index: number) => {
               return (
                 <Link
                   to={`/${params.slug}/${value.slug}`}
                   className="center__chapter--item"
-                  key={value.id}
+                  key={index}
                 >
                   <p>
                     <span className="number__chapter">

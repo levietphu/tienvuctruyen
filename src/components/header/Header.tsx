@@ -49,7 +49,10 @@ const Header = ({ cates, logo }: any) => {
               <ul className="menu__cate">
                 {cates.map((value: any) => {
                   return (
-                    <li key={value?.id}>
+                    <li
+                      key={value?.id}
+                      onClick={() => setToogleMenuCate(false)}
+                    >
                       <Link to={`/the-loai/${value?.slug}`}>{value?.name}</Link>
                     </li>
                   );
@@ -71,16 +74,16 @@ const Header = ({ cates, logo }: any) => {
             </div>
             {toogleMenuList && (
               <ul className="menu__list">
-                <li>
+                <li onClick={() => setToogleMenuList(false)}>
                   <Link to="/danh-sach/truyen-vip">bảng xếp hạng</Link>
                 </li>
-                <li>
+                <li onClick={() => setToogleMenuList(false)}>
                   <Link to="/danh-sach/truyen-mien-phi">truyện miễn phí</Link>
                 </li>
-                <li>
+                <li onClick={() => setToogleMenuList(false)}>
                   <Link to="/danh-sach/truyen-full">truyện đã hoàn</Link>
                 </li>
-                <li>
+                <li onClick={() => setToogleMenuList(false)}>
                   <Link to="/danh-sach/truyen-moi">truyện mới cập nhật</Link>
                 </li>
               </ul>
@@ -141,90 +144,15 @@ const Header = ({ cates, logo }: any) => {
               </div>
               {toogleMenuMobileCate && (
                 <ul className="header__right--menucate">
-                  <li>
-                    <Link to="/the-loai/tien-hiep">tiên hiệp</Link>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
-                  <li>
-                    <a href="">tiên hiệp</a>
-                  </li>
+                  {cates.map((value: any) => {
+                    return (
+                      <li key={value?.id}>
+                        <Link to={`/the-loai/${value?.slug}`}>
+                          {value?.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>

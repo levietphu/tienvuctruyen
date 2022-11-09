@@ -9,13 +9,15 @@ const ListChapter = () => {
   const [checkSearchChapter, setCheckSearchChapter] = useState(false);
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>("");
+  const [orderby, setOrderby] = useState<string>("asc");
 
   const params = useParams();
 
   const callApi = async (id_user: string, page: number) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}`
+        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
       )
       .then((res) => {
         setDataChapter(res.data.data.items);
@@ -27,6 +29,14 @@ const ListChapter = () => {
     callApi("", 1);
     setLoader(true);
   }, [params.slugchapter, params.slugstory]);
+
+  useEffect(() => {
+    callApi("", 1);
+  }, [keyword]);
+
+  useEffect(() => {
+    callApi("", 1);
+  }, [orderby]);
 
   const changePageChapter = (word: string) => {
     if (word === "next") {
@@ -50,9 +60,15 @@ const ListChapter = () => {
               <span>Danh sách chương</span>
             </div>
             <div className="sort__search">
-              <button>
-                <i className="fa-solid fa-arrow-up-9-1"></i>
-              </button>
+              {orderby === "asc" ? (
+                <button onClick={() => setOrderby("desc")}>
+                  <i className="fa-solid fa-arrow-up-9-1"></i>
+                </button>
+              ) : (
+                <button onClick={() => setOrderby("asc")}>
+                  <i className="fa-solid fa-arrow-down-1-9"></i>
+                </button>
+              )}
               <div className="search">
                 <div
                   className={`search__container ${
@@ -68,6 +84,8 @@ const ListChapter = () => {
                     placeholder="Tìm theo số chương, tên chương..."
                     onClick={() => setCheckSearchChapter(!checkSearchChapter)}
                     onBlur={() => setCheckSearchChapter(false)}
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
                   />
                 </div>
               </div>

@@ -5,6 +5,7 @@ import { SettingContext } from "../../context/SettingContextProvider";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import ChapterVip from "../../components/chapter/ChapterVip";
+import Loader from "../../components/chapter/Loader";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -21,7 +22,7 @@ const Chapterpage = () => {
   const callApi = async (id_user: string, page: number) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}`
+        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}&keyword=&orderby=asc`
       )
       .then((res) => {
         setDataChapter(res.data.data.items);
@@ -32,6 +33,7 @@ const Chapterpage = () => {
   useEffect(() => {
     callApi("", 1);
     setLoader(true);
+    setTogglePopup(false);
   }, [params.slugchapter, params.slugstory]);
 
   const changeChapter = (word: string) => {
@@ -217,7 +219,7 @@ const Chapterpage = () => {
           )}
         </>
       ) : (
-        <div>Loader</div>
+        <Loader />
       )}
     </MainLayout>
   );

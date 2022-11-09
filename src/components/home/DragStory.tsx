@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const DragStory = ({ data }: any) => {
   const [posCurrent, setPosCurrent] = useState(0);
+  const params = useParams();
 
   const dragRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +57,7 @@ const DragStory = ({ data }: any) => {
         className="drag__story--slider"
         style={{ left: `${posCurrent}px` }}
         ref={dragRef}
-        onMouseDown={dragStart}
+        onMouseDown={(e) => !params.slugdichgia && dragStart(e)}
       >
         {data &&
           data.map((item: any) => {
