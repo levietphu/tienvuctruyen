@@ -2,6 +2,7 @@
   width: 100%;
   height: 100vh;
   background: #e7e3e3;
+  position: relative;
   .login__center {
     height: 100%;
     .login__container {
@@ -30,6 +31,7 @@
         background: white;
         .name__login,
         .password__login {
+          margin-bottom: 10px;
           p {
             font-size: 1.25rem;
             font-weight: bold;
@@ -37,7 +39,7 @@
           input {
             width: 100%;
             height: 40px;
-            border: none;
+            border: 1px solid white;
             outline: none;
             background: #e7e3e3;
             border-radius: 3px;
@@ -107,4 +109,22 @@
       }
     }
   }
+  .error_auth {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    background: red;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 3px;
+  }
+}
+
+.active_error {
+  border: 1px solid red !important;
+}
+
+.error {
+  color: red;
+  font-size: 12px !important;
 }

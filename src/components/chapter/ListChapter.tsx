@@ -118,7 +118,7 @@ const ListChapter = () => {
                       </Moment>
                     </span>
                   </i>
-                  <div className="money">5 xu</div>
+                  {dataChapter.vip && <div className="money">5 xu</div>}
                 </Link>
               );
             })}

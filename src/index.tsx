@@ -5,6 +5,7 @@ import SettingContextProvider from "./context/SettingContextProvider";
 import HomeContextProvider from "./context/HomeContextProvider";
 import reportWebVitals from "./reportWebVitals";
 import LayoutContextProvider from "./context/LayoutContextProvider";
+import AuthContextProvider from "./context/AuthContextProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <LayoutContextProvider>
     <SettingContextProvider>
-      <HomeContextProvider>
-        <App />
-      </HomeContextProvider>
+      <AuthContextProvider>
+        <HomeContextProvider>
+          <App />
+        </HomeContextProvider>
+      </AuthContextProvider>
     </SettingContextProvider>
   </LayoutContextProvider>
 );
