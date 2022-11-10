@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./story.scss";
 import MainLayout from "../../layouts/MainLayout";
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import axios from "axios";
 import CommentStory from "../../components/story/CommentStory";
 import ChapterStory from "../../components/story/ChapterStory";
 import Loader from "../../components/story/Loader";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Story = () => {
   // data api
@@ -14,6 +15,8 @@ const Story = () => {
   const [keyword, setKeyword] = useState<string>("");
   const [orderby, setOrderby] = useState<string>("asc");
 
+  const { user, loaderUser }: any = useContext(AuthContext);
+
   const checkStoryAddView = JSON.parse(
     localStorage.getItem("checkStoryAddView") || "[]"
   );
@@ -21,10 +24,10 @@ const Story = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const callApi = async (page: number) => {
+  const callApi = async (id_user: string, page: number) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}`
+        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
       )
       .then((res) => {
         setStory(res.data.data.items);
@@ -37,7 +40,13 @@ const Story = () => {
   };
 
   useEffect(() => {
-    callApi(1);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
     setLoader(true);
     if (checkStoryAddView.length === 0) {
       localStorage.setItem("checkStoryAddView", JSON.stringify([params.slug]));
@@ -56,15 +65,29 @@ const Story = () => {
         return () => clearTimeout(id);
       }
     }
-  }, [params.slug]);
+  }, [params.slug, loaderUser]);
 
   useEffect(() => {
-    callApi(1);
-  }, [keyword]);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
+  }, [keyword, loaderUser]);
+
+  console.log(story);
 
   useEffect(() => {
-    callApi(1);
-  }, [orderby]);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
+  }, [orderby, loaderUser]);
 
   return (
     <MainLayout>
@@ -152,6 +175,7 @@ const Story = () => {
               keyword={keyword}
               orderby={orderby}
               setOrderby={setOrderby}
+              user={user}
             />
             <CommentStory />
           </div>
