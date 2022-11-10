@@ -6,6 +6,7 @@ import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import ChapterVip from "../../components/chapter/ChapterVip";
 import Loader from "../../components/chapter/Loader";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -15,6 +16,7 @@ const Chapterpage = () => {
 
   const { setTogglePopup, setTheme, theme, size, setSize }: any =
     useContext(SettingContext);
+  const { user, loaderUser }: any = useContext(AuthContext);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -31,10 +33,16 @@ const Chapterpage = () => {
   };
 
   useEffect(() => {
-    callApi("", 1);
+    if (loaderUser === "user") {
+      callApi(user.user.id, 1);
+    } else {
+      // callApi("", 1);
+    }
     setLoader(true);
     setTogglePopup(false);
-  }, [params.slugchapter, params.slugstory]);
+  }, [params.slugchapter, params.slugstory, loaderUser]);
+
+  console.log(dataChapter);
 
   const changeChapter = (word: string) => {
     if (word === "prev") {

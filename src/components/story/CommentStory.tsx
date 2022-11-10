@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const CommentStory = () => {
   const [checkComment, setCheckComment] = useState<boolean>(false);
   const [checkReply, setCheckReply] = useState<boolean>(false);
+  const { user }: any = useContext(AuthContext);
 
   return (
     <div className="story__comment">
@@ -10,7 +13,9 @@ const CommentStory = () => {
         <p>Bình luận</p>
       </div>
       <div className="comment__text">
-        {/* <textarea
+        {user ? (
+          <>
+            <textarea
               name=""
               className={checkComment ? "comment__text--active" : ""}
               rows={5}
@@ -20,10 +25,13 @@ const CommentStory = () => {
             ></textarea>
             <div className="click__comment">
               <button className="active__comment__button">Bình luận</button>
-            </div> */}
-        <div className="login__here">
-          Hãy <a href="">Đăng nhập</a> và để lại bình luận của bạn
-        </div>
+            </div>
+          </>
+        ) : (
+          <div className="login__here">
+            Hãy <Link to="/login">Đăng nhập</Link> và để lại bình luận của bạn
+          </div>
+        )}
       </div>
       <div className="story__comment--list">
         <div className="story__comment--item">

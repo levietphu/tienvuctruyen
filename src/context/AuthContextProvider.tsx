@@ -7,6 +7,7 @@ export const AuthContext = createContext<AppContextInterface | null>(null);
 
 const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>();
+  const [loaderUser, setLoaderUser] = useState<string>("loader");
   const [data, setData] = useState<any>();
   const [dataRegister, setDataRegister] = useState({
     name: "",
@@ -77,12 +78,17 @@ const AuthContextProvider = ({ children }: any) => {
       .get(`${process.env.REACT_APP_API}getUser?token=${token}`)
       .then((res) => {
         setUser(res.data.data.items);
+        setLoaderUser("user");
       });
   };
 
   useEffect(() => {
     if (dataLogin || token.length > 0) {
       getUser();
+    } else if (textLogin.email && textLogin.password) {
+      setLoaderUser("loader");
+    } else {
+      setLoaderUser("login");
     }
   }, [dataLogin, token]);
 
@@ -98,6 +104,8 @@ const AuthContextProvider = ({ children }: any) => {
     setTextLogin,
     user,
     textLogin,
+    loaderUser,
+    setLoaderUser,
   };
 
   return (

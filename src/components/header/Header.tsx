@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./header.scss";
 import { useOutSide } from "../../hookCustom/useOutSide";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
+import setToken from "../../ultis/setToken";
 
 const Header = ({ cates, logo }: any) => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
@@ -20,6 +22,18 @@ const Header = ({ cates, logo }: any) => {
   const listRefMobile = useOutSide(() => setToogleMenuMobileList(false));
   const menuRefPerLog = useOutSide(() => setTooglePersonalLogout(false));
   const PersonRef = useOutSide(() => setTooglePersonalLogoutMolie(false));
+
+  const navigate = useNavigate();
+
+  const { user, loaderUser, setLoaderUser }: any = useContext(AuthContext);
+
+  const logout = () => {
+    setToken("");
+    localStorage.removeItem("token");
+    setLoaderUser("login");
+    navigate("/");
+  };
+
   return (
     <>
       <div className="screen-85 header">
@@ -91,23 +105,45 @@ const Header = ({ cates, logo }: any) => {
           </div>
         </div>
         <div className="header__right" ref={menuRefPerLog}>
-          {/* <a href="/register" className="btn btn__user--register">đăng ký</a>
-          <a href=/login" className="btn btn__user--login">Đăng nhập</a> */}
-          <p onClick={() => setTooglePersonalLogout(!tooglePersonalLogout)}>
-            Hi,<strong>Tên account</strong>{" "}
-            <i className="fa-solid fa-angle-down"></i>
-          </p>
-          {tooglePersonalLogout && (
-            <div className="personal__logout">
-              <Link to="/account" className="person">
-                <i className="fa-solid fa-user"></i>
-                <span>Trang cá nhân</span>
-              </Link>
-              <Link to="/logout" className="logout">
-                <i className="fa-solid fa-right-from-bracket"></i>
-                <span>Đăng xuất</span>
-              </Link>
+          {loaderUser === "loader" ? (
+            <div className="box2" style={{ width: "100%" }}>
+              <div className="gallery" style={{ height: "30px" }}>
+                <div className="skeleton4" style={{ width: "200px" }}></div>
+              </div>
             </div>
+          ) : loaderUser === "login" ? (
+            <>
+              {" "}
+              <Link to="/register" className="btn btn__user--register">
+                đăng ký
+              </Link>
+              <Link to="/login" className="btn btn__user--login">
+                Đăng nhập
+              </Link>
+            </>
+          ) : (
+            loaderUser === "user" && (
+              <>
+                <p
+                  onClick={() => setTooglePersonalLogout(!tooglePersonalLogout)}
+                >
+                  Hi,<strong>{user.user.name}</strong>{" "}
+                  <i className="fa-solid fa-angle-down"></i>
+                </p>
+                {tooglePersonalLogout && (
+                  <div className="personal__logout">
+                    <Link to="/account" className="person">
+                      <i className="fa-solid fa-user"></i>
+                      <span>Trang cá nhân</span>
+                    </Link>
+                    <a href="" className="logout" onClick={logout}>
+                      <i className="fa-solid fa-right-from-bracket"></i>
+                      <span>Đăng xuất</span>
+                    </a>
+                  </div>
+                )}
+              </>
+            )
           )}
         </div>
       </div>

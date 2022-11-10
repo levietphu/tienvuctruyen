@@ -14,7 +14,7 @@ const Login = () => {
 
   useEffect(() => {
     if (dataLogin) {
-      dataLogin.success && navigate("/");
+      dataLogin.success && navigate(-1);
     }
   }, [dataLogin]);
 

@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContextProvider";
+import { useParams, useNavigate } from "react-router-dom";
 
 const ChapterVip = ({ coin }: any) => {
+  const { user }: any = useContext(AuthContext);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const callApi = async () => {
+    if (user) {
+      await axios
+        .get(
+          `${process.env.REACT_APP_API}buy_chapter?id_user=${user.user.id}&slug_story=${params.slugstory} &slug=${params.slugchapter}`
+        )
+        .then((res) => {
+          if (res.data.success) {
+            navigate(`/${params.slugstory}/${params.slugchapter}`);
+          }
+        });
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="box__vip">
       <div className="chapter-vip">
@@ -15,8 +39,17 @@ const ChapterVip = ({ coin }: any) => {
           </p>
         </div>
         <div className="buy__chapter center">
-          <button className="btn-chapter">Mua Chương này</button>
-          <button className="btn-coin">Nạp xu</button>
+          <button className="btn-chapter" onClick={callApi}>
+            Mua Chương này
+          </button>
+          <button
+            className="btn-coin"
+            onClick={() =>
+              user ? navigate("/account/coin") : navigate("/login")
+            }
+          >
+            Nạp xu
+          </button>
         </div>
         <div className="qa-buy center">
           <button>Bạn muốn mua hết các chương VIP?</button>
