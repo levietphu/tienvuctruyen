@@ -13,6 +13,7 @@ const Chapterpage = () => {
   const [bookMark, setBookMark] = useState<boolean>(false);
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   const { setTogglePopup, setTheme, theme, size, setSize }: any =
     useContext(SettingContext);
@@ -33,16 +34,16 @@ const Chapterpage = () => {
   };
 
   useEffect(() => {
-    if (loaderUser === "user") {
+    if (user) {
       callApi(user.user.id, 1);
     } else {
-      // callApi("", 1);
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
     }
     setLoader(true);
     setTogglePopup(false);
   }, [params.slugchapter, params.slugstory, loaderUser]);
-
-  console.log(dataChapter);
 
   const changeChapter = (word: string) => {
     if (word === "prev") {
@@ -52,10 +53,26 @@ const Chapterpage = () => {
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      let id = setTimeout(() => {
+        setError(false);
+      }, 2000);
+
+      return () => clearTimeout(id);
+    }
+  }, [error]);
+
   return (
     <MainLayout>
       {!loader ? (
         <>
+          <span
+            className="error_chapter"
+            style={{ top: `${error ? "70px" : "0"}` }}
+          >
+            Xu của bạn không đủ. Vui lòng nạp thêm !
+          </span>
           <section className="screen-80">
             <div className="header__chapter">
               <div className="name__story">
@@ -103,7 +120,10 @@ const Chapterpage = () => {
                   }}
                 ></div>
               ) : (
-                <ChapterVip coin={dataChapter.chuong.coin} />
+                <ChapterVip
+                  coin={dataChapter.chuong.coin}
+                  setError={setError}
+                />
               )}
             </div>
             <div className="next__prev--chapter">

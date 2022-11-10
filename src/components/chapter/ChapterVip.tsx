@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useParams, useNavigate } from "react-router-dom";
 
-const ChapterVip = ({ coin }: any) => {
+const ChapterVip = ({ coin, setError }: any) => {
   const { user }: any = useContext(AuthContext);
 
   const params = useParams();
@@ -18,6 +18,8 @@ const ChapterVip = ({ coin }: any) => {
         .then((res) => {
           if (res.data.success) {
             navigate(`/${params.slugstory}/${params.slugchapter}`);
+          } else if (!res.data.success && res.data.status === 400) {
+            setError(true);
           }
         });
     } else {
