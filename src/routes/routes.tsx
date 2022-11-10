@@ -11,7 +11,7 @@ import Transalator from "../pages/translator/Transalator";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
 
-const routes = () => {
+const routes = ({ user }: any) => {
   return (
     <Router>
       <Routes>

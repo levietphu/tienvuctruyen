@@ -20,14 +20,8 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const {
-    data,
-    errorServer,
-    setErrorServer,
-    register,
-    setDataRegister,
-    dataRegister,
-  }: any = useContext(AuthContext);
+  const { data, errorServer, register, setDataRegister, dataRegister }: any =
+    useContext(AuthContext);
 
   const validate = (word: string) => {
     if (word === "email") {
@@ -46,15 +40,6 @@ const Register = () => {
         setName({ errorName: "Không được bỏ trống", error: true });
     }
   };
-
-  useEffect(() => {
-    if (errorServer.error) {
-      let id = setTimeout(() => {
-        setErrorServer({ showText: "", error: false });
-      }, 3000);
-      return () => clearTimeout(id);
-    }
-  }, [errorServer.error]);
 
   useEffect(() => {
     if (data) {

@@ -1,9 +1,12 @@
 import "./app.scss";
-import HomePage from "./pages/home/HomePage";
 import Routes from "./routes/routes";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContextProvider";
 
 function App() {
-  return <Routes />;
+  const { user }: any = useContext(AuthContext);
+
+  return <Routes user={user} />;
 }
 
 export default App;

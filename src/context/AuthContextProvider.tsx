@@ -1,20 +1,40 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { AppContextInterface } from "./SettingContextProvider";
 import axios from "axios";
+import setToken from "../ultis/setToken";
 
 export const AuthContext = createContext<AppContextInterface | null>(null);
 
 const AuthContextProvider = ({ children }: any) => {
+  const [user, setUser] = useState<any>();
   const [data, setData] = useState<any>();
   const [dataRegister, setDataRegister] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const [dataLogin, setDataLogin] = useState<any>();
+  const [textLogin, setTextLogin] = useState({
+    email: "",
+    password: "",
+  });
+
   const [errorServer, setErrorServer] = useState<any>({
     showText: "",
     error: false,
   });
+
+  const token = JSON.parse(localStorage.getItem("token") || "[]");
+
+  useEffect(() => {
+    if (errorServer.error) {
+      let id = setTimeout(() => {
+        setErrorServer({ showText: "", error: false });
+      }, 3000);
+      return () => clearTimeout(id);
+    }
+  }, [errorServer.error]);
 
   const register = async () => {
     await axios
@@ -33,6 +53,39 @@ const AuthContextProvider = ({ children }: any) => {
       });
   };
 
+  const login = async () => {
+    await axios
+      .post(
+        `${process.env.REACT_APP_API}login?email=${textLogin.email}&password=${textLogin.password}`
+      )
+      .then((res) => {
+        if (res.data.success) {
+          setDataLogin(res.data);
+          setToken(res.data.data.token);
+          localStorage.setItem("token", JSON.stringify(res.data.data.token));
+        } else {
+          setErrorServer({ showText: res.data.data.hasMore, error: true });
+        }
+      })
+      .catch((err) => {
+        setErrorServer({ showText: "Lỗi hệ thống", error: true });
+      });
+  };
+
+  const getUser = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API}getUser?token=${token}`)
+      .then((res) => {
+        setUser(res.data.data.items);
+      });
+  };
+
+  useEffect(() => {
+    if (dataLogin || token.length > 0) {
+      getUser();
+    }
+  }, [dataLogin, token]);
+
   const dataAuth: any = {
     data,
     errorServer,
@@ -40,6 +93,11 @@ const AuthContextProvider = ({ children }: any) => {
     register,
     dataRegister,
     setDataRegister,
+    login,
+    dataLogin,
+    setTextLogin,
+    user,
+    textLogin,
   };
 
   return (

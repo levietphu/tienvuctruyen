@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./user.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
+
+  const { login, dataLogin, setTextLogin, errorServer, textLogin }: any =
+    useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (dataLogin) {
+      dataLogin.success && navigate("/");
+    }
+  }, [dataLogin]);
 
   return (
     <div className="login">
@@ -26,6 +38,11 @@ const Login = () => {
                 placeholder="vidugmail.com"
                 onClick={() => setCheckInputName(!checkInputName)}
                 onBlur={() => setCheckInputName(false)}
+                value={textLogin.email}
+                onChange={(e) =>
+                  setTextLogin({ ...textLogin, email: e.target.value })
+                }
+                name="email"
               />
             </div>
             <div className="password__login">
@@ -36,16 +53,29 @@ const Login = () => {
                 placeholder="*********"
                 onClick={() => setCheckInputPass(!checkInputPass)}
                 onBlur={() => setCheckInputPass(false)}
+                value={textLogin.password}
+                onChange={(e) =>
+                  setTextLogin({ ...textLogin, password: e.target.value })
+                }
+                name="password"
               />
             </div>
             <Link to="">Quên mật khẩu?</Link>
-            <button className="">Đăng nhập</button>
+            <button
+              className=""
+              onClick={() => textLogin.email && textLogin.password && login()}
+            >
+              Đăng nhập
+            </button>
           </div>
           <div className="change__register">
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
           </div>
         </div>
       </div>
+      {errorServer.error && (
+        <p className="error_auth">{errorServer.showText}</p>
+      )}
     </div>
   );
 };
