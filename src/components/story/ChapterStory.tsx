@@ -27,7 +27,6 @@ const ChapterStory = ({
   );
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
-  console.log(story);
   useEffect(() => {
     if (Ref.current) {
       setSaveRef(Ref.current);

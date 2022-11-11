@@ -177,7 +177,7 @@ const Story = () => {
               setOrderby={setOrderby}
               user={user}
             />
-            <CommentStory />
+            <CommentStory comments={story.comments_story} />
           </div>
         </>
       ) : (

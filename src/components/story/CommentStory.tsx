@@ -1,11 +1,18 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
+import Moment from "react-moment";
+import "moment/locale/vi";
 
-const CommentStory = () => {
+const CommentStory = ({ comments }: any) => {
   const [checkComment, setCheckComment] = useState<boolean>(false);
   const [checkReply, setCheckReply] = useState<boolean>(false);
   const { user }: any = useContext(AuthContext);
+  console.log(comments);
+
+  // const hanleClick = () => {
+
+  // }
 
   return (
     <div className="story__comment">
@@ -34,33 +41,53 @@ const CommentStory = () => {
         )}
       </div>
       <div className="story__comment--list">
-        <div className="story__comment--item">
-          <div className="comment--item">
-            <p>
-              <span className="account__name">catdan05</span> •
-              <span className="time__update"> 3 tuần trước</span>
-            </p>
-            <p className="comment">free sao tính tuền thế ad</p>
-            <a>0 trả lời</a>
-          </div>
-          <div className="recomment--item">
-            <p>
-              <span className="account__name">catdan05</span> •
-              <span className="time__update"> 3 tuần trước</span>
-            </p>
-            <p className="comment">free sao tính tuền thế ad</p>
-          </div>
-          <div className="reply">
-            <input
-              type="text"
-              className={checkReply ? "comment__text--active" : ""}
-              onClick={() => setCheckReply(!checkReply)}
-              onBlur={() => setCheckReply(false)}
-            />
-            <i className="fa-solid fa-paper-plane" style={{ opacity: "1" }}></i>
-            <a>trả lời</a>
-          </div>
-        </div>
+        {comments.map((value: any, index: any) => {
+          return (
+            <div key={index} className="story__comment--item">
+              <div className="comment--item">
+                <p>
+                  <span className="account__name">{value.user.name}</span> •
+                  <span className="time__update">
+                    {" "}
+                    <Moment fromNow locale="vi">
+                      {value.created_at}
+                    </Moment>
+                  </span>
+                </p>
+                <p className="comment">{value.content}</p>
+                <a>{value.commet_childrens.length} trả lời</a>
+              </div>
+              {value.commet_childrens.map((item: any, index: any) => {
+                return (
+                  <div className="recomment--item">
+                    <p>
+                      <span className="account__name">{item.user.name}</span> •
+                      <span className="time__update">
+                        {" "}
+                        <Moment fromNow locale="vi">
+                          {value.created_at}
+                        </Moment>
+                      </span>
+                    </p>
+                    <p className="comment">{item.content}</p>
+                  </div>
+                );
+              })}
+              <div className="reply">
+                <input
+                  type="text"
+                  className={checkReply ? "comment__text--active" : ""}
+                  onClick={() => setCheckReply(!checkReply)}
+                  onBlur={() => setCheckReply(false)}
+                />
+                <i
+                  className="fa-solid fa-paper-plane"
+                  style={{ opacity: "1" }}
+                ></i>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
