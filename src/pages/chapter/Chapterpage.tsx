@@ -123,6 +123,7 @@ const Chapterpage = () => {
                 <ChapterVip
                   coin={dataChapter.chuong.coin}
                   setError={setError}
+                  callApi={callApi}
                 />
               )}
             </div>

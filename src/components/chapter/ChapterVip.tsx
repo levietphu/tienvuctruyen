@@ -3,13 +3,13 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useParams, useNavigate } from "react-router-dom";
 
-const ChapterVip = ({ coin, setError }: any) => {
+const ChapterVip = ({ coin, setError, callApi }: any) => {
   const { user }: any = useContext(AuthContext);
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const callApi = async () => {
+  const callApiBuy = async () => {
     if (user) {
       await axios
         .get(
@@ -17,7 +17,7 @@ const ChapterVip = ({ coin, setError }: any) => {
         )
         .then((res) => {
           if (res.data.success) {
-            callApi();
+            callApi(user.user.id, 1);
           } else if (!res.data.success && res.data.status === 400) {
             setError(true);
           }
@@ -41,7 +41,7 @@ const ChapterVip = ({ coin, setError }: any) => {
           </p>
         </div>
         <div className="buy__chapter center">
-          <button className="btn-chapter" onClick={callApi}>
+          <button className="btn-chapter" onClick={callApiBuy}>
             Mua Chương này
           </button>
           <button
