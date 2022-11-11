@@ -228,37 +228,55 @@ const Header = ({ cates, logo }: any) => {
                   setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
                 }
               >
-                <span
-                  style={{
-                    color: `${tooglePersonalLogoutMoblie ? "#357376" : ""}`,
-                  }}
-                >
-                  Hi, <strong>tieu_nam_phong</strong>
-                </span>
-                <i className="fa-solid fa-angle-down"></i>
+                {loaderUser === "loader" ? (
+                  <div className="box2" style={{ width: "100%" }}>
+                    <div className="gallery" style={{ height: "30px" }}>
+                      <div
+                        className="skeleton4"
+                        style={{ width: "200px" }}
+                      ></div>
+                    </div>
+                  </div>
+                ) : loaderUser === "login" ? (
+                  <div className="mt-20 mb-20">
+                    <a href="" className="btn btn__user--register">
+                      đăng ký
+                    </a>
+                    <a href="" className="btn btn__user--login">
+                      Đăng nhập
+                    </a>
+                  </div>
+                ) : (
+                  loaderUser === "user" && (
+                    <>
+                      <span
+                        style={{
+                          color: `${
+                            tooglePersonalLogoutMoblie ? "#357376" : ""
+                          }`,
+                        }}
+                      >
+                        Hi, <strong>{user.user.name}</strong>
+                      </span>
+                      <i className="fa-solid fa-angle-down"></i>
+                    </>
+                  )
+                )}
               </div>
+
               {tooglePersonalLogoutMoblie && (
                 <div className="personal__logout">
                   <Link to="/account" className="person">
                     <i className="fa-solid fa-user"></i>
                     <span>Trang cá nhân</span>
                   </Link>
-                  <Link to="/logout" className="logout">
+                  <a href="/logout" className="logout" onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Đăng xuất</span>
-                  </Link>
+                  </a>
                 </div>
               )}
             </div>
-
-            {/* <div className="mt-20 mb-20">
-              <a href="" className="btn btn__user--register">
-                đăng ký
-              </a>
-              <a href="" className="btn btn__user--login">
-                Đăng nhập
-              </a>
-            </div> */}
           </div>
         </div>
       )}

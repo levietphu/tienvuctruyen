@@ -1,35 +1,56 @@
-import { newUpdateStory } from "../../store";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
+import { useContext } from "react";
+import image from "../../assets/mascot-02.235fd60.png";
 
 const BookCase = () => {
+  const { user }: any = useContext(AuthContext);
+
   return (
     <div className="list__bookcase">
-      {newUpdateStory.map((item, index) => {
-        if (index < 8) {
+      {user.bookcase.length !== 0 ? (
+        Object.entries(user.bookcase).map((item: any, index: any) => {
           return (
-            <Link
-              className="item__bookcase"
-              to="/dieu-thap-lam-hoang-de"
-              key={index}
-            >
+            <div className="item__bookcase" key={index}>
               <div className="item">
                 <div className="height__full">
                   <div className="image__bookcase">
-                    <img src={item.image} alt="" />
+                    <Link to={`/${item[1].truyen.slug}`}>
+                      <img
+                        src={`${process.env.REACT_APP_UPLOADS}${item[1].truyen.image}`}
+                        alt=""
+                      />
+                    </Link>
                   </div>
                   <div className="title__book">
-                    <p className="name__book">{item.name}</p>
-                    <p className="save__chapter">
-                      <i>đọc tiếp chương 5</i>{" "}
-                    </p>
+                    <Link to={`/${item[1].truyen.slug}`} className="name__book">
+                      {item[1].truyen.name}
+                    </Link>
+                    <Link
+                      to={`/${item[1].truyen.slug}/${item[1].chuong.slug}`}
+                      className="save__chapter"
+                    >
+                      <i>đọc tiếp {item[1].chuong.chapter_number}</i>{" "}
+                    </Link>
                   </div>
                   <i className="fa-sharp fa-solid fa-xmark close"></i>
                 </div>
               </div>
-            </Link>
+            </div>
           );
-        }
-      })}
+        })
+      ) : (
+        <div className="no-view">
+          <div>
+            <img src={image} alt="" />
+            <h4 className="center">Hiện chưa có truyện nào</h4>
+            <p className="center">Bạn hãy quay lại sau nhé!</p>
+            <span className="center">
+              <Link to="/">Về trang chủ</Link>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

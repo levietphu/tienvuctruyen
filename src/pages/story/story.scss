@@ -17,6 +17,12 @@
       text-transform: capitalize;
       margin: 0;
     }
+    .btn__vip,
+    .btn__full {
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
     .header__story--author,
     .header__story--translator {
       margin: 5px 0 0 0;
@@ -193,7 +199,8 @@
               font-size: 1.1rem;
               color: #303030;
             }
-            .coin {
+            .coin,
+            .bought {
               padding: 3px 12px;
               background: #ffe08a;
               border-radius: 3px;
@@ -201,6 +208,20 @@
               position: absolute;
               top: 20px;
               right: 15px;
+              z-index: 99;
+            }
+            .bought {
+              background: forestgreen;
+              i {
+                color: white;
+                font-size: 14px;
+              }
+            }
+            .hover__bought {
+              display: none;
+            }
+            .bought:hover .hover__bought {
+              display: block;
             }
           }
           .center__chapter--item:hover {
@@ -396,4 +417,8 @@
 .comment__text--active {
   border: 1px solid black !important;
   box-shadow: 0px 0px 5px 0px #357375;
+}
+
+.cate__story {
+  margin-left: 10px;
 }

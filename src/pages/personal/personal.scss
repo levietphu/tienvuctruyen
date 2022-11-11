@@ -92,6 +92,10 @@
               font-weight: bold;
               margin-bottom: 25px;
               color: black;
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
             }
             .save__chapter {
               position: absolute;
@@ -137,6 +141,13 @@
             width: 152px;
             height: 100%;
             left: 10px;
+            .hover__story--name {
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              font-size: 1.38rem;
+            }
           }
         }
       }

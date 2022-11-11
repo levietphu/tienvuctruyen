@@ -77,8 +77,6 @@ const Story = () => {
     }
   }, [keyword, loaderUser]);
 
-  console.log(story);
-
   useEffect(() => {
     if (user) {
       callApi(user.user.id, 1);
@@ -103,7 +101,9 @@ const Story = () => {
               </div>
             </div>
             <div className="header__story--right">
-              <div className="cate__story header__story--cate">
+              {story.vip === 1 && <span className="btn__vip">vip</span>}
+              {story.full === 1 && <span className="btn__full">full</span>}
+              <span className="cate__story header__story--cate">
                 {story.theloais.map((item: any) => {
                   return (
                     <Link
@@ -115,7 +115,7 @@ const Story = () => {
                     </Link>
                   );
                 })}
-              </div>
+              </span>
 
               <h1 className="header__story--name">{story.name}</h1>
               <p className="header__story--author">

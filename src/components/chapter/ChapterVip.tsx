@@ -17,7 +17,7 @@ const ChapterVip = ({ coin, setError }: any) => {
         )
         .then((res) => {
           if (res.data.success) {
-            navigate(`/${params.slugstory}/${params.slugchapter}`);
+            callApi();
           } else if (!res.data.success && res.data.status === 400) {
             setError(true);
           }

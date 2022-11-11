@@ -27,7 +27,7 @@ const ChapterStory = ({
   );
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
-
+  console.log(story);
   useEffect(() => {
     if (Ref.current) {
       setSaveRef(Ref.current);
@@ -160,8 +160,18 @@ const ChapterStory = ({
                       </Moment>
                     </span>
                   </i>
-                  {value.coin > 0 && (
-                    <span className="coin">{value.coin} xu</span>
+                  {value.bought && (
+                    <>
+                      <span className="bought">
+                        <i className="fa-solid fa-lock-open"></i>
+                      </span>
+                      <div className="hover__bought">
+                        {value.coin} xu - đã mua
+                      </div>
+                    </>
+                  )}
+                  {!value.bought && value.coin > 0 && (
+                    <span className="coin">{value.coin} xu </span>
                   )}
                 </Link>
               );
