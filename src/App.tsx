@@ -4,9 +4,9 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContextProvider";
 
 function App() {
-  const { user }: any = useContext(AuthContext);
+  const { user, loaderUser }: any = useContext(AuthContext);
 
-  return <Routes user={user} />;
+  return <Routes user={user} loaderUser={loaderUser} />;
 }
 
 export default App;

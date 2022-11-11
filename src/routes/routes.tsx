@@ -16,7 +16,7 @@ import Transalator from "../pages/translator/Transalator";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
 
-const routes = ({ user }: any) => {
+const routes = ({ user, loaderUser }: any) => {
   return (
     <Router>
       <Routes>
@@ -36,7 +36,13 @@ const routes = ({ user }: any) => {
         <Route path="/:slugstory/:slugchapter" element={<Chapterpage />} />
         <Route
           path="account"
-          element={user ? <PersonalPage /> : <Navigate to="/login" />}
+          element={
+            user || loaderUser !== "login" ? (
+              <PersonalPage />
+            ) : (
+              !user && loaderUser === "login" && <Navigate to="/login" />
+            )
+          }
         >
           <Route path="" element={<BookCase />} />
           <Route path="vipbuy" element={<VipBuy />} />

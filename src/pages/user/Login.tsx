@@ -7,18 +7,22 @@ const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
 
-  const { login, dataLogin, setTextLogin, errorServer, textLogin, user }: any =
-    useContext(AuthContext);
+  const {
+    login,
+    dataLogin,
+    setTextLogin,
+    errorServer,
+    textLogin,
+    checkLogin,
+  }: any = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  if (user) {
-    navigate("/");
-  }
-
   useEffect(() => {
     if (dataLogin) {
-      dataLogin.success && navigate(-1);
+      dataLogin.success && !checkLogin
+        ? navigate(-1)
+        : dataLogin.success && checkLogin && navigate("/");
     }
   }, [dataLogin]);
 

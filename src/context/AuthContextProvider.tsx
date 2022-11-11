@@ -9,6 +9,7 @@ const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>();
   const [loaderUser, setLoaderUser] = useState<string>("loader");
   const [data, setData] = useState<any>();
+  const [checkLogin, setCheckLogin] = useState<boolean>(false);
   const [dataRegister, setDataRegister] = useState({
     name: "",
     email: "",
@@ -106,6 +107,9 @@ const AuthContextProvider = ({ children }: any) => {
     textLogin,
     loaderUser,
     setLoaderUser,
+    getUser,
+    setCheckLogin,
+    checkLogin,
   };
 
   return (

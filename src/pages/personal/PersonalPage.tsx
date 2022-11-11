@@ -2,11 +2,19 @@ import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const PersonalPage = () => {
   const { pathname } = useLocation();
-  const { user }: any = useContext(AuthContext);
+  const { user, getUser, loaderUser, setCheckLogin }: any =
+    useContext(AuthContext);
+
+  useEffect(() => {
+    if (loaderUser === "user") {
+      getUser();
+    }
+    setCheckLogin(true);
+  }, []);
 
   return (
     <MainLayout>
@@ -15,7 +23,7 @@ const PersonalPage = () => {
           <div className="personal__left">
             <div className="name__person">
               <h3>{user.user.name}</h3>
-              <p style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "10px" }}>
                 <div className="image__coin">
                   <div>
                     <img
@@ -23,10 +31,9 @@ const PersonalPage = () => {
                       alt=""
                     />
                   </div>
-
                   <span>{user.user.coin} xu</span>
                 </div>
-              </p>
+              </div>
             </div>
             <div className="personal__left--list">
               <NavLink
