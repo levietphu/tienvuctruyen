@@ -154,3 +154,17 @@
     }
   }
 }
+
+.image__coin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {
+    width: 20px;
+    height: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

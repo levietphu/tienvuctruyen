@@ -7,10 +7,14 @@ const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
 
-  const { login, dataLogin, setTextLogin, errorServer, textLogin }: any =
+  const { login, dataLogin, setTextLogin, errorServer, textLogin, user }: any =
     useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  if (user) {
+    navigate("/");
+  }
 
   useEffect(() => {
     if (dataLogin) {

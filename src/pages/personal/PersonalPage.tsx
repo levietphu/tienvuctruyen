@@ -16,8 +16,16 @@ const PersonalPage = () => {
             <div className="name__person">
               <h3>{user.user.name}</h3>
               <p style={{ marginTop: "10px" }}>
-                <span className="coin">$</span>
-                <span>{user.user.coin} xu</span>
+                <div className="image__coin">
+                  <div>
+                    <img
+                      src="https://tienvuc.vip/_nuxt/img/coin.4fd899c.svg"
+                      alt=""
+                    />
+                  </div>
+
+                  <span>{user.user.coin} xu</span>
+                </div>
               </p>
             </div>
             <div className="personal__left--list">

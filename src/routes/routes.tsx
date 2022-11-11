@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import BookCase from "../components/account/BookCase";
 import Coin from "../components/account/Coin";
 import VipBuy from "../components/account/VipBuy";
@@ -19,11 +24,20 @@ const routes = ({ user }: any) => {
         <Route path="/danh-sach/:sluglist" element={<CatePage />} />
         <Route path="/dich-gia/:slugdichgia" element={<Transalator />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route
+          path="/login"
+          element={!user ? <Login /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/register"
+          element={!user ? <Register /> : <Navigate to="/" />}
+        />
         <Route path="/:slug" element={<Story />} />
         <Route path="/:slugstory/:slugchapter" element={<Chapterpage />} />
-        <Route path="account" element={<PersonalPage />}>
+        <Route
+          path="account"
+          element={user ? <PersonalPage /> : <Navigate to="/login" />}
+        >
           <Route path="" element={<BookCase />} />
           <Route path="vipbuy" element={<VipBuy />} />
           <Route path="coin" element={<Coin />} />
