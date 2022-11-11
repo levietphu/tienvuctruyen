@@ -4,15 +4,29 @@ import { AuthContext } from "../../context/AuthContextProvider";
 import Moment from "react-moment";
 import "moment/locale/vi";
 
-const CommentStory = ({ comments }: any) => {
+const CommentStory = ({
+  comments,
+  setContent,
+  callApi,
+  content,
+  replyContent,
+  setReplyContent,
+}: any) => {
   const [checkComment, setCheckComment] = useState<boolean>(false);
   const [checkReply, setCheckReply] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<number>(0);
+
   const { user }: any = useContext(AuthContext);
-  console.log(comments);
 
-  // const hanleClick = () => {
-
-  // }
+  const handeleComment = (word: string, id_parent: number) => {
+    if (word === "comment") {
+      callApi(user.user.id, 1, id_parent);
+      setContent("");
+    } else {
+      callApi(user.user.id, 1, id_parent);
+      setReplyContent("");
+    }
+  };
 
   return (
     <div className="story__comment">
@@ -29,9 +43,16 @@ const CommentStory = ({ comments }: any) => {
               placeholder="Hãy để lại bình luận của bạn"
               onClick={() => setCheckComment(!checkComment)}
               onBlur={() => setCheckComment(false)}
+              onChange={(e) => setContent(e.target.value)}
+              defaultValue={content}
             ></textarea>
-            <div className="click__comment">
-              <button className="active__comment__button">Bình luận</button>
+            <div
+              className="click__comment"
+              onClick={() => user && content && handeleComment("comment", 0)}
+            >
+              <button className={!content ? "active__comment__button" : ""}>
+                Bình luận
+              </button>
             </div>
           </>
         ) : (
@@ -41,53 +62,71 @@ const CommentStory = ({ comments }: any) => {
         )}
       </div>
       <div className="story__comment--list">
-        {comments.map((value: any, index: any) => {
-          return (
-            <div key={index} className="story__comment--item">
-              <div className="comment--item">
-                <p>
-                  <span className="account__name">{value.user.name}</span> •
-                  <span className="time__update">
-                    {" "}
-                    <Moment fromNow locale="vi">
-                      {value.created_at}
-                    </Moment>
-                  </span>
-                </p>
-                <p className="comment">{value.content}</p>
-                <a>{value.commet_childrens.length} trả lời</a>
-              </div>
-              {value.commet_childrens.map((item: any, index: any) => {
-                return (
-                  <div className="recomment--item">
-                    <p>
-                      <span className="account__name">{item.user.name}</span> •
-                      <span className="time__update">
-                        {" "}
-                        <Moment fromNow locale="vi">
-                          {value.created_at}
-                        </Moment>
-                      </span>
-                    </p>
-                    <p className="comment">{item.content}</p>
+        {comments.length > 0 ? (
+          comments.map((value: any, index: any) => {
+            return (
+              <div key={index} className="story__comment--item">
+                <div className="comment--item">
+                  <p>
+                    <span className="account__name">{value.user.name}</span> •
+                    <span className="time__update">
+                      {" "}
+                      <Moment fromNow locale="vi">
+                        {value.created_at}
+                      </Moment>
+                    </span>
+                  </p>
+                  <p className="comment">{value.content}</p>
+                  <a onClick={() => user && setAnswer(value.id)}>
+                    {value.commet_childrens.length} trả lời
+                  </a>
+                </div>
+                {value.commet_childrens.map((item: any, keygen: any) => {
+                  return (
+                    <div className="recomment--item" key={keygen}>
+                      <p>
+                        <span className="account__name">{item.user.name}</span>{" "}
+                        •
+                        <span className="time__update">
+                          {" "}
+                          <Moment fromNow locale="vi">
+                            {item.created_at}
+                          </Moment>
+                        </span>
+                      </p>
+                      <p className="comment">{item.content}</p>
+                    </div>
+                  );
+                })}
+                {answer === value.id && (
+                  <div className="reply">
+                    <input
+                      type="text"
+                      className={checkReply ? "comment__text--active" : ""}
+                      onClick={() => setCheckReply(!checkReply)}
+                      onBlur={() => setCheckReply(false)}
+                      value={replyContent}
+                      onChange={(e) => setReplyContent(e.target.value)}
+                    />
+                    <i
+                      className="fa-solid fa-paper-plane"
+                      style={{ opacity: "1" }}
+                      onClick={() =>
+                        user &&
+                        replyContent &&
+                        handeleComment("reply", value.id)
+                      }
+                    ></i>
                   </div>
-                );
-              })}
-              <div className="reply">
-                <input
-                  type="text"
-                  className={checkReply ? "comment__text--active" : ""}
-                  onClick={() => setCheckReply(!checkReply)}
-                  onBlur={() => setCheckReply(false)}
-                />
-                <i
-                  className="fa-solid fa-paper-plane"
-                  style={{ opacity: "1" }}
-                ></i>
+                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div className="spank_story">
+            <i>Truyện chưa có bình luận nào, hãy là người đầu tiên!</i>
+          </div>
+        )}
       </div>
     </div>
   );

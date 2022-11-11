@@ -3,9 +3,12 @@ import { SettingContext } from "../../context/SettingContextProvider";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Moment from "react-moment";
+import { AuthContext } from "../../context/AuthContextProvider";
 
 const ListChapter = () => {
   const { togglePopup }: any = useContext(SettingContext);
+  const { user, loaderUser }: any = useContext(AuthContext);
+
   const [checkSearchChapter, setCheckSearchChapter] = useState(false);
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
@@ -26,23 +29,53 @@ const ListChapter = () => {
   };
 
   useEffect(() => {
-    callApi("", 1);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
     setLoader(true);
-  }, [params.slugchapter, params.slugstory]);
+  }, [params.slugchapter, params.slugstory, loaderUser]);
 
   useEffect(() => {
-    callApi("", 1);
-  }, [keyword]);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
+  }, [keyword, loaderUser]);
 
   useEffect(() => {
-    callApi("", 1);
-  }, [orderby]);
+    if (user) {
+      callApi(user.user.id, 1);
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", 1);
+      }
+    }
+  }, [orderby, loaderUser]);
 
   const changePageChapter = (word: string) => {
     if (word === "next") {
-      callApi("", dataChapter.allChapter.current_page + 1);
+      if (user) {
+        callApi(user.user.id, dataChapter.allChapter.current_page + 1);
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", dataChapter.allChapter.current_page + 1);
+        }
+      }
     } else {
-      callApi("", dataChapter.allChapter.current_page - 1);
+      if (user) {
+        callApi(user.user.id, dataChapter.allChapter.current_page - 1);
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", dataChapter.allChapter.current_page - 1);
+        }
+      }
     }
   };
 
@@ -118,7 +151,14 @@ const ListChapter = () => {
                       </Moment>
                     </span>
                   </i>
-                  {dataChapter.vip && <div className="money">5 xu</div>}
+                  {item.bought && (
+                    <div className="bought">
+                      <i className="fa-solid fa-lock-open"></i>
+                    </div>
+                  )}
+                  {!item.bought && item.coin > 0 && (
+                    <span className="money">{item.coin} xu </span>
+                  )}
                 </Link>
               );
             })}

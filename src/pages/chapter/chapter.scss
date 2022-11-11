@@ -244,7 +244,8 @@
       i {
         font-size: 1.1rem;
       }
-      .money {
+      .money,
+      .bought {
         position: absolute;
         top: 20px;
         right: 15px;
@@ -254,6 +255,13 @@
         font-size: 14px;
         padding: 3px 5px;
         border-radius: 3px;
+      }
+      .bought {
+        background: forestgreen;
+        i {
+          color: white;
+          font-size: 14px;
+        }
       }
     }
     .active {

@@ -14,6 +14,8 @@ const Story = () => {
   const [loader, setLoader] = useState<boolean>(true);
   const [keyword, setKeyword] = useState<string>("");
   const [orderby, setOrderby] = useState<string>("asc");
+  const [content, setContent] = useState<string>("");
+  const [replyContent, setReplyContent] = useState<string>("");
 
   const { user, loaderUser }: any = useContext(AuthContext);
 
@@ -24,10 +26,10 @@ const Story = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const callApi = async (id_user: string, page: number) => {
+  const callApi = async (id_user: string, page: number, id_parent: string) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
+        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}&id_parent=${id_parent}&content=${content}&reply_content=${replyContent}`
       )
       .then((res) => {
         setStory(res.data.data.items);
@@ -41,10 +43,10 @@ const Story = () => {
 
   useEffect(() => {
     if (user) {
-      callApi(user.user.id, 1);
+      callApi(user.user.id, 1, "");
     } else {
       if (loaderUser !== "loader") {
-        callApi("", 1);
+        callApi("", 1, "");
       }
     }
     setLoader(true);
@@ -69,20 +71,20 @@ const Story = () => {
 
   useEffect(() => {
     if (user) {
-      callApi(user.user.id, 1);
+      callApi(user.user.id, 1, "");
     } else {
       if (loaderUser !== "loader") {
-        callApi("", 1);
+        callApi("", 1, "");
       }
     }
   }, [keyword, loaderUser]);
 
   useEffect(() => {
     if (user) {
-      callApi(user.user.id, 1);
+      callApi(user.user.id, 1, "");
     } else {
       if (loaderUser !== "loader") {
-        callApi("", 1);
+        callApi("", 1, "");
       }
     }
   }, [orderby, loaderUser]);
@@ -177,7 +179,14 @@ const Story = () => {
               setOrderby={setOrderby}
               user={user}
             />
-            <CommentStory comments={story.comments_story} />
+            <CommentStory
+              comments={story.comments_story}
+              setContent={setContent}
+              callApi={callApi}
+              content={content}
+              replyContent={replyContent}
+              setReplyContent={setReplyContent}
+            />
           </div>
         </>
       ) : (

@@ -57,22 +57,22 @@ const ChapterStory = ({
       story.chuongs.current_page < story.chuongs.last_page
     ) {
       if (user) {
-        callApi(user.user.id, story.chuongs.current_page + 1);
+        callApi(user.user.id, story.chuongs.current_page + 1, "");
       } else {
-        callApi("", story.chuongs.current_page + 1);
+        callApi("", story.chuongs.current_page + 1, "");
       }
     } else if (word === "prev" && story.chuongs.current_page - 1 > 0) {
       if (user) {
-        callApi(user.user.id, story.chuongs.current_page - 1);
+        callApi(user.user.id, story.chuongs.current_page - 1, "");
       } else {
-        callApi("", story.chuongs.current_page - 1);
+        callApi("", story.chuongs.current_page - 1, "");
       }
     } else if (word !== "next" && word !== "prev") {
       e.preventDefault();
       if (user) {
-        callApi(user.user.id, Number(word));
+        callApi(user.user.id, Number(word), "");
       } else {
-        callApi("", Number(word));
+        callApi("", Number(word), "");
       }
     }
   };
