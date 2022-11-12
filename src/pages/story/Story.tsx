@@ -121,15 +121,20 @@ const Story = () => {
 
               <h1 className="header__story--name">{story.name}</h1>
               <p className="header__story--author">
-                <span>tác giả: </span> <span>{story.tacgia.name}</span>
+                <span>tác giả: </span>{" "}
+                <span>
+                  {story.tacgia ? story.tacgia.name : "Chưa có thông tin"}
+                </span>
               </p>
               <p className="header__story--translator">
                 <span>dịch giả: </span>{" "}
-                <Link to={`/dich-gia/${story.dichgia.slug}`}>
+                <Link to={`/dich-gia/${story.dichgia && story.dichgia.slug}`}>
                   <span className="person">
                     <i className="fa-solid fa-person"></i>
                   </span>{" "}
-                  <span>{story.dichgia.name}</span>
+                  <span>
+                    {story.dichgia ? story.dichgia.name : "chưa có thông tin"}
+                  </span>
                 </Link>
               </p>
               <div className="header__story--view">
