@@ -25,28 +25,39 @@ const DragStory = ({ data }: any) => {
   }, [posCurrent]);
 
   const dragStart = (e: any) => {
-    e.preventDefault();
+    e = e || window.event;
+    e.type !== "touchstart" && e.preventDefault();
     dragRef.current?.classList.add("active");
-    posX1 = e.clientX;
+    if (e.type === "touchstart") {
+      posX1 = e.touches[0].clientX;
+    } else {
+      posX1 = e.clientX;
+      document.onmousemove = dragMove;
+      document.onmouseup = dragEnd;
+    }
     posInitial = dragRef.current?.offsetLeft;
-    document.onmousemove = dragMove;
-    document.onmouseup = dragEnd;
   };
 
   const dragMove = (e: any) => {
-    posX2 = posX1 - e.clientX;
-    posX1 = e.clientX;
+    if (e.type === "touchmove") {
+      posX2 = posX1 - e.touches[0].clientX;
+      posX1 = e.touches[0].clientX;
+    } else {
+      posX2 = posX1 - e.clientX;
+      posX1 = e.clientX;
+    }
     let posInitial: any = dragRef.current?.offsetLeft;
     setPosCurrent(posInitial - posX2);
   };
 
-  const dragEnd = () => {
+  const dragEnd = (e: any) => {
     posFinal = dragRef.current?.offsetLeft;
     if (posFinal > 0) {
       setPosCurrent(0);
     } else if (posFinal < data.length * -200 + 310) {
       setPosCurrent(data.length * -200 + 310);
     }
+
     document.onmousemove = null;
     document.onmouseup = null;
   };
@@ -58,6 +69,9 @@ const DragStory = ({ data }: any) => {
         style={{ left: `${posCurrent}px` }}
         ref={dragRef}
         onMouseDown={(e) => !params.slugdichgia && dragStart(e)}
+        onTouchStart={(e) => !params.slugdichgia && dragStart(e)}
+        onTouchMove={(e) => !params.slugdichgia && dragMove(e)}
+        onTouchEnd={(e) => !params.slugdichgia && dragEnd(e)}
       >
         {data &&
           data.map((item: any) => {

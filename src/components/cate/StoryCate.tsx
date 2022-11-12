@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import Moment from "react-moment";
 import "moment/locale/vi";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import image from "../../assets/mascot-02.235fd60.png";
 
 const StoryCate = () => {

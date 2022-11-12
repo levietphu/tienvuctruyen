@@ -1,6 +1,10 @@
 @media screen and (max-width: 768px) {
+  main {
+    margin-top: 20px !important;
+  }
   .screen-85 {
     width: 95% !important;
+
     .story {
       .drag__story .drag__story--slider .story__slider--item {
         margin-right: 10px;
@@ -76,8 +80,8 @@
     .list__story--newupdate {
       margin-right: 0 !important;
       .image__story {
-        width: 120px !important;
-        height: 130px !important;
+        width: 80px !important;
+        height: 120px !important;
       }
       .story__newupdate--right {
         display: block !important;
@@ -172,6 +176,9 @@
             width: 50% !important;
             .btn__vip {
               left: 25px !important;
+            }
+            .btn__full {
+              left: 60px !important;
             }
             .hover__story {
               left: 18px !important;
