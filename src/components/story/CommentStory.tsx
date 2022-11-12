@@ -44,7 +44,7 @@ const CommentStory = ({
               onClick={() => setCheckComment(!checkComment)}
               onBlur={() => setCheckComment(false)}
               onChange={(e) => setContent(e.target.value)}
-              defaultValue={content}
+              value={content}
             ></textarea>
             <div
               className="click__comment"

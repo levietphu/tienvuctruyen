@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import chicken from "../../assets/chicken.png";
 import Moment from "react-moment";
 import "moment/locale/vi";
@@ -61,12 +61,14 @@ const ChapterStory = ({
       } else {
         callApi("", story.chuongs.current_page + 1, "");
       }
+      window.scrollTo(0, 1000);
     } else if (word === "prev" && story.chuongs.current_page - 1 > 0) {
       if (user) {
         callApi(user.user.id, story.chuongs.current_page - 1, "");
       } else {
         callApi("", story.chuongs.current_page - 1, "");
       }
+      window.scrollTo(0, 1000);
     } else if (word !== "next" && word !== "prev") {
       e.preventDefault();
       if (user) {
@@ -74,6 +76,7 @@ const ChapterStory = ({
       } else {
         callApi("", Number(word), "");
       }
+      window.scrollTo(0, 1000);
     }
   };
 

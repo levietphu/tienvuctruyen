@@ -14,8 +14,6 @@ const StoryCate = () => {
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
 
-  const Ref = useRef<HTMLDivElement>(null);
-
   const params = useParams();
 
   const callApi = async (page: number) => {
@@ -27,22 +25,7 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          setFrom(res.data.data.items.current_page - halfTotalLinks);
-          setTo(res.data.data.items.current_page + halfTotalLinks);
-          if (res.data.data.items.current_page < halfTotalLinks) {
-            setTo(to + halfTotalLinks - res.data.data.items.current_page);
-          }
-          if (
-            res.data.data.items.last_page - res.data.data.items.current_page <
-            halfTotalLinks
-          ) {
-            setFrom(
-              from -
-                (halfTotalLinks -
-                  (res.data.data.items.last_page -
-                    res.data.data.items.current_page))
-            );
-          }
+          window.scrollTo(0, 0);
         });
     } else {
       await axios
@@ -52,25 +35,30 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          setFrom(res.data.data.items.current_page - halfTotalLinks);
-          setTo(res.data.data.items.current_page + halfTotalLinks);
-          if (res.data.data.items.current_page < halfTotalLinks) {
-            setTo(to + halfTotalLinks - res.data.data.items.current_page);
-          }
-          if (
-            res.data.data.items.last_page - res.data.data.items.current_page <
-            halfTotalLinks
-          ) {
-            setFrom(
-              from -
-                (halfTotalLinks -
-                  (res.data.data.items.last_page -
-                    res.data.data.items.current_page))
-            );
-          }
+          window.scrollTo(0, 0);
         });
     }
   };
+
+  useEffect(() => {
+    if (dataCate) {
+      setFrom(dataCate.items.current_page - halfTotalLinks);
+      setTo(dataCate.items.current_page + halfTotalLinks);
+      if (dataCate.items.current_page < halfTotalLinks) {
+        setTo(to + halfTotalLinks - dataCate.items.current_page);
+      }
+      if (
+        dataCate.items.last_page - dataCate.items.current_page <
+        halfTotalLinks
+      ) {
+        setFrom(
+          from -
+            (halfTotalLinks -
+              (dataCate.items.last_page - dataCate.items.current_page))
+        );
+      }
+    }
+  }, [dataCate]);
 
   useEffect(() => {
     callApi(1);
@@ -111,7 +99,7 @@ const StoryCate = () => {
       <div className="cate-content">
         {!loader && dataCate.items.data.length !== 0 ? (
           <>
-            <div className="list__story--newupdate" ref={Ref}>
+            <div className="list__story--newupdate">
               {dataCate.items.data.map((item: any, index: any) => {
                 return (
                   <div className="item__story--newupdate" key={item.id}>

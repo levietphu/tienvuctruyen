@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useEffect, useRef } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { useParams } from "react-router-dom";
@@ -15,6 +15,10 @@ const MainLayout = ({ children }: Props) => {
   const params = useParams();
   const { togglePopup, theme }: any = useContext(SettingContext);
   const { dataLayout }: any = useContext(LayoutContext);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
