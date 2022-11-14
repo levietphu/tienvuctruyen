@@ -234,12 +234,12 @@ const Header = ({ cates, logo }: any) => {
                   </div>
                 ) : loaderUser === "login" ? (
                   <div className="mt-20 mb-20">
-                    <a href="" className="btn btn__user--register">
+                    <Link to="/register" className="btn btn__user--register">
                       đăng ký
-                    </a>
-                    <a href="" className="btn btn__user--login">
+                    </Link>
+                    <Link to="/login" className="btn btn__user--login">
                       Đăng nhập
-                    </a>
+                    </Link>
                   </div>
                 ) : (
                   loaderUser === "user" && (
@@ -270,10 +270,10 @@ const Header = ({ cates, logo }: any) => {
                     <i className="fa-solid fa-user"></i>
                     <span>Trang cá nhân</span>
                   </Link>
-                  <a href="/logout" className="logout" onClick={logout}>
+                  <span className="logout" onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Đăng xuất</span>
-                  </a>
+                  </span>
                 </div>
               )}
             </div>
