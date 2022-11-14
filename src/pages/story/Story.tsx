@@ -70,10 +70,10 @@ const Story = () => {
   }, [params.slug, loaderUser]);
 
   useEffect(() => {
-    if (user) {
+    if (user && keyword && keyword.length > 0) {
       callApi(user.user.id, 1, "");
     } else {
-      if (loaderUser !== "loader") {
+      if (loaderUser !== "loader" && keyword && keyword.length > 0) {
         callApi("", 1, "");
       }
     }
@@ -87,7 +87,7 @@ const Story = () => {
         callApi("", 1, "");
       }
     }
-  }, [orderby, loaderUser]);
+  }, [orderby]);
 
   return (
     <MainLayout>

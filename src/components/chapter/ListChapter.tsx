@@ -29,35 +29,39 @@ const ListChapter = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      callApi(user.user.id, 1);
-    } else {
-      if (loaderUser !== "loader") {
-        callApi("", 1);
+    if (togglePopup) {
+      if (user) {
+        callApi(user.user.id, 1);
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", 1);
+        }
       }
+      setLoader(true);
     }
-    setLoader(true);
-  }, [params.slugchapter, params.slugstory, loaderUser]);
+  }, [params.slugchapter, params.slugstory, loaderUser, togglePopup]);
 
   useEffect(() => {
-    if (user) {
+    if (user && keyword && keyword.length > 0) {
       callApi(user.user.id, 1);
     } else {
-      if (loaderUser !== "loader") {
+      if (loaderUser !== "loader" && keyword && keyword.length > 0) {
         callApi("", 1);
       }
     }
   }, [keyword, loaderUser]);
 
   useEffect(() => {
-    if (user) {
-      callApi(user.user.id, 1);
-    } else {
-      if (loaderUser !== "loader") {
-        callApi("", 1);
+    if (togglePopup) {
+      if (user) {
+        callApi(user.user.id, 1);
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", 1);
+        }
       }
     }
-  }, [orderby, loaderUser]);
+  }, [orderby, loaderUser, togglePopup]);
 
   const changePageChapter = (word: string) => {
     if (word === "next") {
