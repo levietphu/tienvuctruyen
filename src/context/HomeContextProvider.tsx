@@ -25,8 +25,17 @@ const HomeContextProvider = ({ children }: any) => {
       });
   };
 
+  const callApi2 = async () => {
+    await axios
+      .get(`https://server-zing-mp3.vercel.app/api/home?page=1`)
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
   useEffect(() => {
     callApi();
+    callApi2();
   }, []);
 
   useEffect(() => {
