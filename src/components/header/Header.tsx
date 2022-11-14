@@ -222,12 +222,7 @@ const Header = ({ cates, logo }: any) => {
               )}
             </div>
             <div className="person__page" ref={PersonRef}>
-              <div
-                className="header__right--list"
-                onClick={() =>
-                  setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
-                }
-              >
+              <div className="header__right--list">
                 {loaderUser === "loader" ? (
                   <div className="box2" style={{ width: "100%" }}>
                     <div className="gallery" style={{ height: "30px" }}>
@@ -250,6 +245,11 @@ const Header = ({ cates, logo }: any) => {
                   loaderUser === "user" && (
                     <>
                       <span
+                        onClick={() =>
+                          setTooglePersonalLogoutMolie(
+                            !tooglePersonalLogoutMoblie
+                          )
+                        }
                         style={{
                           color: `${
                             tooglePersonalLogoutMoblie ? "#357376" : ""
