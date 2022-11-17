@@ -25,14 +25,13 @@ const Header = ({ cates, logo }: any) => {
 
   const navigate = useNavigate();
 
-  const { user, loaderUser, setLoaderUser }: any = useContext(AuthContext);
+  const { user, loaderUser }: any = useContext(AuthContext);
 
   const logout = () => {
     setToken("");
     localStorage.removeItem("token");
-    setLoaderUser("login");
-    navigate("/");
     setTooglePersonalLogoutMolie(false);
+    window.location.href = "/";
   };
 
   return (
@@ -271,10 +270,10 @@ const Header = ({ cates, logo }: any) => {
                     <i className="fa-solid fa-user"></i>
                     <span>Trang cá nhân</span>
                   </Link>
-                  <span className="logout" onClick={logout}>
+                  <a className="logout" onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Đăng xuất</span>
-                  </span>
+                  </a>
                 </div>
               )}
             </div>

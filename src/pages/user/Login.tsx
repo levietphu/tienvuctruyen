@@ -30,6 +30,7 @@ const Login = () => {
     document.title = "Đăng nhập vào Tiên Vực";
   }, []);
 
+  console.log(checkLogin);
   return (
     <div className="login">
       <div className="center login__center">
