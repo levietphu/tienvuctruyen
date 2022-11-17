@@ -1,13 +1,16 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HomeContext } from "../../context/HomeContextProvider";
+import { useOutSide } from "../../hookCustom/useOutSide";
 
 const Search = () => {
   const [check, setCheck] = useState(false);
   const { keyword, setKeyword, dataSearch }: any = useContext(HomeContext);
 
+  const Ref = useOutSide(() => setCheck(false));
+
   return (
-    <div className="search">
+    <div className="search" ref={Ref}>
       <div
         className={`search__container ${
           check ? "search__container--active" : ""
@@ -27,7 +30,6 @@ const Search = () => {
           value={keyword}
           onChange={(e: any) => setKeyword(e.target.value)}
           onClick={() => setCheck(!check)}
-          onBlur={() => setCheck(false)}
         />
         {keyword && (
           <div
