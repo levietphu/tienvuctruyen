@@ -26,6 +26,10 @@ const Login = () => {
     }
   }, [dataLogin]);
 
+  useEffect(() => {
+    document.title = "Đăng nhập vào Tiên Vực";
+  }, []);
+
   return (
     <div className="login">
       <div className="center login__center">

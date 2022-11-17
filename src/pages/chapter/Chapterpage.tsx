@@ -63,6 +63,17 @@ const Chapterpage = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (!loader && params.slugchapter && params.slugstory) {
+      document.title =
+        dataChapter.chuong.chapter_number +
+        ". " +
+        dataChapter.chuong.name_chapter +
+        " - " +
+        dataChapter.truyen.name;
+    }
+  }, [loader]);
+
   return (
     <MainLayout>
       {!loader ? (

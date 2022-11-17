@@ -65,6 +65,22 @@ const StoryCate = () => {
     setLoader(true);
   }, [params.slugcate, params.sluglist]);
 
+  useEffect(() => {
+    if (!loader && (params.slugcate || params.sluglist)) {
+      document.title = `${
+        params.slugcate
+          ? !loader && "Truyện " + dataCate.name
+          : params.sluglist === "truyen-vip"
+          ? "Bảng xếp hạng truyện vip"
+          : params.sluglist === "truyen-moi"
+          ? "Truyện mới"
+          : params.sluglist === "truyen-mien-phi"
+          ? "Truyện miễn phí"
+          : "Truyện đã hoàn thành"
+      }`;
+    }
+  }, [loader]);
+
   const changePage = (e: any, word: string) => {
     if (
       word === "next" &&

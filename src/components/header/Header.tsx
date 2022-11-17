@@ -32,6 +32,7 @@ const Header = ({ cates, logo }: any) => {
     localStorage.removeItem("token");
     setLoaderUser("login");
     navigate("/");
+    setTooglePersonalLogoutMolie(false);
   };
 
   return (

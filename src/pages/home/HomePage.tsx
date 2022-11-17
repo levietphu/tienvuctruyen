@@ -3,14 +3,17 @@ import MainLayout from "../../layouts/MainLayout";
 import GalleryCarousel from "../../components/home/GalleryCarousel";
 import Search from "../../components/home/Search";
 import DragStory from "../../components/home/DragStory";
-import imageStory from "../../store";
 import NewUpdateStory from "../../components/home/NewUpdateStory";
 import FullStory from "../../components/home/FullStory";
 import { HomeContext } from "../../context/HomeContextProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const HomePage = () => {
   const { dataHome, loaderHome }: any = useContext(HomeContext);
+
+  useEffect(() => {
+    document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
+  }, []);
 
   return (
     <MainLayout>
@@ -18,31 +21,19 @@ const HomePage = () => {
       <Search />
       <div className="story">
         <h1 style={{ margin: "0.67em 0" }}>Truyện đề cử</h1>
-        <DragStory
-          data={dataHome && dataHome.recommendedStory}
-          imageStory={imageStory}
-        />
+        <DragStory data={dataHome && dataHome.recommendedStory} />
       </div>
       <div className="story">
         <h1 style={{ margin: "0.67em 0" }}>Truyện yêu thích mỗi tuần</h1>
-        <DragStory
-          data={dataHome && dataHome.truyenhot_sort_week}
-          imageStory={imageStory}
-        />
+        <DragStory data={dataHome && dataHome.truyenhot_sort_week} />
       </div>
       <div className="story">
         <h1 style={{ margin: "0.67em 0" }}>Bảng xếp hạng truyện vip</h1>
-        <DragStory
-          data={dataHome && dataHome.rankVip}
-          imageStory={imageStory}
-        />
+        <DragStory data={dataHome && dataHome.rankVip} />
       </div>
       <div className="story">
         <h1 style={{ margin: "0.67em 0" }}>Truyện hot mới ra lò</h1>
-        <DragStory
-          data={dataHome && dataHome.hotStory}
-          imageStory={imageStory}
-        />
+        <DragStory data={dataHome && dataHome.hotStory} />
       </div>
       <div className="main__content">
         <div className="story__newupdate">

@@ -14,6 +14,7 @@ const PersonalPage = () => {
       getUser();
     }
     setCheckLogin(true);
+    document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
   }, []);
 
   return (

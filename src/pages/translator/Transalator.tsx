@@ -25,6 +25,12 @@ const Transalator = () => {
     callApi();
   }, [params.slugdichgia]);
 
+  useEffect(() => {
+    if (!loader && params.slugdichgia) {
+      document.title = `Truyện dịch bởi ${params.slugdichgia}`;
+    }
+  }, [loader]);
+
   return (
     <MainLayout>
       <div className="translator__header center">

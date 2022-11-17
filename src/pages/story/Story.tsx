@@ -89,6 +89,12 @@ const Story = () => {
     }
   }, [orderby]);
 
+  useEffect(() => {
+    if (!loader && params.slug) {
+      document.title = story.name;
+    }
+  }, [loader]);
+
   return (
     <MainLayout>
       {!loader ? (

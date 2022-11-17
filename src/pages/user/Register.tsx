@@ -47,6 +47,10 @@ const Register = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    document.title = "Tạo tài khoản Tiên Vực";
+  }, []);
+
   return (
     <div className="login">
       <div className="center login__center">
