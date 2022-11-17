@@ -49,12 +49,12 @@ const Search = () => {
           ) : (
             <>
               {dataSearch &&
-                dataSearch.map((item: any) => {
+                dataSearch.map((item: any, index: any) => {
                   return (
                     <Link
                       to={`/${item.slug}`}
                       className="search__menu--item"
-                      key={item.id}
+                      key={index}
                     >
                       <div className="menu__item--image">
                         <img
@@ -68,9 +68,9 @@ const Search = () => {
                           {item.full === 1 && (
                             <button className="btn">Full</button>
                           )}
-                          {item.theloais.map((value: any) => {
+                          {item.theloais.map((value: any, index: any) => {
                             return (
-                              <button className="btn btn__cate">
+                              <button className="btn btn__cate" key={index}>
                                 {value.name}
                               </button>
                             );

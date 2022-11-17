@@ -6,7 +6,7 @@ export const HomeContext = createContext<AppContextInterface | null>(null);
 
 const HomeContextProvider = ({ children }: any) => {
   const [dataHome, setDataHome] = useState<any>();
-  const [keyword, setKeyword] = useState<string>();
+  const [keyword, setKeyword] = useState<string>("");
   const [dataSearch, setDataSearch] = useState<any>();
   const [loaderHome, setLoaderHome] = useState<boolean>(false);
 
