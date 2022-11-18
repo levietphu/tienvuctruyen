@@ -1,10 +1,9 @@
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SettingContext } from "../context/SettingContextProvider";
-import Popup from "../pages/chapter/Popup";
-import ListChapter from "../components/chapter/ListChapter";
+
 import { LayoutContext } from "../context/LayoutContextProvider";
 
 export interface Props {
@@ -13,7 +12,7 @@ export interface Props {
 
 const MainLayout = ({ children }: Props) => {
   const params = useParams();
-  const { togglePopup, theme }: any = useContext(SettingContext);
+  const { theme }: any = useContext(SettingContext);
   const { dataLayout }: any = useContext(LayoutContext);
 
   useEffect(() => {
@@ -49,9 +48,6 @@ const MainLayout = ({ children }: Props) => {
           />
         </footer>
       )}
-      {params.slugchapter && <ListChapter />}
-
-      {togglePopup && <Popup />}
     </>
   );
 };

@@ -12,6 +12,8 @@ const ChapterStory = ({
   orderby,
   setOrderby,
   user,
+  setCheckKeywordOrderby,
+  checkKeywordOrderby,
 }: any) => {
   const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
@@ -110,11 +112,21 @@ const ChapterStory = ({
         <div className="center__chapter--left">
           <div className="sort__search">
             {orderby === "asc" ? (
-              <button onClick={() => setOrderby("desc")}>
+              <button
+                onClick={() => {
+                  setOrderby("desc");
+                  !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                }}
+              >
                 <i className="fa-solid fa-arrow-up-9-1"></i>
               </button>
             ) : (
-              <button onClick={() => setOrderby("asc")}>
+              <button
+                onClick={() => {
+                  setOrderby("asc");
+                  !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                }}
+              >
                 <i className="fa-solid fa-arrow-down-1-9"></i>
               </button>
             )}
@@ -135,7 +147,10 @@ const ChapterStory = ({
                   onClick={() => setCheckInput(!checkInput)}
                   onBlur={() => setCheckInput(false)}
                   value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  }}
                 />
               </div>
             </div>

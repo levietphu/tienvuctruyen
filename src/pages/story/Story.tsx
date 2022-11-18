@@ -16,6 +16,8 @@ const Story = () => {
   const [orderby, setOrderby] = useState<string>("asc");
   const [content, setContent] = useState<string>("");
   const [replyContent, setReplyContent] = useState<string>("");
+  const [checkKeywordOrderby, setCheckKeywordOrderby] =
+    useState<boolean>(false);
 
   const { user, loaderUser }: any = useContext(AuthContext);
 
@@ -70,21 +72,25 @@ const Story = () => {
   }, [params.slug, loaderUser]);
 
   useEffect(() => {
-    if (user && keyword && keyword.length > 0) {
-      callApi(user.user.id, 1, "");
-    } else {
-      if (loaderUser !== "loader" && keyword && keyword.length > 0) {
-        callApi("", 1, "");
+    if (checkKeywordOrderby) {
+      if (user) {
+        callApi(user.user.id, 1, "");
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", 1, "");
+        }
       }
     }
-  }, [keyword, loaderUser]);
+  }, [keyword]);
 
   useEffect(() => {
-    if (user) {
-      callApi(user.user.id, 1, "");
-    } else {
-      if (loaderUser !== "loader") {
-        callApi("", 1, "");
+    if (checkKeywordOrderby) {
+      if (user) {
+        callApi(user.user.id, 1, "");
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", 1, "");
+        }
       }
     }
   }, [orderby]);
@@ -189,6 +195,8 @@ const Story = () => {
               orderby={orderby}
               setOrderby={setOrderby}
               user={user}
+              setCheckKeywordOrderby={setCheckKeywordOrderby}
+              checkKeywordOrderby={checkKeywordOrderby}
             />
             <CommentStory
               comments={story.comments_story}

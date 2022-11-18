@@ -1,58 +1,29 @@
 import { useContext, useState, useEffect } from "react";
 import { SettingContext } from "../../context/SettingContextProvider";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import Moment from "react-moment";
 import { AuthContext } from "../../context/AuthContextProvider";
 
-const ListChapter = () => {
+const ListChapter = ({
+  callApi,
+  dataChapter,
+  keyword,
+  setKeyword,
+  orderby,
+  setOrderby,
+  loader,
+  setCheckKeywordOrderby,
+  checkKeywordOrderby,
+}: any) => {
   const { togglePopup }: any = useContext(SettingContext);
   const { user, loaderUser }: any = useContext(AuthContext);
 
   const [checkSearchChapter, setCheckSearchChapter] = useState(false);
-  const [dataChapter, setDataChapter] = useState<any>();
-  const [loader, setLoader] = useState<boolean>(true);
-  const [keyword, setKeyword] = useState<string>("");
-  const [orderby, setOrderby] = useState<string>("asc");
 
   const params = useParams();
 
-  const callApi = async (id_user: string, page: number) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
-      )
-      .then((res) => {
-        setDataChapter(res.data.data.items);
-        setLoader(false);
-      });
-  };
-
   useEffect(() => {
-    if (togglePopup) {
-      if (user) {
-        callApi(user.user.id, 1);
-      } else {
-        if (loaderUser !== "loader") {
-          callApi("", 1);
-        }
-      }
-      setLoader(true);
-    }
-  }, [params.slugchapter, params.slugstory, loaderUser, togglePopup]);
-
-  useEffect(() => {
-    if (user && keyword && keyword.length > 0) {
-      callApi(user.user.id, 1);
-    } else {
-      if (loaderUser !== "loader" && keyword && keyword.length > 0) {
-        callApi("", 1);
-      }
-    }
-  }, [keyword, loaderUser]);
-
-  useEffect(() => {
-    if (togglePopup) {
+    if (togglePopup && checkKeywordOrderby) {
       if (user) {
         callApi(user.user.id, 1);
       } else {
@@ -61,7 +32,19 @@ const ListChapter = () => {
         }
       }
     }
-  }, [orderby, loaderUser, togglePopup]);
+  }, [keyword, togglePopup]);
+
+  useEffect(() => {
+    if (togglePopup && checkKeywordOrderby) {
+      if (user) {
+        callApi(user.user.id, 1);
+      } else {
+        if (loaderUser !== "loader") {
+          callApi("", 1);
+        }
+      }
+    }
+  }, [orderby, togglePopup]);
 
   const changePageChapter = (word: string) => {
     if (word === "next") {
@@ -98,11 +81,21 @@ const ListChapter = () => {
             </div>
             <div className="sort__search">
               {orderby === "asc" ? (
-                <button onClick={() => setOrderby("desc")}>
+                <button
+                  onClick={() => {
+                    setOrderby("desc");
+                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  }}
+                >
                   <i className="fa-solid fa-arrow-up-9-1"></i>
                 </button>
               ) : (
-                <button onClick={() => setOrderby("asc")}>
+                <button
+                  onClick={() => {
+                    setOrderby("asc");
+                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  }}
+                >
                   <i className="fa-solid fa-arrow-down-1-9"></i>
                 </button>
               )}
@@ -122,7 +115,10 @@ const ListChapter = () => {
                     onClick={() => setCheckSearchChapter(!checkSearchChapter)}
                     onBlur={() => setCheckSearchChapter(false)}
                     value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
+                    onChange={(e) => {
+                      setKeyword(e.target.value);
+                      !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                    }}
                   />
                 </div>
               </div>
