@@ -36,20 +36,22 @@ const Chapterpage = () => {
       .then((res) => {
         setDataChapter(res.data.data.items);
         setLoader(false);
-        window.scrollTo(0, 0);
       });
   };
 
   useEffect(() => {
     if (user) {
       callApi(user.user.id, 1);
+      window.scrollTo(0, 0);
     } else {
       if (loaderUser !== "loader") {
         callApi("", 1);
+        window.scrollTo(0, 0);
       }
     }
     setLoader(true);
     setTogglePopup(false);
+    window.scrollTo(0, 0);
   }, [params.slugchapter, params.slugstory, loaderUser]);
 
   const changeChapter = (word: string) => {
