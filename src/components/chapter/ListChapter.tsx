@@ -143,7 +143,7 @@ const ListChapter = () => {
                     <span>
                       {" "}
                       {item.name_chapter.length > 17
-                        ? item.name_chapter.slice(0, 17) + "..."
+                        ? item.name_chapter.slice(0, 14) + "..."
                         : item.name_chapter}
                     </span>
                   </div>
