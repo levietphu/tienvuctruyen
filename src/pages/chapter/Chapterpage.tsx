@@ -36,6 +36,7 @@ const Chapterpage = () => {
       .then((res) => {
         setDataChapter(res.data.data.items);
         setLoader(false);
+        window.scrollTo(0, 0);
       });
   };
 
