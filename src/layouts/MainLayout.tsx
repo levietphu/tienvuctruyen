@@ -1,7 +1,7 @@
-import { ReactNode, useContext, useEffect, useRef } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { SettingContext } from "../context/SettingContextProvider";
 import Popup from "../pages/chapter/Popup";
 import ListChapter from "../components/chapter/ListChapter";
