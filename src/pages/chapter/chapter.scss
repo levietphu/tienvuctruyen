@@ -181,7 +181,7 @@
 }
 
 .popup__list__container {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: auto;
   height: 100vh;
@@ -220,6 +220,7 @@
           }
           input {
             padding: 8px;
+            margin-right: 8px;
           }
         }
       }
@@ -273,6 +274,7 @@
     bottom: 0;
     z-index: 33;
     background: white;
+    height: 130px;
     .next__prev {
       padding: 15px;
       text-align: center;
