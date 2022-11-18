@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const GalleryCarousel = ({ banners, loaderHome }: any) => {
@@ -44,7 +44,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
       setPosChange(-carouselRef.current.offsetWidth);
       setPosition(-carouselRef.current.offsetWidth);
     }
-  }, [banners]);
+  }, [banners, carouselRef]);
 
   // Xử lý slider
   const checkIndex = () => {
@@ -129,7 +129,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
           <div
             className={`carousel__annimation`}
             style={{
-              transform: `translateX(${posChange != 0 && posChange}px)`,
+              transform: `translateX(-1780px)`,
             }}
             ref={Ref}
             // onMouseDown={dragStart}
@@ -145,28 +145,23 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
                 />
               </Link>
             </div>
-            {banners &&
-              banners.map((value: any) => {
-                return (
-                  <div className="carousel-item" key={value.id}>
-                    <Link to={`/${value.slugtruyen}`}>
-                      <img
-                        src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
-                        alt=""
-                      />
-                    </Link>
-                  </div>
-                );
-              })}
+            {banners.map((value: any) => {
+              return (
+                <div className="carousel-item" key={value.id}>
+                  <Link to={`/${value.slugtruyen}`}>
+                    <img
+                      src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
+                      alt=""
+                    />
+                  </Link>
+                </div>
+              );
+            })}
             <div className="carousel-item">
               <Link to={`/${banners?.[0]?.slugtruyen}`}>
                 <img
-                  src={
-                    banners &&
-                    `${process.env.REACT_APP_UPLOADS}${banners[0]?.image}`
-                  }
+                  src={`${process.env.REACT_APP_UPLOADS}${banners[0]?.image}`}
                   alt=""
-                  style={{ width: "100%", height: "382px" }}
                 />
               </Link>
             </div>
