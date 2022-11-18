@@ -129,7 +129,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
           <div
             className={`carousel__annimation`}
             style={{
-              transform: `translateX(-1780px)`,
+              transform: `translateX(${posChange}px)`,
             }}
             ref={Ref}
             // onMouseDown={dragStart}
