@@ -14,6 +14,7 @@ const HomeContextProvider = ({ children }: any) => {
     await axios.get(`${process.env.REACT_APP_API}home`).then((res) => {
       setDataHome(res.data.data.items);
       setLoaderHome(true);
+      window.scrollTo(0, 0);
     });
   };
 
