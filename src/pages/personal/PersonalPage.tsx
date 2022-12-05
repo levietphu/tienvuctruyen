@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/AuthContextProvider";
 import MainLayout from "../../layouts/MainLayout";
 import "./personal.scss";
 import { useContext, useEffect } from "react";
+import coinImage from "../../assets/coin.svg";
 
 const PersonalPage = () => {
   const { pathname } = useLocation();
@@ -27,10 +28,7 @@ const PersonalPage = () => {
               <div style={{ marginTop: "10px" }}>
                 <div className="image__coin">
                   <div>
-                    <img
-                      src="https://tienvuc.vip/_nuxt/img/coin.4fd899c.svg"
-                      alt=""
-                    />
+                    <img src={coinImage} alt="" />
                   </div>
                   <span>{user.user.coin} xu</span>
                 </div>
