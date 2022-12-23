@@ -267,7 +267,19 @@
   .popup-payment {
     &__center {
       width: 80% !important;
-      &--item {
+      &--popup {
+        .imageMb {
+          margin-right: 0 !important;
+          margin-left: 0 !important;
+        }
+        .popup__coppy {
+          left: 30% !important;
+        }
+        .coin__money {
+          &--item {
+            width: 29% !important;
+          }
+        }
       }
     }
   }
