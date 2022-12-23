@@ -7,6 +7,7 @@ export const AuthContext = createContext<AppContextInterface | null>(null);
 
 const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>();
+  const [popupPayment, setPopupPayment] = useState("");
   const [loaderUser, setLoaderUser] = useState<string>("loader");
   const [data, setData] = useState<any>();
   const [checkLogin, setCheckLogin] = useState<boolean>(false);
@@ -110,6 +111,8 @@ const AuthContextProvider = ({ children }: any) => {
     getUser,
     setCheckLogin,
     checkLogin,
+    popupPayment,
+    setPopupPayment,
   };
 
   return (

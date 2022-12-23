@@ -1,7 +1,13 @@
-import React from "react";
+import HistoryTransition from "./coin/HistoryTransition";
+import LoadCents from "./coin/LoadCents";
 
 const Coin = () => {
-  return <h4>Tính năng đang phát triển</h4>;
+  return (
+    <div className="coin__personal">
+      <LoadCents />
+      <HistoryTransition />
+    </div>
+  );
 };
 
 export default Coin;

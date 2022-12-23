@@ -261,6 +261,16 @@
   .error_chapter {
     margin-left: 20px !important;
   }
+  .load__cents {
+    display: grid !important;
+  }
+  .popup-payment {
+    &__center {
+      width: 80% !important;
+      &--item {
+      }
+    }
+  }
 }
 
 body {
