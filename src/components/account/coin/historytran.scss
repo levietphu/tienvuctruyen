@@ -1,0 +1,66 @@
+h1 {
+  margin-bottom: 20px;
+}
+table {
+  border-collapse: collapse;
+
+  tr {
+    font-size: 1.1rem;
+    border-top: 1px solid #e7e3e3;
+    th {
+      width: 20%;
+      background: white;
+      padding: 10px;
+      text-align: start;
+    }
+    td {
+      padding: 10px;
+      background: white;
+    }
+    th:nth-child(3) {
+      text-align: end;
+    }
+    td:nth-child(3) {
+      text-align: end;
+      color: #1eb553;
+    }
+    th:nth-child(4) {
+      text-align: center;
+    }
+    td:nth-child(4) {
+      text-align: center;
+      span {
+        padding: 5px 10px;
+        background: #1eb553;
+        font-size: 1rem;
+        border-radius: 3px;
+        color: white;
+      }
+    }
+  }
+}
+
+.pagination__coin {
+  text-align: end;
+  margin: 20px 0 0 0;
+  button {
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  button:nth-child(1) {
+    color: white;
+  }
+  .ban__coin {
+    cursor: not-allowed;
+    background: #cfcece;
+    opacity: 0.4;
+  }
+  .not-active__coin {
+    cursor: default;
+    background: #357376;
+  }
+}

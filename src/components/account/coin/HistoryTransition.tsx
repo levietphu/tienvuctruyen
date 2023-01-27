@@ -1,7 +1,135 @@
-import React from "react";
+import "./historytran.scss";
+import coin from "../../../assets/coin.svg";
+import "./historytran.scss";
+import PaginationCoin from "./PaginationCoin";
 
 const HistoryTransition = () => {
-  return <div>HistoryTransition</div>;
+  return (
+    <>
+      <h1>Lịch sử giao dịch</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã giao dịch</th>
+            <th>Nội dung</th>
+            <th>XU</th>
+            <th>Tình trạng</th>
+            <th>Cập nhật lần cuối</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr draggable={false}>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+              </span>
+            </td>
+
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+              </span>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+              </span>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+                <p>Nộp 50k mbbank</p>
+              </span>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <strong>Nạp Xu</strong>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+                <p>Nộp 50k mbbank</p>
+              </span>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+          <tr>
+            <td>KRAJ5MVJENM0RVK7</td>
+            <td>
+              <span>
+                <strong>Nạp Xu</strong>
+                <p>Nộp 50k mbbank</p>
+              </span>
+            </td>
+            <td>
+              +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+            </td>
+            <td>
+              <span>Thành công</span>
+            </td>
+            <td>19:39:51 06/03/2022</td>
+          </tr>
+        </tbody>
+      </table>
+      <PaginationCoin />
+    </>
+  );
 };
 
 export default HistoryTransition;

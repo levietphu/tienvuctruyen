@@ -280,8 +280,19 @@
             width: 29% !important;
           }
         }
+        .popup_next {
+          &--step1 {
+            line-height: 1.15 !important;
+            p {
+              margin: 10px 0;
+            }
+          }
+        }
       }
     }
+  }
+  thead {
+    display: none !important;
   }
 }
 
