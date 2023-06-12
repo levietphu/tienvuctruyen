@@ -1,109 +1,36 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+// import required modules
+import { Pagination, Autoplay } from "swiper";
 
 const GalleryCarousel = ({ banners, loaderHome }: any) => {
-  const [countSlider, setCountSlider] = useState(1);
-  const [posChange, setPosChange] = useState<number>(0);
-  const [position, setPosition] = useState<number>(0);
   const [countNotification, setCountNotification] = useState(1);
 
-  const Ref = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  // let posX1: any;
-  // let posX2: any;
-  // let posInitial: any;
-  // let posFinal: any;
 
   useEffect(() => {
     let a: any;
-    if (Ref) {
-      a = setTimeout(() => {
-        handlerClick("Next");
-        handlerNotification("Next");
-      }, 3000);
-      Ref.current?.addEventListener("transitionend", checkIndex);
-      notificationRef.current?.addEventListener(
+    a = setTimeout(() => {
+      handlerNotification("Next");
+    }, 3000);
+    notificationRef.current?.addEventListener(
+      "transitionend",
+      checkNotification
+    );
+    return () => {
+      notificationRef.current?.removeEventListener(
         "transitionend",
         checkNotification
       );
-      return () => {
-        Ref.current?.removeEventListener("transitionend", checkIndex);
-        notificationRef.current?.removeEventListener(
-          "transitionend",
-          checkNotification
-        );
-        clearTimeout(a);
-      };
-    }
-  }, [countSlider]);
-
-  useEffect(() => {
-    if (banners && carouselRef?.current) {
-      setPosChange(-carouselRef.current.offsetWidth);
-      setPosition(-carouselRef.current.offsetWidth);
-    }
-  }, [banners, carouselRef]);
-
-  // Xử lý slider
-  const checkIndex = () => {
-    Ref.current?.classList.remove("active");
-    if (!carouselRef?.current) return;
-    if (countSlider <= 0) {
-      setPosChange(4 * -carouselRef.current.offsetWidth);
-      setCountSlider(4);
-      setPosition(4 * -carouselRef.current.offsetWidth);
-    }
-    if (countSlider >= 5) {
-      setPosChange(-carouselRef.current.offsetWidth);
-      setPosition(-carouselRef.current.offsetWidth);
-      setCountSlider(1);
-    }
-  };
-
-  const handlerClick = (arg: string) => {
-    Ref.current?.classList.add("active");
-    if (!carouselRef?.current) return;
-    if (arg === "Next") {
-      setPosChange((countSlider + 1) * -carouselRef.current.offsetWidth);
-      setPosition((countSlider + 1) * -carouselRef.current.offsetWidth);
-      setCountSlider(countSlider + 1);
-    } else {
-      setPosChange((countSlider - 1) * -carouselRef.current.offsetWidth);
-      setPosition((countSlider - 1) * -carouselRef.current.offsetWidth);
-      setCountSlider(countSlider - 1);
-    }
-  };
-
-  // const dragStart = (e: any) => {
-  //   e.preventDefault();
-  //   posX1 = e.clientX;
-  //   posInitial = Ref.current?.offsetWidth;
-  //   document.onmouseup = dragEnd;
-  //   document.onmousemove = dragMove;
-  // };
-
-  // const dragMove = (e: any) => {
-  //   posX2 = posX1 - e.clientX;
-  //   posX1 = e.clientX;
-  //   let posCurrent: any = Ref.current?.offsetWidth;
-  //   setPosChange(posCurrent - posX2);
-  // };
-
-  // const dragEnd = () => {
-  //   posFinal = Ref.current?.offsetWidth;
-  //   if (posFinal - position < -500) {
-  //     handlerClick("Next");
-  //   } else if (posFinal - position > 500) {
-  //     handlerClick("Prev");
-  //   } else {
-  //     setPosChange(position);
-  //   }
-  //   document.onmousemove = null;
-  //   document.onmouseup = null;
-  // };
-
+      clearTimeout(a);
+    };
+  }, [countNotification]);
   // Xử lý phần notification
   const handlerNotification = (params: string) => {
     notificationRef.current?.classList.add("active");
@@ -126,46 +53,33 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
     <>
       <div className="carousel mb-20">
         {loaderHome ? (
-          <div
-            className={`carousel__annimation`}
-            style={{
-              transform: `translateX(${posChange}px)`,
-            }}
-            ref={Ref}
-            // onMouseDown={dragStart}
-          >
-            <div className="carousel-item" ref={carouselRef}>
-              <Link to={`/${banners?.[3]?.slugtruyen}`}>
-                <img
-                  src={
-                    banners &&
-                    `${process.env.REACT_APP_UPLOADS}${banners[3]?.image}`
-                  }
-                  alt=""
-                />
-              </Link>
-            </div>
-            {banners.map((value: any) => {
-              return (
-                <div className="carousel-item" key={value.id}>
-                  <Link to={`/${value.slugtruyen}`}>
-                    <img
-                      src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
-                      alt=""
-                    />
-                  </Link>
-                </div>
-              );
-            })}
-            <div className="carousel-item">
-              <Link to={`/${banners?.[0]?.slugtruyen}`}>
-                <img
-                  src={`${process.env.REACT_APP_UPLOADS}${banners[0]?.image}`}
-                  alt=""
-                />
-              </Link>
-            </div>
-          </div>
+          <>
+            <Swiper
+              pagination={{
+                dynamicBullets: true,
+              }}
+              modules={[Autoplay, Pagination]}
+              className="mySwiper carousel__annimation"
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+            >
+              {banners.map((value: any) => {
+                return (
+                  <SwiperSlide className="carousel-item" key={value.id}>
+                    <Link to={`/${value.slugtruyen}`}>
+                      <img
+                        src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
+                        alt=""
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </>
         ) : (
           <div className="box2" style={{ width: "100%" }}>
             <div className="gallery">

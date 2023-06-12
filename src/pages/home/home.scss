@@ -8,8 +8,6 @@
   .carousel__annimation {
     display: flex;
     height: 100%;
-    position: absolute;
-    top: 0;
     .carousel-item {
       flex-shrink: 0;
       width: 100%;
@@ -194,10 +192,13 @@
     display: flex;
     position: relative;
     top: 0;
+    .swiper-slide {
+      flex-shrink: unset;
+    }
     .story__slider--item {
       margin-right: 25px;
       position: relative;
-      margin-top: 20px;
+      margin-bottom: 10px;
       .btn__vip {
         padding: 5px 10px;
         background: #f5f593;

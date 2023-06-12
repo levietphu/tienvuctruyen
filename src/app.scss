@@ -9,7 +9,6 @@
       .drag__story .drag__story--slider .story__slider--item {
         margin-right: 10px;
         position: relative;
-        margin-top: 20px;
       }
       .drag__story .drag__story--slider .story__slider--item a .image__story {
         width: 100px;
@@ -170,22 +169,6 @@
       .list__bookcase .item__bookcase {
         width: 50% !important;
       }
-      .drag__story {
-        .drag__story--slider {
-          .story__slider--item {
-            width: 50% !important;
-            .btn__vip {
-              left: 25px !important;
-            }
-            .btn__full {
-              left: 60px !important;
-            }
-            .hover__story {
-              left: 18px !important;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -226,33 +209,12 @@
     .drag__story {
       .drag__story--slider {
         .story__slider--item {
-          width: 33.33334% !important;
-
           .btn__vip {
             left: 20px;
           }
           .image__story {
-            width: 100px !important;
+            width: 95px !important;
             height: 150px;
-          }
-          .hover__story {
-            width: 100px !important;
-            height: 150px;
-            left: 12px !important;
-            .hover__story--name {
-              font-size: 14px;
-              margin-bottom: 20px;
-              margin-top: 10px;
-            }
-            span {
-              font-size: 11px;
-            }
-            .border-top {
-              display: none !important;
-            }
-            .discount__story {
-              display: none !important;
-            }
           }
         }
       }
