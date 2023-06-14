@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,14 +10,15 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
 
-const DragStory = ({ data }: any) => {
-  const params = useParams();
-
+const DragStory = ({ data, vip }: any) => {
   return (
     <div className="drag__story">
       <Swiper
         slidesPerView={1}
         spaceBetween={10}
+        pagination={{
+          dynamicBullets: true,
+        }}
         breakpoints={{
           640: {
             slidesPerView: 2,
@@ -37,11 +37,38 @@ const DragStory = ({ data }: any) => {
         className="mySwiper drag__story--slider"
       >
         {data &&
-          data.map((item: any) => {
+          data.map((item: any, index: number) => {
             return (
               <SwiperSlide className="story__slider--item" key={item.id}>
-                {item.vip === 1 && <span className="btn__vip">vip</span>}
-                {item.full === 1 && <span className="btn__full">full</span>}
+                {vip !== 1 && item.vip === 1 ? (
+                  <span className="btn__vip">vip</span>
+                ) : (
+                  <span
+                    className="btn__vip"
+                    style={{
+                      background: `${
+                        index === 0
+                          ? "#ffe08a"
+                          : index === 1
+                          ? "#f14668"
+                          : index === 2
+                          ? "#3e8ed0"
+                          : "#7a7a7a"
+                      }`,
+                      color: `${index === 0 ? "black" : "white"}`,
+                    }}
+                  >
+                    Top {index + 1}
+                  </span>
+                )}
+                {item.full === 1 && (
+                  <span
+                    className="btn__full"
+                    style={{ left: `${vip ? "75px" : ""}` }}
+                  >
+                    full
+                  </span>
+                )}
 
                 <Link to={`/${item.slug}`}>
                   <div className="image__story">

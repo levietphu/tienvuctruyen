@@ -40,7 +40,7 @@ const HomePage = () => {
         </div>
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Bảng xếp hạng truyện vip</h1>
-          <DragStory data={dataHome && dataHome.rankVip} />
+          <DragStory data={dataHome && dataHome.rankVip} vip={1} />
         </div>
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Truyện hot mới ra lò</h1>
