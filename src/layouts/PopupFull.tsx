@@ -19,7 +19,7 @@ const PopupFull = () => {
             Vì lý do bên backend không có tên miền nên muốn vào trang cần làm
             theo hướng dẫn:
           </h3>
-          <a href="https://20.239.160.243/" target="_blank">
+          <a href="https://139.162.17.88/" target="_blank">
             Nhấp vào đây
           </a>
           <div>
