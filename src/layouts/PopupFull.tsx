@@ -3,13 +3,14 @@ import xuly from "../assets/xuly.png";
 import xuly2 from "../assets/xuly2.png";
 import { SettingContext } from "../context/SettingContextProvider";
 import { useContext } from "react";
+import { useOutSide } from "../hookCustom/useOutSide";
 
 const PopupFull = () => {
   const { setCheckPopupHome }: any = useContext(SettingContext);
-
+  const Ref = useOutSide(() => setCheckPopupHome(false));
   return (
     <div className="popup-full">
-      <div className="popup-full__center">
+      <div className="popup-full__center" ref={Ref}>
         <i
           className="fa-solid fa-xmark"
           onClick={() => setCheckPopupHome(false)}
