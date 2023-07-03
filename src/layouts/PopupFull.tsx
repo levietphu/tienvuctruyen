@@ -20,7 +20,7 @@ const PopupFull = () => {
             theo hướng dẫn:
           </h3>
           <a href="https://139.162.17.88/" target="_blank">
-            Nhấp vào đây
+            Nhấp vào đây nhé
           </a>
           <div>
             <img src={xuly} alt="" />
