@@ -181,14 +181,13 @@
 }
 
 .popup__list__container {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: auto;
   height: 100vh;
   background: white;
   z-index: 32;
   transition: 0.3s;
-  overflow-y: scroll;
   .header__list {
     background: white;
     .list {
@@ -228,6 +227,8 @@
   .main__list {
     background: #e7e3e3;
     margin-top: 10px;
+    overflow: auto;
+    height: 65vh;
     .main__item {
       display: block;
       padding: 10px;
@@ -269,11 +270,8 @@
     }
   }
   .footer__list {
-    position: sticky;
-    bottom: 0;
     z-index: 33;
     background: white;
-    height: 130px;
     .next__prev {
       padding: 15px;
       text-align: center;
