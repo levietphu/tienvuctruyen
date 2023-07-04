@@ -86,7 +86,6 @@
         }
         .cate__story {
           width: 100% !important;
-          margin-left: 0;
         }
         .chapter__story {
           width: 100% !important;
@@ -157,14 +156,11 @@
   .setting__chapter {
     display: none;
   }
-  .personal__left {
-    display: none;
-  }
   .personal {
     .personal__right {
       width: 100% !important;
       .list__bookcase .item__bookcase {
-        width: 50% !important;
+        width: calc((100% - 10px) / 2) !important;
       }
     }
   }

@@ -1,7 +1,13 @@
 .personal {
   display: flex;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
   .personal__left {
     width: 25%;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
     margin-right: 20px;
     .name__person {
       text-align: center;
@@ -28,16 +34,36 @@
       }
     }
     .personal__left--list {
+      @media screen and (max-width: 768px) {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        z-index: 6;
+        background: white;
+        padding: 5px;
+        width: 100%;
+      }
       .personal__item {
-        padding: 10px 10px;
+        padding: 15px;
         border-radius: 3px;
         font-size: 1.1rem;
         text-transform: capitalize;
         color: black;
         display: flex;
+        @media screen and (max-width: 768px) {
+          display: block;
+          text-align: center;
+          font-size: 16px;
+          line-height: 16px;
+          flex: 1;
+          padding: 10px;
+        }
         position: relative;
         i {
           flex: 1;
+          @media screen and (max-width: 768px) {
+            display: block;
+          }
         }
         span {
           flex: 8;
@@ -57,15 +83,16 @@
     .list__bookcase {
       display: flex;
       flex-wrap: wrap;
-      margin: 20px -10px 0 -10px;
+      gap: 15px;
+      @media screen and (max-width: 768px) {
+        gap: 10px;
+      }
       .item__bookcase {
-        width: 25%;
+        width: calc((100% - 45px) / 4);
         .item {
           box-sizing: border-box;
-          padding: 10px;
           position: relative;
           height: 100%;
-
           .height__full {
             height: 100%;
             padding: 0;
@@ -104,6 +131,9 @@
               color: #357376;
               font-size: 1rem;
               text-transform: capitalize;
+              @media screen and (max-width: 768px) {
+                font-size: 14px;
+              }
             }
           }
           i.close {
@@ -129,16 +159,16 @@
       .drag__story--slider {
         flex-wrap: wrap;
         display: flex;
-        gap: 20px;
+        gap: 40px;
         @media screen and (max-width: 768px) {
-          gap: 10px;
+          gap: 25px;
         }
         .story__slider--item {
-          width: calc((100% - 80px) / 5);
+          width: calc((100% - 160px) / 5);
           margin-right: 0;
           margin-bottom: 0;
           @media screen and (max-width: 768px) {
-            width: calc((100% - 20px) / 3);
+            width: calc((100% - 50px) / 3);
           }
           .image__story {
             width: 152px;

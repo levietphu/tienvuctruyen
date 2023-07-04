@@ -11,7 +11,7 @@ const VipBuy = () => {
         {user.vipbuy.length !== 0 ? (
           user.vipbuy.map((item: any, index: any) => {
             return (
-              <div className="story__slider--item center" key={item.id}>
+              <div className="story__slider--item" key={item.id}>
                 <div className="ghim">
                   {item.truyen.vip === 1 && (
                     <span className="btn__vip">vip</span>

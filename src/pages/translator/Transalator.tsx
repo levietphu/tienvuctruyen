@@ -10,7 +10,6 @@ const Transalator = () => {
   const [dataTran, setDataTran] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
 
-  const navigate = useNavigate();
   const params = useParams();
 
   const callApi = async () => {
@@ -47,7 +46,6 @@ const Transalator = () => {
         <h1>
           Truyện dịch bởi <span>{params.slugdichgia}</span>
         </h1>
-        {/* {!loader && <DragStory data={dataTran} />} */}
         <div className="drag__story">
           <div className="drag__story--slider">
             {dataTran &&
