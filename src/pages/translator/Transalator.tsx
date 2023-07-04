@@ -54,8 +54,12 @@ const Transalator = () => {
               dataTran.map((item: any) => {
                 return (
                   <div className="story__slider--item" key={item.id}>
-                    {item.vip === 1 && <span className="btn__vip">vip</span>}
-                    {item.full === 1 && <span className="btn__full">full</span>}
+                    <div className="ghim">
+                      {item.vip === 1 && <span className="btn__vip">vip</span>}
+                      {item.full === 1 && (
+                        <span className="btn__full">full</span>
+                      )}
+                    </div>
 
                     <Link to={`/${item.slug}`}>
                       <div className="image__story">

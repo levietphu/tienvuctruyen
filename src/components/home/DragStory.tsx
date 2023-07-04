@@ -11,6 +11,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
 const DragStory = ({ data, vip }: any) => {
+  console.log(!vip);
   return (
     <div className="drag__story">
       <Swiper
@@ -40,35 +41,31 @@ const DragStory = ({ data, vip }: any) => {
           data.map((item: any, index: number) => {
             return (
               <SwiperSlide className="story__slider--item" key={item.id}>
-                {vip !== 1 && item.vip === 1 ? (
-                  <span className="btn__vip">vip</span>
-                ) : (
-                  <span
-                    className="btn__vip"
-                    style={{
-                      background: `${
-                        index === 0
-                          ? "#ffe08a"
-                          : index === 1
-                          ? "#f14668"
-                          : index === 2
-                          ? "#3e8ed0"
-                          : "#7a7a7a"
-                      }`,
-                      color: `${index === 0 ? "black" : "white"}`,
-                    }}
-                  >
-                    Top {index + 1}
-                  </span>
-                )}
-                {item.full === 1 && (
-                  <span
-                    className="btn__full"
-                    style={{ left: `${vip ? "75px" : ""}` }}
-                  >
-                    full
-                  </span>
-                )}
+                <div className="ghim">
+                  {!vip && item.vip === 1 ? (
+                    <span className="btn__vip">vip</span>
+                  ) : (
+                    <span
+                      className="btn__vip"
+                      style={{
+                        background: `${
+                          index === 0
+                            ? "#ffe08a"
+                            : index === 1
+                            ? "#f14668"
+                            : index === 2
+                            ? "#3e8ed0"
+                            : "#7a7a7a"
+                        }`,
+                        color: `${index === 0 ? "black" : "white"}`,
+                        display: `${item.vip === 0 ? "none" : ""}`,
+                      }}
+                    >
+                      Top {index + 1}
+                    </span>
+                  )}
+                  {item.full === 1 && <span className="btn__full">full</span>}
+                </div>
 
                 <Link to={`/${item.slug}`}>
                   <div className="image__story">

@@ -209,27 +209,38 @@
       margin-right: 25px;
       position: relative;
       margin-bottom: 10px;
-      .btn__vip {
-        padding: 5px 10px;
-        background: #f5f593;
-        text-transform: uppercase;
+      .ghim {
         position: absolute;
         top: 10px;
         left: 10px;
-        border-radius: 3px;
-        font-size: 12px;
-        cursor: pointer;
-      }
-      .btn__full {
-        padding: 5px 10px;
-        background: #1eb553;
-        text-transform: uppercase;
-        position: absolute;
-        top: 10px;
-        left: 55px;
-        border-radius: 3px;
-        font-size: 12px;
-        cursor: pointer;
+        @media screen and (max-width: 768px) {
+          top: 5px;
+        }
+        .btn__vip {
+          padding: 5px 10px;
+          background: #f5f593;
+          text-transform: uppercase;
+          margin-right: 10px;
+          border-radius: 3px;
+          font-size: 12px;
+          cursor: pointer;
+          @media screen and (max-width: 768px) {
+            font-size: 10px;
+            margin-right: 5px;
+          }
+        }
+        .btn__full {
+          padding: 5px 10px;
+          background: #1eb553;
+          text-transform: uppercase;
+
+          border-radius: 3px;
+          font-size: 12px;
+          cursor: pointer;
+          @media screen and (max-width: 768px) {
+            font-size: 10px;
+          }
+        }
       }
       a {
         .image__story {

@@ -12,10 +12,15 @@ const VipBuy = () => {
           user.vipbuy.map((item: any, index: any) => {
             return (
               <div className="story__slider--item center" key={item.id}>
-                {item.truyen.vip === 1 && <span className="btn__vip">vip</span>}
-                {item.truyen.full === 1 && (
-                  <span className="btn__full">full</span>
-                )}
+                <div className="ghim">
+                  {item.truyen.vip === 1 && (
+                    <span className="btn__vip">vip</span>
+                  )}
+                  {item.truyen.full === 1 && (
+                    <span className="btn__full">full</span>
+                  )}
+                </div>
+
                 <Link to={`/${item.truyen.slug}`}>
                   <div className="image__story">
                     <img
