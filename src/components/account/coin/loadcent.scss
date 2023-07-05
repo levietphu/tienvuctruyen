@@ -120,7 +120,12 @@
         border: 1px solid white;
         &--item {
           cursor: pointer;
-          width: 23%;
+          width: calc((100% - 30px) / 4);
+          box-sizing: border-box;
+          border: 1px solid white;
+          @media screen and (max-width: 768px) {
+            width: calc((100% - 20px) / 3);
+          }
           .top {
             border-radius: 5px;
             border-bottom-left-radius: 0;
@@ -130,6 +135,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
             .coin__500 {
               display: flex;
               img {

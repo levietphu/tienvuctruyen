@@ -3,7 +3,10 @@ h1 {
 }
 table {
   border-collapse: collapse;
-
+  overflow-x: scroll;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
   tr {
     font-size: 1.1rem;
     border-top: 1px solid #e7e3e3;

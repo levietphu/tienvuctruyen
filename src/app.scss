@@ -230,11 +230,7 @@
         .popup__coppy {
           left: 30% !important;
         }
-        .coin__money {
-          &--item {
-            width: 29% !important;
-          }
-        }
+
         .popup_next {
           &--step1 {
             line-height: 1.15 !important;
@@ -245,9 +241,6 @@
         }
       }
     }
-  }
-  thead {
-    display: none !important;
   }
 }
 

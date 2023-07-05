@@ -67,7 +67,6 @@
 }
 
 .search {
-  box-sizing: border-box;
   .search__container {
     display: flex;
     position: relative;
@@ -118,6 +117,8 @@
         font-size: 1.25rem;
       }
     }
+    box-sizing: border-box;
+    border: 1px solid #f7f6f6;
   }
   .search__container.search__container--active {
     border: 1px solid black;

@@ -11,7 +11,6 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
 const DragStory = ({ data, vip }: any) => {
-  console.log(!vip);
   return (
     <div className="drag__story">
       <Swiper

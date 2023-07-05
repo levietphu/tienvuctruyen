@@ -1,9 +1,16 @@
 import "./loadcent.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 
 const LoadCents = () => {
-  const { setPopupPayment }: any = useContext(AuthContext);
+  const { popupPayment, setPopupPayment }: any = useContext(AuthContext);
+  useEffect(() => {
+    if (popupPayment) {
+      document.body.classList.add("hidden__scroll");
+    } else {
+      document.body.classList.remove("hidden__scroll");
+    }
+  }, [popupPayment]);
 
   return (
     <div className="load__cents">
