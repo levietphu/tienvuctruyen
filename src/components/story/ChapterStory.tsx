@@ -81,7 +81,6 @@ const ChapterStory = ({
       window.scrollTo(0, 1000);
     }
   };
-
   return (
     <div className="chapter__donate">
       <div className="list__chapter__donate">

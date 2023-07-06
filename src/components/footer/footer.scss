@@ -1,9 +1,10 @@
 footer {
   width: 100%;
-  min-height: 280px;
+  min-height: 320px;
   background: #efefef;
   margin-top: auto;
   .footer {
+    padding-bottom: 40px;
     .footer__logo {
       img {
         width: 2rem;
@@ -14,6 +15,7 @@ footer {
         font-size: 1.75rem;
         font-weight: 600;
         text-transform: capitalize;
+        color: #3c3c3c;
       }
     }
     p {
@@ -33,6 +35,9 @@ footer {
         color: #357376;
         text-transform: capitalize;
         font-size: 1.25rem;
+        @media screen and (max-width: 768px) {
+          font-size: 1rem;
+        }
       }
     }
   }

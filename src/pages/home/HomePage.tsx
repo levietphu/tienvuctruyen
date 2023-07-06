@@ -48,11 +48,11 @@ const HomePage = () => {
         </div>
         <div className="main__content">
           <div className="story__newupdate">
-            <h1 style={{ margin: "0.67em 0" }}>truyện mới cập nhật</h1>
+            <h1 style={{ margin: "0.67em 0" }}>Truyện mới cập nhật</h1>
             <NewUpdateStory data={dataHome && dataHome.newUpdateStory} />
           </div>
           <div className="story__full">
-            <h1 style={{ margin: "0.67em 0" }}>truyện đã full</h1>
+            <h1 style={{ margin: "0.67em 0" }}>Truyện đã full</h1>
             <FullStory data={dataHome && dataHome.fullStory} />
           </div>
         </div>

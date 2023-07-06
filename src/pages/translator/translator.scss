@@ -1,15 +1,21 @@
 .translator__header {
-  margin-bottom: 100px;
+  height: 200px;
   div {
     i {
       font-size: 6rem;
       border-radius: 50%;
       background: rgb(201, 197, 197);
-      padding: 20px 25px;
       color: rgb(151, 148, 148);
       align-items: center;
       display: flex;
       justify-content: center;
+      width: 130px;
+      height: 130px;
+      @media screen and (max-width: 768px) {
+        width: 70px;
+        height: 70px;
+        font-size: 3rem;
+      }
     }
     .translator__name {
       text-align: center;
@@ -20,6 +26,7 @@
   }
 }
 .translator__story {
+  margin-top: 40px;
   .drag__story {
     @media screen and (max-width: 768px) {
       margin: 0;

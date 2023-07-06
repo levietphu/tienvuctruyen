@@ -21,7 +21,9 @@ const NewUpdateStory = ({ data }: any) => {
                   <Link className="mr-5" to={`/${item.slug}`}>
                     <span>{item.name}</span>
                   </Link>
-                  <span className="cate btn__vip">vip</span>
+                  <span className="cate btn__vip" style={{ margin: "0" }}>
+                    vip
+                  </span>
                   <p>{item.tacgia?.name}</p>
                 </div>
                 <div className="cate__story mr-10">

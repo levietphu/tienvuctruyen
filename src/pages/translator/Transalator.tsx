@@ -33,12 +33,16 @@ const Transalator = () => {
 
   return (
     <MainLayout>
-      <div className="translator__header center">
-        <div>
-          <i className="fa-solid fa-user"></i>
-          <div className="translator__name">
-            <h1>{params.slugdichgia}</h1>
-            <p>@{params.slugdichgia}</p>
+      <div className="center">
+        <div className="translator__header center">
+          <div>
+            <div className="center">
+              <i className="fa-solid fa-user"></i>
+            </div>
+            <div className="translator__name">
+              <h1>{params.slugdichgia}</h1>
+              <p>@{params.slugdichgia}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -83,7 +83,6 @@ const AuthContextProvider = ({ children }: any) => {
         setLoaderUser("user");
       });
   };
-
   useEffect(() => {
     if (dataLogin || token.length > 0) {
       getUser();

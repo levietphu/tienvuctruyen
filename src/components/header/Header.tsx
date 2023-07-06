@@ -254,6 +254,7 @@ const Header = ({ cates, logo }: any) => {
                           color: `${
                             tooglePersonalLogoutMoblie ? "#357376" : ""
                           }`,
+                          textTransform: "unset"
                         }}
                       >
                         Hi, <strong>{user.user.name}</strong>
