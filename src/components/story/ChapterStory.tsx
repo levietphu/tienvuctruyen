@@ -36,7 +36,7 @@ const ChapterStory = ({
     const change = () => setPosition(-saveRef?.clientWidth);
     window.addEventListener("resize", change);
     return () => window.removeEventListener("resize", change);
-  });
+  }, []);
 
   useEffect(() => {
     if (story) {

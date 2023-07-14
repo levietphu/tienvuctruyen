@@ -3,7 +3,7 @@
     margin-top: 20px !important;
   }
   .screen-85 {
-    width: 95% !important;
+    // width: 95% !important;
 
     .story {
       .drag__story .drag__story--slider .story__slider--item {
@@ -14,10 +14,7 @@
         width: 100px;
         height: 150px;
       }
-      .drag__story .drag__story--slider .story__slider--item a .hover__story {
-        width: 100px;
-        height: 150px;
-      }
+
       .drag__story
         .drag__story--slider
         .story__slider--item
@@ -68,9 +65,6 @@
   .main__content {
     display: block !important;
   }
-  .carousel {
-    height: 120px !important;
-  }
   .story__newupdate {
     width: 100% !important;
     .list__story--newupdate {
@@ -117,102 +111,11 @@
       }
     }
   }
-  .header__story {
-    display: block !important;
-    .header__story--left {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 0 !important;
-      .header__story--image {
-        width: 200px !important;
-      }
-    }
-    .header__story--right {
-      margin-top: 10px !important;
-      .header__stoty--read {
-        flex-direction: column;
-        button {
-          width: 100% !important;
-        }
-      }
-    }
-  }
-  .main__story {
-    display: block !important;
-    .story__comment {
-      margin-left: 0 !important;
-      margin-top: 20px !important;
-    }
-    .main__story--chapter {
-      span {
-        right: 8px !important;
-      }
-    }
-  }
-  .screen-80 {
-    width: 100% !important;
-  }
-  .setting__chapter {
-    display: none;
-  }
-  .personal {
-    .personal__right {
-      width: 100% !important;
-      .list__bookcase .item__bookcase {
-        width: calc((100% - 10px) / 2) !important;
-      }
-    }
-  }
 
   .login .login__center .login__container {
     width: 90% !important;
   }
 
-  .setting__chapter {
-    width: 100% !important;
-    background: white;
-    top: unset !important;
-    bottom: -1px !important;
-    display: flex;
-    justify-content: space-evenly;
-    border-radius: 0 !important;
-  }
-  .setting__chapter .setting,
-  .setting__chapter .change__story,
-  .setting__chapter .list__chapter,
-  .setting__chapter .tick__chapter,
-  .setting__chapter .prev__chapter,
-  .setting__chapter .next__chapter {
-    margin-bottom: 0 !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .setting__chapter .next__chapter i {
-    margin-bottom: 0 !important;
-  }
-  .main__setting {
-    width: 100% !important;
-    top: unset !important;
-    bottom: 0 !important;
-    border-radius: 0 !important;
-  }
-  .translator__story {
-    .drag__story {
-      .drag__story--slider {
-        .story__slider--item {
-          .btn__vip {
-            left: 20px;
-          }
-          .image__story {
-            width: 95px !important;
-            height: 150px;
-          }
-        }
-      }
-    }
-  }
   .error_chapter {
     margin-left: 20px !important;
   }
@@ -302,6 +205,9 @@ main {
 .screen-85 {
   width: 85%;
   margin: auto;
+  @media screen and (max-width: 1023px) {
+    width: 95%;
+  }
 }
 .btn {
   padding: 10px 15px;
@@ -361,10 +267,7 @@ h1 {
     background: #2a2a2a;
     color: white;
   }
-  .main__setting {
-    background: #2a2a2a;
-    color: white;
-  }
+
   .setting__chapter {
     background: #2a2a2a;
     color: white;

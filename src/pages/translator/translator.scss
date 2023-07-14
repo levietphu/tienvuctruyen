@@ -31,7 +31,7 @@
 .translator__story {
   margin-top: 40px;
   .drag__story {
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1023px) {
       margin: 0;
     }
     height: auto;
@@ -39,16 +39,14 @@
       flex-wrap: wrap;
       display: flex;
       gap: 20px;
-      @media screen and (max-width: 768px) {
-        gap: 10px;
-      }
+
       .story__slider--item {
         margin-right: 0;
         margin-top: 0;
         box-sizing: border-box;
         width: calc((100% - 100px) / 6);
-        @media screen and (max-width: 768px) {
-          width: calc((100% - 20px) / 3);
+        @media screen and (max-width: 1023px) {
+          width: calc((100% - 40px) / 3);
           margin-bottom: 0;
         }
         .btn__vip {
@@ -58,11 +56,14 @@
           left: 55px;
         }
         .image__story {
-          width: 172px;
+          width: 100%;
+          @media screen and (max-width: 1023px) {
+            height: 150px;
+          }
         }
         .hover__story {
-          width: 172px;
-          @media screen and (max-width: 768px) {
+          width: 100%;
+          @media screen and (max-width: 1023px) {
             display: none;
           }
         }

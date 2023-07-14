@@ -17,8 +17,7 @@ const PopupFull = () => {
         ></i>
         <div className="popup-full__center--popup">
           <h3>
-            Vì lý do bên backend không có tên miền nên muốn vào trang cần làm
-            theo hướng dẫn:
+            Vì lý do: chứng chỉ ssl nên muốn vào trang cần làm theo hướng dẫn:
           </h3>
           <a href="https://139.162.17.88/" target="_blank">
             Nhấp vào đây nhé

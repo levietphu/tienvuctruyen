@@ -1,11 +1,11 @@
 .personal {
   display: flex;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     display: block;
   }
   .personal__left {
     width: 25%;
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1023px) {
       width: 100%;
     }
     margin-right: 20px;
@@ -34,7 +34,7 @@
       }
     }
     .personal__left--list {
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 1023px) {
         display: flex;
         position: fixed;
         bottom: 0;
@@ -51,7 +51,7 @@
         text-transform: capitalize;
         color: black;
         display: flex;
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 1023px) {
           display: block;
           text-align: center;
           font-size: 16px;
@@ -62,7 +62,7 @@
         position: relative;
         i {
           flex: 1;
-          @media screen and (max-width: 768px) {
+          @media screen and (max-width: 1023px) {
             display: block;
           }
         }
@@ -81,15 +81,21 @@
   }
   .personal__right {
     width: 75%;
+    @media screen and (max-width: 1023px) {
+      width: 100%;
+    }
     .list__bookcase {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 1023px) {
         gap: 10px;
       }
       .item__bookcase {
         width: calc((100% - 45px) / 4);
+        @media screen and (max-width: 1023px) {
+          width: calc((100% - 10px) / 2);
+        }
         .item {
           box-sizing: border-box;
           position: relative;
@@ -162,30 +168,26 @@
       .drag__story--slider {
         flex-wrap: wrap;
         display: flex;
-        gap: 40px;
-        @media screen and (max-width: 768px) {
-          gap: 25px;
-        }
+        gap: 20px;
+
         .story__slider--item {
-          width: calc((100% - 160px) / 5);
+          width: calc((100% - 80px) / 5);
           margin-right: 0;
           margin-bottom: 0;
-          @media screen and (max-width: 768px) {
+          @media screen and (max-width: 1023px) {
             width: calc((100% - 50px) / 3);
           }
           .image__story {
-            width: 152px;
-            @media screen and (max-width: 768px) {
-              width: 100%;
+            width: 100%;
+            @media screen and (max-width: 1023px) {
               height: 150px;
             }
           }
           .hover__story {
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 1023px) {
               display: none;
             }
-            width: 152px;
-            height: 100%;
+            width: 100%;
             .hover__story--name {
               display: -webkit-box;
               -webkit-line-clamp: 3;

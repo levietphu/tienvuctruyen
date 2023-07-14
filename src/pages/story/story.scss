@@ -1,11 +1,23 @@
 .header__story {
   display: flex;
   width: 100%;
+  @media screen and (max-width: 1023px) {
+    display: block;
+  }
   .header__story--left {
     flex: 1;
     margin-right: 30px;
+    @media screen and (max-width: 1023px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0;
+    }
     .header__story--image {
       width: 100%;
+      @media screen and (max-width: 1023px) {
+        width: 200px;
+      }
       img {
         width: 100%;
       }
@@ -13,6 +25,9 @@
   }
   .header__story--right {
     flex: 3;
+    @media screen and (max-width: 1023px) {
+      margin-top: 10px;
+    }
     .header__story--name {
       text-transform: capitalize;
       margin: 0;
@@ -80,6 +95,9 @@
       margin: 30px 0 0 0;
       display: flex;
       gap: 10px;
+      @media screen and (max-width: 1023px) {
+        flex-direction: column;
+      }
       button {
         cursor: pointer;
         padding: 15px 20px;
@@ -88,6 +106,9 @@
         font-size: 1.4rem;
         border-radius: 5px;
         border: none;
+        @media screen and (max-width: 1023px) {
+          width: 100%;
+        }
         i {
           margin-left: 5px;
         }
@@ -99,6 +120,9 @@
 .main__story {
   display: flex;
   margin-top: 80px;
+  @media screen and (max-width: 1023px) {
+    display: block;
+  }
   .chapter__donate {
     background: white;
     flex: 2.5;
@@ -115,14 +139,15 @@
         position: relative;
         border-bottom: 1px solid #357376;
         span {
-          position: absolute;
-          top: 10px;
-          right: 105px;
+          margin-left: 10px;
           border-radius: 50px;
           background: #f1eeee;
           padding: 3px 8px;
           font-size: 14px;
           color: black;
+          @media screen and (max-width: 1023px) {
+            dright: 8px;
+          }
         }
       }
       .main__story--donate {
@@ -288,6 +313,10 @@
     background: white;
     align-self: baseline;
     box-shadow: 1px 0px 8px 0px #738a8b;
+    @media screen and (max-width: 1023px) {
+      margin-left: 0;
+      margin-top: 20px;
+    }
     .head__story__comment {
       width: 100%;
       height: 50px;

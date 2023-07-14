@@ -291,7 +291,10 @@ const StoryCate = () => {
           </div>
         ) : (
           loader && (
-            <ul className="o-vertical-spacing o-vertical-spacing--l">
+            <ul
+              className="o-vertical-spacing o-vertical-spacing--l"
+              style={{ width: "100%" }}
+            >
               <li className="blog-post o-media">
                 <div className="o-media__figure">
                   <span

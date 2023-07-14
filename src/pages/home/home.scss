@@ -1,31 +1,30 @@
 //carousel
 .carousel {
   width: 100%;
-  height: 382px;
-  border-radius: 10px;
+  height: 100%;
   overflow: hidden;
   position: relative;
   .carousel__annimation {
     display: flex;
-    height: 100%;
+    height: auto;
     .carousel-item {
       flex-shrink: 0;
       width: 100%;
       a {
         img {
           width: 100%;
-          height: 100%;
+          height: auto;
+          border-radius: 10px;
         }
       }
     }
   }
-}
-.active {
-  transition: 0.9s;
-}
-
-.img__active {
-  height: 383px !important;
+  .swiper-pagination {
+    bottom: 15px !important;
+    @media screen and (max-width: 768px) {
+      bottom: 10px !important;
+    }
+  }
 }
 
 .notification {
@@ -213,39 +212,41 @@
       margin-right: 25px;
       position: relative;
       margin-bottom: 10px;
-      .ghim {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        @media screen and (max-width: 768px) {
-          top: 5px;
-        }
-        .btn__vip {
-          padding: 5px 10px;
-          background: #f5f593;
-          text-transform: uppercase;
-          margin-right: 5px;
-          border-radius: 3px;
-          font-size: 12px;
-          cursor: pointer;
-          @media screen and (max-width: 768px) {
-            font-size: 10px;
-          }
-        }
-        .btn__full {
-          padding: 5px 10px;
-          background: #1eb553;
-          text-transform: uppercase;
 
-          border-radius: 3px;
-          font-size: 12px;
-          cursor: pointer;
+      a {
+        .pin {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          width: 200px;
           @media screen and (max-width: 768px) {
-            font-size: 10px;
+            top: 5px;
+          }
+          .btn__vip {
+            padding: 5px 10px;
+            background: #f5f593;
+            text-transform: uppercase;
+            margin-right: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            @media screen and (max-width: 768px) {
+              font-size: 10px;
+            }
+          }
+          .btn__full {
+            padding: 5px 10px;
+            background: #1eb553;
+            text-transform: uppercase;
+
+            border-radius: 3px;
+            font-size: 12px;
+            cursor: pointer;
+            @media screen and (max-width: 768px) {
+              font-size: 10px;
+            }
           }
         }
-      }
-      a {
         .image__story {
           width: 200px;
           height: 300px;
@@ -467,6 +468,13 @@
 .gallery {
   width: 100%;
   height: 400px;
+  background-color: dimgrey;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.gallery-drag {
+  width: 200px;
+  height: 300px;
   background-color: dimgrey;
   border-radius: 5px;
   overflow: hidden;
