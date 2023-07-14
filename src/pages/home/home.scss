@@ -37,6 +37,9 @@
   overflow: hidden;
   display: flex;
   position: relative;
+  .active {
+    transition: 0.9s;
+  }
   .notification__animation {
     display: flex;
     position: absolute;
