@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   h3 {
     border-bottom: 2px solid #e7e3e3;
     padding: 0;
@@ -58,6 +59,9 @@
     width: 50%;
     padding: 30px;
     position: relative;
+    @media screen and (max-width: 1023px) {
+      width: 80%;
+    }
     &--popup {
       position: relative;
       width: 100%;
@@ -66,6 +70,9 @@
         top: -150px;
         transition: 0.8s;
         left: 43%;
+        @media screen and (max-width: 1023px) {
+          left: 30%;
+        }
         span {
           border-radius: 50px;
           background: #38b553;
@@ -84,6 +91,10 @@
         margin-top: 5px;
         margin-right: -75px;
         margin-left: -75px;
+        @media screen and (max-width: 1023px) {
+          margin-right: 0;
+          margin-left: 0;
+        }
         .wrap {
           flex-wrap: wrap;
         }
@@ -247,6 +258,14 @@
   &--step1 {
     line-height: 50px;
     font-size: 1.1rem;
+    @media screen and (max-width: 1023px) {
+      line-height: 1.15;
+    }
+    p {
+      @media screen and (max-width: 1023px) {
+        margin: 10px 0;
+      }
+    }
     .popup__input {
       margin-top: 10px;
       input {

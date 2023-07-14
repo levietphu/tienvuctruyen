@@ -122,29 +122,6 @@
   .load__cents {
     display: grid !important;
   }
-  .popup-payment {
-    &__center {
-      width: 80% !important;
-      &--popup {
-        .imageMb {
-          margin-right: 0 !important;
-          margin-left: 0 !important;
-        }
-        .popup__coppy {
-          left: 30% !important;
-        }
-
-        .popup_next {
-          &--step1 {
-            line-height: 1.15 !important;
-            p {
-              margin: 10px 0;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 body {
