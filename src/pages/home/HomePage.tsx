@@ -14,13 +14,13 @@ import DragLoader from "./LoaderHome/DragLoader";
 const HomePage = () => {
   const { dataHome, loaderHome }: any = useContext(HomeContext);
   const { checkPopupHome }: any = useContext(SettingContext);
-  // useEffect(() => {
-  //   if (checkPopupHome) {
-  //     document.body.classList.add("hidden__scroll");
-  //   } else {
-  //     document.body.classList.remove("hidden__scroll");
-  //   }
-  // }, [checkPopupHome]);
+  useEffect(() => {
+    if (checkPopupHome) {
+      document.body.classList.add("hidden__scroll");
+    } else {
+      document.body.classList.remove("hidden__scroll");
+    }
+  }, [checkPopupHome]);
 
   useEffect(() => {
     document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
@@ -58,7 +58,7 @@ const HomePage = () => {
           </div>
         </div>
       </MainLayout>
-      {/* {checkPopupHome && <PopupFull />} */}
+      {checkPopupHome && <PopupFull />}
     </>
   );
 };
