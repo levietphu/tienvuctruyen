@@ -175,7 +175,12 @@
           margin-right: 0;
           margin-bottom: 0;
           @media screen and (max-width: 1023px) {
-            width: calc((100% - 50px) / 3);
+            width: calc((100% - 40px) / 3);
+          }
+          .pin {
+            @media screen and (max-width: 768px) {
+              width: auto;
+            }
           }
           .image__story {
             width: 100%;
