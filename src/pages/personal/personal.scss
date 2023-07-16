@@ -4,11 +4,10 @@
     display: block;
   }
   .personal__left {
-    width: 25%;
-    @media screen and (max-width: 1023px) {
-      width: 100%;
-    }
     margin-right: 20px;
+    @media screen and (max-width: 1023px) {
+      margin-right: 0;
+    }
     .name__person {
       text-align: center;
       margin-bottom: 10px;
@@ -80,10 +79,6 @@
     }
   }
   .personal__right {
-    width: 75%;
-    @media screen and (max-width: 1023px) {
-      width: 100%;
-    }
     .list__bookcase {
       display: flex;
       flex-wrap: wrap;

@@ -271,6 +271,7 @@
           transition: 0.3s;
           border-radius: 5px;
           background: rgba(54, 54, 54, 0.9);
+          overflow: hidden;
           @media screen and (max-width: 768px) {
             display: none;
           }

@@ -14,14 +14,19 @@ const DragStory = ({ data, vip }: any) => {
   return (
     <div className="drag__story">
       <Swiper
-        slidesPerView={1}
-        spaceBetween={10}
+        slidesPerView={3}
+        spaceBetween={30}
         pagination={{
           dynamicBullets: true,
+          clickable: true,
         }}
         breakpoints={{
           320: {
-            slidesPerView: 2,
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          375: {
+            slidesPerView: 3.3,
             spaceBetween: 15,
           },
           768: {
@@ -29,10 +34,14 @@ const DragStory = ({ data, vip }: any) => {
             spaceBetween: 50,
           },
           810: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 4,
             spaceBetween: 25,
           },
-          1440: {
+          1366: {
             slidesPerView: 5.3,
             spaceBetween: 25,
           },
