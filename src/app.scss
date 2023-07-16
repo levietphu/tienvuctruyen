@@ -185,6 +185,9 @@ main {
   @media screen and (max-width: 1023px) {
     width: 95%;
   }
+  @media screen and (min-width: 2550px) {
+    width: 50%;
+  }
 }
 .btn {
   padding: 10px 15px;
