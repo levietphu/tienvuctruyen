@@ -15,6 +15,15 @@ import Story from "../pages/story/Story";
 import Transalator from "../pages/translator/Transalator";
 import Login from "../pages/user/Login";
 import Register from "../pages/user/Register";
+import Dashboard from "../pages/cms/dashboard/view/Dashboard";
+import ViewCate from "../pages/cms/cate/views/ViewCate";
+import ViewDashboard from "../pages/cms/dashboard/view/ViewDashboard";
+import ViewAuthor from "../pages/cms/author/views/ViewAuthor";
+import ViewTranslator from "../pages/cms/translator/views/ViewTranslator";
+import ViewAds from "../pages/cms/ads/views/ViewAds";
+import ViewContact from "../pages/cms/contact/views/ViewContact";
+import ViewLogo from "../pages/cms/logo/views/ViewLogo";
+import ViewBanner from "../pages/cms/banner/views/ViewBanner";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -34,6 +43,28 @@ const routes = ({ user, loaderUser }: any) => {
         />
         <Route path="/:slug" element={<Story />} />
         <Route path="/:slugstory/:slugchapter" element={<Chapterpage />} />
+
+        <Route
+          path="dashboard"
+          element={
+            user || loaderUser !== "login" ? (
+              <Dashboard />
+            ) : (
+              !user && loaderUser === "login" && <Navigate to="/login" />
+            )
+          }
+        >
+          <Route path="" element={<ViewDashboard />} />
+          <Route path="cate/view" element={<ViewCate />} />
+          <Route path="author/view" element={<ViewAuthor />} />
+          <Route path="translator/view" element={<ViewTranslator />} />
+          <Route path="ads/view" element={<ViewAds />} />
+          <Route path="contact/view" element={<ViewContact />} />
+          <Route path="logo/view" element={<ViewLogo />} />
+          <Route path="banner/view" element={<ViewBanner />} />
+          <Route path="*" element={<a>Not Found</a>} />
+        </Route>
+
         <Route
           path="account"
           element={
@@ -47,6 +78,7 @@ const routes = ({ user, loaderUser }: any) => {
           <Route path="" element={<BookCase />} />
           <Route path="vipbuy" element={<VipBuy />} />
           <Route path="coin" element={<Coin />} />
+          <Route path="*" element={<a>Not Found</a>} />
         </Route>
       </Routes>
     </Router>

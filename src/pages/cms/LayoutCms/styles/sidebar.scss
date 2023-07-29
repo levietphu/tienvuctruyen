@@ -1,0 +1,32 @@
+.sidebar {
+  background: #357376;
+  color: white;
+  height: 100%;
+  padding-top: 10px;
+  position: fixed;
+  top: 0;
+  .logo {
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .menu-cms {
+    color: white;
+    background: #357376;
+  }
+  .ant-menu-item:hover {
+    color: white !important;
+  }
+  .ant-menu-submenu-selected {
+    background: white;
+  }
+
+  .ant-menu-item-selected {
+    background: white !important;
+    color: #357376;
+  }
+  .ant-menu-sub {
+    color: white;
+    background: #357376 !important ;
+  }
+}

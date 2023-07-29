@@ -1,0 +1,380 @@
+import {
+  Card,
+  Button,
+  Table,
+  Alert,
+  Row,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Select,
+} from "antd";
+import "../styles/view-ads.scss";
+import type { ColumnsType } from "antd/es/table";
+import { createAds, hiddenAds, getAds, updateAds } from "../api";
+import { useEffect, useState } from "react";
+import { changeToSlug } from "../../../../ultis/changeToSlug";
+
+interface DataType {
+  id: number;
+  name: string;
+  value: string;
+  status: number;
+}
+
+const ViewAds: React.FC = () => {
+  const [dataAds, setDataAds] = useState<any>();
+  const [open, setOpen] = useState(false);
+  const [errorAds, setErrorAds] = useState<any>();
+  const [alert, setAlert] = useState("");
+  const [idAds, setIdAds] = useState<any>();
+
+  const [form] = Form.useForm();
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      render(value, record, index) {
+        return <a>{index + 1}</a>;
+      },
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Giá trị",
+      dataIndex: "value",
+      key: "value",
+    },
+    {
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
+      render: (_, record) => {
+        return (
+          <span style={{ background: `${record.status === 1 ? "" : "red"}` }}>
+            {record.status === 1 ? "Publish" : "Unpublish"}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (value) => (
+        <>
+          <span
+            style={{
+              cursor: "pointer",
+              background: "#1eb553",
+              padding: "5px 10px",
+              color: "white",
+            }}
+            onClick={() => showModal(value)}
+          >
+            Sửa
+          </span>
+          <span
+            style={{
+              marginLeft: "10px",
+              cursor: "pointer",
+              background: "red",
+              padding: "5px 10px",
+              color: "white",
+            }}
+            onClick={() => {
+              if (
+                // eslint-disable-next-line no-restricted-globals
+                confirm(`Bạn có muốn ẩn ${value.name} này không`) === true
+              ) {
+                destroyAds(value.id);
+              }
+            }}
+          >
+            Ẩn
+          </span>
+        </>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    getAds()
+      .then((res: any) => {
+        setDataAds(res.data.ads);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (alert) {
+      var a = setTimeout(() => {
+        setAlert("");
+      }, 3000);
+    }
+    return () => clearTimeout(a);
+  }, [alert]);
+
+  const showModal = (value: any) => {
+    setOpen(true);
+    if (value) {
+      form.setFieldsValue({
+        name: value.name,
+        slug: value.slug,
+        value: value.value,
+        status: value.status,
+      });
+      setIdAds(value.id);
+    }
+  };
+
+  const handleOk = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+    form.resetFields();
+    setErrorAds("");
+    setIdAds("");
+  };
+
+  // Thêm mới ads
+  const postAds = async (values: any) => {
+    await createAds(values)
+      .then((res: any) => {
+        setAlert(res.data.message);
+        handleCancel();
+        getAds().then((res: any) => {
+          setDataAds(res.data.ads);
+        });
+      })
+      .catch((err) => setErrorAds(err.response.data.errors));
+  };
+
+  // Cập nhật ads
+  const changeAds = async (values: any) => {
+    values.id = idAds;
+    await updateAds(idAds, values)
+      .then((res) => {
+        setAlert(res.data.message);
+        handleCancel();
+        getAds().then((res: any) => {
+          setDataAds(res.data.ads);
+        });
+      })
+      .catch((err) => setErrorAds(err.response.data.errors));
+  };
+
+  //Xóa ads
+  const destroyAds = async (id: number) => {
+    await hiddenAds(id)
+      .then((res) => {
+        setAlert(res.data.message);
+        getAds().then((res: any) => {
+          setDataAds(res.data.ads);
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const saveAds = (values: any) => {
+    if (!idAds) {
+      postAds(values);
+    } else {
+      changeAds(values);
+    }
+  };
+
+  const handleChange = (changedValues: any, allValues: any) => {
+    allValues.slug = changeToSlug(changedValues.name);
+    form.setFieldsValue({
+      slug: changeToSlug(allValues.name),
+    });
+  };
+
+  return (
+    <>
+      <div className="top-main">
+        <p>Danh sách ads</p>
+        <div className="top-main__right">
+          <a href="">ads</a> / <span>Danh sách ads</span>
+        </div>
+      </div>
+      <Card>
+        <Button
+          type="primary"
+          onClick={() => showModal("")}
+          style={{ marginBottom: "20px" }}
+        >
+          Thêm mới
+        </Button>
+        {alert && (
+          <Alert
+            message={alert}
+            type="success"
+            closable
+            style={{ marginBottom: "20px", fontSize: "24px" }}
+          />
+        )}
+
+        <Modal
+          title={`${idAds ? "Sửa ads" : "Thêm mới ads"}`}
+          open={open}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <Form
+            name="wrap"
+            labelCol={{ flex: "110px" }}
+            labelAlign="left"
+            labelWrap
+            wrapperCol={{ flex: 1 }}
+            colon={false}
+            style={{ maxWidth: 600 }}
+            initialValues={{ name: "", slug: "", status: 1 }}
+            form={form}
+            onFinish={saveAds}
+            onValuesChange={handleChange}
+          >
+            <Form.Item
+              label="Tên ads"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Tên ads không được bỏ trống",
+                },
+                {
+                  max: 255,
+                  message: "Tên ads không được quá 255 ký tự",
+                },
+              ]}
+            >
+              <Input type="text" name="name" />
+            </Form.Item>
+            <Row className="error">
+              <Col md={6}>
+                <div></div>
+              </Col>
+              <Col md={18}>
+                {errorAds &&
+                  errorAds.name &&
+                  errorAds.name.map((item: any, index: number) => {
+                    return (
+                      <p key={index} style={{ color: "red" }}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </Col>
+            </Row>
+            <Form.Item
+              label="Slug"
+              name="slug"
+              rules={[
+                { required: true, message: "slug không được bỏ trống" },
+                { max: 255, message: "slug không được quá 255 ký tự" },
+              ]}
+            >
+              <Input type="text" name="slug" disabled />
+            </Form.Item>
+
+            <Row className="error">
+              <Col md={6}>
+                <div></div>
+              </Col>
+              <Col md={18}>
+                {errorAds &&
+                  errorAds.slug &&
+                  errorAds.slug.map((item: any, index: number) => {
+                    return (
+                      <p key={index} style={{ color: "red" }}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </Col>
+            </Row>
+            <Form.Item
+              label="Giá trị"
+              name="value"
+              rules={[
+                { required: true, message: "giá trị không được bỏ trống" },
+              ]}
+            >
+              <Input type="text" name="value" />
+            </Form.Item>
+            <Row className="error">
+              <Col md={6}>
+                <div></div>
+              </Col>
+              <Col md={18}>
+                {errorAds &&
+                  errorAds.value &&
+                  errorAds.value.map((item: any, index: number) => {
+                    return (
+                      <p key={index} style={{ color: "red" }}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </Col>
+            </Row>
+            <Form.Item label="Trạng thái" name="status">
+              <Select
+                options={[
+                  { value: 1, label: "Publish" },
+                  { value: 0, label: "Unpublish" },
+                ]}
+              />
+            </Form.Item>
+            <Row className="error">
+              <Col md={6}>
+                <div></div>
+              </Col>
+              <Col md={18}>
+                {errorAds &&
+                  errorAds.status &&
+                  errorAds.status.map((item: any, index: number) => {
+                    return (
+                      <p key={index} style={{ color: "red" }}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </Col>
+            </Row>
+            <div className="submit-button">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginRight: "10px" }}
+              >
+                Lưu
+              </Button>
+              <Button type="primary" danger onClick={handleCancel}>
+                Hủy
+              </Button>
+            </div>
+          </Form>
+        </Modal>
+
+        <Table
+          columns={columns}
+          dataSource={dataAds}
+          rowKey={(record) => record.id}
+        />
+      </Card>
+    </>
+  );
+};
+
+export default ViewAds;
