@@ -71,14 +71,18 @@ const EditStory: React.FC = () => {
   // Cập nhật Story
   const postStory = async (values: any) => {
     await updateStory(Number(params.id_story), values)
-      .then((res: any) => {
+      .then((res) => {
         dispatch({
           payload: res.data.message,
           type: "story/updateStorySuccess",
         });
         navigate("/dashboard/story/view");
+        console.log(1)
       })
-      .catch((err) => setErrorStory(err.response.data.errors));
+      .catch((err) => {
+        setErrorStory(err.response.data.errors);
+        console.log(2)
+      });
   };
 
   const saveStory = (values: any) => {

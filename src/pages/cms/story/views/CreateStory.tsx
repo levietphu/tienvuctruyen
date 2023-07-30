@@ -55,7 +55,7 @@ const CreateStory: React.FC = () => {
   // Thêm mới Story
   const postStory = async (values: any) => {
     await storeStory(values)
-      .then((res: any) => {
+      .then((res) => {
         dispatch({
           payload: res.data.message,
           type: "story/createStorySuccess",

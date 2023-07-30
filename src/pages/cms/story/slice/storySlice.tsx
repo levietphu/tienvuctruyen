@@ -23,7 +23,7 @@ export const storySlice = createSlice({
       state.alert = action.payload;
     },
     setDefaultAlert: (state, action) => {
-      return action.payload;
+      state.alert = action.payload;
     },
   },
 });
