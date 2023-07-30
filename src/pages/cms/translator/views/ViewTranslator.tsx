@@ -64,9 +64,9 @@ const ViewTranslator: React.FC = () => {
       dataIndex: "status",
       render: (_, record) => {
         return (
-          <span style={{ background: `${record.status === 1 ? "" : "red"}` }}>
+          <Button size="small" type="primary" danger={record.status === 0}>
             {record.status === 1 ? "Publish" : "Unpublish"}
-          </span>
+          </Button>
         );
       },
     },
@@ -75,24 +75,15 @@ const ViewTranslator: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <span
-            style={{
-              cursor: "pointer",
-              background: "#1eb553",
-              padding: "5px 10px",
-              color: "white",
-            }}
-            onClick={() => showModal(value)}
-          >
+          <Button size="middle" type="primary" onClick={() => showModal(value)}>
             Sửa
-          </span>
-          <span
+          </Button>
+          <Button
+            size="middle"
+            danger
+            type="primary"
             style={{
-              marginLeft: "10px",
-              cursor: "pointer",
-              background: "red",
-              padding: "5px 10px",
-              color: "white",
+              marginLeft: "5px",
             }}
             onClick={() => {
               if (
@@ -104,8 +95,8 @@ const ViewTranslator: React.FC = () => {
               }
             }}
           >
-            Delete
-          </span>
+            Xóa
+          </Button>
         </>
       ),
     },
@@ -202,10 +193,17 @@ const ViewTranslator: React.FC = () => {
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
-    allValues.slug = changeToSlug(changedValues.name);
-    form.setFieldsValue({
-      slug: changeToSlug(allValues.name),
-    });
+    if (changedValues.name) {
+      allValues.slug = changeToSlug(changedValues.name);
+      form.setFieldsValue({
+        slug: changeToSlug(changedValues.name),
+      });
+    }
+    if (changedValues.name === "") {
+      form.setFieldsValue({
+        slug: "",
+      });
+    }
   };
 
   return (

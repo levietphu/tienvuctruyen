@@ -73,10 +73,10 @@ const ViewLogo: React.FC = () => {
       dataIndex: "status",
       render: (_, record) => {
         return (
-          <span style={{ background: `${record.status === 1 ? "" : "red"}` }}>
+          <Button size="small" type="primary" danger={record.status === 0}>
             {" "}
             {record.status === 1 ? "Publish" : "Unpublish"}
-          </span>
+          </Button>
         );
       },
     },
@@ -85,16 +85,14 @@ const ViewLogo: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <span
-            className="span-action"
-            style={{ background: "green" }}
-            onClick={() => showModal(value)}
-          >
+          <Button size="middle" type="primary" onClick={() => showModal(value)}>
             Sửa
-          </span>
-          <span
-            className="span-action"
-            style={{ marginLeft: "10px", background: "red" }}
+          </Button>
+          <Button
+            size="middle"
+            type="primary"
+            danger
+            style={{ marginLeft: "10px" }}
             onClick={() => {
               if (
                 // eslint-disable-next-line no-restricted-globals
@@ -105,7 +103,7 @@ const ViewLogo: React.FC = () => {
             }}
           >
             Ẩn
-          </span>
+          </Button>
         </>
       ),
     },
@@ -211,16 +209,24 @@ const ViewLogo: React.FC = () => {
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
-    allValues.slug = changeToSlug(changedValues.name);
-    form.setFieldsValue({
-      slug: changeToSlug(allValues.name),
-    });
+    if (changedValues.name) {
+      allValues.slug = changeToSlug(changedValues.name);
+      form.setFieldsValue({
+        slug: changeToSlug(changedValues.name),
+      });
+    }
+    if (changedValues.name === "") {
+      form.setFieldsValue({
+        slug: "",
+      });
+    }
   };
 
   const props: UploadProps = {
     name: "value",
-    action: `${process.env.REACT_APP_API}cms/upload_logo`,
-
+    action: `${process.env.REACT_APP_API}cms/upload_logo/${
+      idLogo ? idLogo : "0"
+    }`,
     accept: "image/png, image/gif, image/jpeg",
     listType: "picture-card",
     fileList: fileList,
@@ -234,9 +240,7 @@ const ViewLogo: React.FC = () => {
           })
         );
       }
-      if (info.file.status !== "uploading") {
-        console.log("đang tải lên");
-      }
+
       if (info.file.status === "done") {
         message.success(` tải ảnh ${info.file.name} lên thành công`);
       } else if (info.file.status === "error") {

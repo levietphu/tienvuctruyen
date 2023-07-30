@@ -4,8 +4,13 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import "../styles/layout-cms.scss";
+import { useEffect } from "react";
 
 const LayoutCms = ({ children }: Props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Row>
       <Col xs={0} sm={0} md={4} lg={4}>

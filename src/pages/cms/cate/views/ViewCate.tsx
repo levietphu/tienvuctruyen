@@ -51,7 +51,7 @@ const ViewCate: React.FC = () => {
       dataIndex: "status",
       render: (_, record) => {
         return (
-          <Button type="primary" danger={record.status !== 1}>
+          <Button size="small" type="primary" danger={record.status !== 1}>
             {record.status === 1 ? "Publish" : "Unpublish"}
           </Button>
         );
@@ -62,11 +62,18 @@ const ViewCate: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <span style={{ cursor: "pointer" }} onClick={() => showModal(value)}>
+          <Button
+            size="middle"
+            type="primary"
+            style={{ marginRight: "5px" }}
+            onClick={() => showModal(value)}
+          >
             Sửa
-          </span>
-          <span
-            style={{ marginLeft: "10px", cursor: "pointer", background: "red" }}
+          </Button>
+          <Button
+            size="middle"
+            type="primary"
+            danger
             onClick={() => {
               if (
                 // eslint-disable-next-line no-restricted-globals
@@ -77,8 +84,8 @@ const ViewCate: React.FC = () => {
               }
             }}
           >
-            Delete
-          </span>
+            Xóa
+          </Button>
         </>
       ),
     },
@@ -174,10 +181,17 @@ const ViewCate: React.FC = () => {
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
-    allValues.slug = changeToSlug(changedValues.name);
-    form.setFieldsValue({
-      slug: changeToSlug(allValues.name),
-    });
+    if (changedValues.name) {
+      allValues.slug = changeToSlug(changedValues.name);
+      form.setFieldsValue({
+        slug: changeToSlug(changedValues.name),
+      });
+    }
+    if(changedValues.name ===""){
+      form.setFieldsValue({
+        slug: "",
+      });
+    }
   };
 
   return (

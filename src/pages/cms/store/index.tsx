@@ -1,9 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import cate from "./cate/cateSlice";
-// ...
+import story from "../story/slice/storySlice";
 
 const rootReducer = combineReducers({
-  cate,
+  story,
 });
 
 export const rootStore = configureStore({

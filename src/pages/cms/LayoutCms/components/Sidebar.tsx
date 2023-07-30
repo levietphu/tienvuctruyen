@@ -83,8 +83,8 @@ const SideBar: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const ChangeRoute = ({ item, key, keyPath, e }: any) => {
-    navigate(keyPath[0]);
+  const ChangeRoute = ({ key }: any) => {
+    navigate(key);
   };
 
   return (

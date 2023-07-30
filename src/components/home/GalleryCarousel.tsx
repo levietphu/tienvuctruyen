@@ -69,7 +69,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
               {banners.map((value: any) => {
                 return (
                   <SwiperSlide className="carousel-item" key={value.id}>
-                    <Link to={`/${value.slugtruyen}`}>
+                    <Link to={`/${value.slugtruyen}`} target="_">
                       <img
                         src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
                         alt=""

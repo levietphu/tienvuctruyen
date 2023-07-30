@@ -27,9 +27,6 @@ const ViewContact: React.FC = () => {
     getContact()
       .then((res: any) => {
         setDataContact(res.data.contact);
-        document
-          .querySelector(".map")
-          ?.insertAdjacentHTML("afterend", res.data.contact.map.value);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -85,10 +82,17 @@ const ViewContact: React.FC = () => {
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
-    allValues.slug = changeToSlug(changedValues.name);
-    form.setFieldsValue({
-      slug: changeToSlug(allValues.name),
-    });
+    if (changedValues.name) {
+      allValues.slug = changeToSlug(changedValues.name);
+      form.setFieldsValue({
+        slug: changeToSlug(changedValues.name),
+      });
+    }
+    if (changedValues.name === "") {
+      form.setFieldsValue({
+        slug: "",
+      });
+    }
   };
 
   return (
@@ -196,52 +200,40 @@ const ViewContact: React.FC = () => {
               <p className="text-contact">
                 Địa chỉ:{" "}
                 <strong>{dataContact && dataContact.address.value}</strong>
-                <span
-                  style={{
-                    cursor: "pointer",
-                    background: "#1eb553",
-                    padding: "5px 10px",
-                    color: "white",
-                  }}
+                <Button
+                  size="small"
+                  type="primary"
                   onClick={() =>
                     showModal(dataContact.address.id, dataContact.address)
                   }
                 >
                   Sửa
-                </span>
+                </Button>
               </p>
               <p className="text-contact">
                 Email: <strong>{dataContact && dataContact.email.value}</strong>
-                <span
-                  style={{
-                    cursor: "pointer",
-                    background: "#1eb553",
-                    padding: "5px 10px",
-                    color: "white",
-                  }}
+                <Button
+                  size="small"
+                  type="primary"
                   onClick={() =>
                     showModal(dataContact.email.id, dataContact.email)
                   }
                 >
                   Sửa
-                </span>
+                </Button>
               </p>
               <p className="text-contact">
                 Số điện thoại:{" "}
                 <strong>{dataContact && dataContact.phone.value}</strong>
-                <span
-                  style={{
-                    cursor: "pointer",
-                    background: "#1eb553",
-                    padding: "5px 10px",
-                    color: "white",
-                  }}
+                <Button
+                  size="small"
+                  type="primary"
                   onClick={() =>
                     showModal(dataContact.phone.id, dataContact.phone)
                   }
                 >
                   Sửa
-                </span>
+                </Button>
               </p>
             </Card>
           </Col>
@@ -250,19 +242,15 @@ const ViewContact: React.FC = () => {
               <h2>Thời gian làm việc</h2>
               <p className="text-contact">
                 {dataContact && dataContact.worktime.value}
-                <span
-                  style={{
-                    cursor: "pointer",
-                    background: "#1eb553",
-                    padding: "5px 10px",
-                    color: "white",
-                  }}
+                <Button
+                  size="small"
+                  type="primary"
                   onClick={() =>
                     showModal(dataContact.worktime.id, dataContact.worktime)
                   }
                 >
                   Sửa
-                </span>
+                </Button>
               </p>
             </Card>
           </Col>
@@ -270,19 +258,19 @@ const ViewContact: React.FC = () => {
             <Card>
               <h4>
                 Bản đồ{" "}
-                <span
-                  style={{
-                    cursor: "pointer",
-                    background: "#1eb553",
-                    padding: "5px 10px",
-                    color: "white",
-                  }}
+                <Button
+                  size="small"
+                  type="primary"
                   onClick={() => showModal(dataContact.map.id, dataContact.map)}
                 >
                   Sửa
-                </span>
+                </Button>
               </h4>
-              <div className="map"></div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: dataContact && dataContact.map.value,
+                }}
+              ></div>
             </Card>
           </Col>
         </Row>

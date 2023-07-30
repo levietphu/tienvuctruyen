@@ -74,10 +74,10 @@ const ViewBanner: React.FC = () => {
       dataIndex: "status",
       render: (_, record) => {
         return (
-          <span style={{ background: `${record.status === 1 ? "" : "red"}` }}>
+          <Button size="small" type="primary" danger={record.status === 0}>
             {" "}
             {record.status === 1 ? "Publish" : "Unpublish"}
-          </span>
+          </Button>
         );
       },
     },
@@ -86,16 +86,14 @@ const ViewBanner: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <span
-            className="span-action"
-            style={{ background: "green" }}
-            onClick={() => showModal(value)}
-          >
+          <Button size="middle" type="primary" onClick={() => showModal(value)}>
             Sửa
-          </span>
-          <span
-            className="span-action"
-            style={{ marginLeft: "10px", background: "red" }}
+          </Button>
+          <Button
+            size="middle"
+            danger
+            type="primary"
+            style={{ marginLeft: "5px" }}
             onClick={() => {
               if (
                 // eslint-disable-next-line no-restricted-globals
@@ -107,7 +105,7 @@ const ViewBanner: React.FC = () => {
             }}
           >
             Xóa
-          </span>
+          </Button>
         </>
       ),
     },
@@ -216,11 +214,7 @@ const ViewBanner: React.FC = () => {
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
-    if (
-      changedValues.id_truyen &&
-      !changedValues.name &&
-      !changedValues.image
-    ) {
+    if (changedValues.id_truyen) {
       allValues.name = changedValues.id_truyen.split("/")[0];
       form.setFieldsValue({
         name: changedValues.id_truyen.split("/")[0],
@@ -231,7 +225,9 @@ const ViewBanner: React.FC = () => {
   //upload ảnh
   const props: UploadProps = {
     name: "image",
-    action: `${process.env.REACT_APP_API}cms/upload_banner`,
+    action: `${process.env.REACT_APP_API}cms/upload_banner/${
+      idBanner ? idBanner : "0"
+    }`,
     accept: "image/png, image/gif, image/jpeg",
     listType: "picture-card",
     fileList: fileList,
@@ -245,9 +241,7 @@ const ViewBanner: React.FC = () => {
           })
         );
       }
-      if (info.file.status !== "uploading") {
-        console.log("đang tải lên");
-      }
+
       if (info.file.status === "done") {
         message.success(` tải ảnh ${info.file.name} lên thành công`);
       } else if (info.file.status === "error") {
@@ -307,7 +301,6 @@ const ViewBanner: React.FC = () => {
             initialValues={{
               name: "",
               slug: "",
-              value: "",
               status: 1,
               id_truyen: "",
             }}
@@ -379,8 +372,8 @@ const ViewBanner: React.FC = () => {
               </Col>
               <Col md={18}>
                 {errorBanner &&
-                  errorBanner.value &&
-                  errorBanner.value.map((item: any, index: number) => {
+                  errorBanner.image &&
+                  errorBanner.image.map((item: any, index: number) => {
                     return (
                       <p key={index} style={{ color: "red" }}>
                         {item}

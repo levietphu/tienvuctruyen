@@ -24,6 +24,10 @@ import ViewAds from "../pages/cms/ads/views/ViewAds";
 import ViewContact from "../pages/cms/contact/views/ViewContact";
 import ViewLogo from "../pages/cms/logo/views/ViewLogo";
 import ViewBanner from "../pages/cms/banner/views/ViewBanner";
+import ViewStory from "../pages/cms/story/views/ViewStory";
+import CreateStory from "../pages/cms/story/views/CreateStory";
+import EditStory from "../pages/cms/story/views/EditStory";
+import ViewChapter from "../pages/cms/chapter/views/ViewChapter";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -62,6 +66,10 @@ const routes = ({ user, loaderUser }: any) => {
           <Route path="contact/view" element={<ViewContact />} />
           <Route path="logo/view" element={<ViewLogo />} />
           <Route path="banner/view" element={<ViewBanner />} />
+          <Route path="story/view" element={<ViewStory />} />
+          <Route path="story/create" element={<CreateStory />} />
+          <Route path="story/edit/:id_story" element={<EditStory />} />
+          <Route path="chapter/:id_story/view" element={<ViewChapter />} />
           <Route path="*" element={<a>Not Found</a>} />
         </Route>
 
