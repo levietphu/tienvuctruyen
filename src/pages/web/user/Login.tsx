@@ -1,34 +1,58 @@
 import { useState, useContext, useEffect } from "react";
 import "./user.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContextProvider";
+import { AuthContext } from "../../../context/AuthContextProvider";
+import setToken from "../../../ultis/setToken";
 
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
+  const [errorLogin, setErrorLogin] = useState<any>();
 
   const {
     login,
-    dataLogin,
     setTextLogin,
     errorServer,
     textLogin,
     checkLogin,
+    user,
+    setErrorServer,
+    getUser,
+    setLoaderUser,
   }: any = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (dataLogin) {
-      dataLogin.success && !checkLogin
-        ? navigate(-1)
-        : dataLogin.success && checkLogin && navigate("/");
-    }
-  }, [dataLogin]);
-
-  useEffect(() => {
     document.title = "Đăng nhập vào Tiên Vực";
   }, []);
+
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
+
+  const loginTienVuc = () => {
+    login()
+      .then((res: any) => {
+        // lần đầu đăng nhập cần gắn token vào header
+        setToken(res.data.data.token);
+        setLoaderUser("loader");
+
+        getUser();
+        //lưu đăng nhập
+        localStorage.setItem("token", JSON.stringify(res.data.data.token));
+
+        !checkLogin ? navigate(-1) : navigate("/");
+      })
+      .catch((err: any) => {
+        setErrorServer(
+          err.response.status === 400
+            ? err.response.data.message
+            : err.response.data.errors
+        );
+        setTextLogin({ email: "", password: "" });
+      });
+  };
 
   return (
     <div className="login">
@@ -41,11 +65,19 @@ const Login = () => {
 
             <i className="fa-sharp fa-solid fa-laptop-file"></i>
           </h1>
+
           <div className="login__main">
+            {errorServer && !errorServer.email && !errorServer.password && (
+              <div className="inforError">
+                <p>{errorServer}</p>
+              </div>
+            )}
             <div className="name__login">
               <p>Email hoặc tên tài khoản</p>
               <input
-                className={checkInputName ? "comment__text--active" : ""}
+                className={`${checkInputName ? "comment__text--active" : ""} ${
+                  errorServer && errorServer.email ? "active_error" : ""
+                }`}
                 type="text"
                 placeholder="vidugmail.com"
                 onClick={() => setCheckInputName(!checkInputName)}
@@ -56,11 +88,25 @@ const Login = () => {
                 }
                 name="email"
               />
+              {errorServer &&
+                errorServer.email &&
+                errorServer.email.map((item: any, index: any) => {
+                  return (
+                    <p className="error" key={index}>
+                      {item}
+                    </p>
+                  );
+                })}
+              {errorLogin && errorLogin.user && (
+                <p className="error">{errorLogin.user}</p>
+              )}
             </div>
             <div className="password__login">
               <p>Mật khẩu</p>
               <input
-                className={checkInputPass ? "comment__text--active" : ""}
+                className={`${checkInputPass ? "comment__text--active" : ""} ${
+                  errorServer && errorServer.email ? "active_error" : ""
+                }`}
                 type="password"
                 placeholder="*********"
                 onClick={() => setCheckInputPass(!checkInputPass)}
@@ -71,12 +117,18 @@ const Login = () => {
                 }
                 name="password"
               />
+              {errorServer &&
+                errorServer.password &&
+                errorServer.password.map((item: any, index: any) => {
+                  return (
+                    <p className="error" key={index}>
+                      {item}
+                    </p>
+                  );
+                })}
             </div>
             <Link to="">Quên mật khẩu?</Link>
-            <button
-              className=""
-              onClick={() => textLogin.email && textLogin.password && login()}
-            >
+            <button className="" onClick={() => loginTienVuc()}>
               Đăng nhập
             </button>
           </div>
@@ -85,9 +137,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      {errorServer.error && (
-        <p className="error_auth">{errorServer.showText}</p>
-      )}
     </div>
   );
 };

@@ -25,10 +25,21 @@
           margin-left: 15px;
         }
         background: white;
+        margin-bottom: 0;
       }
+
       .login__main {
         padding: 15px;
         background: white;
+        .inforError {
+          color: #cc0f35;
+          background: #feecf0;
+          padding: 25px;
+          border-radius: 5px;
+          border-left: 4px solid #f14668;
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
         .name__login,
         .password__login {
           margin-bottom: 10px;

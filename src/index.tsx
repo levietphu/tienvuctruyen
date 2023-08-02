@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import SettingContextProvider from "./context/SettingContextProvider";
-import HomeContextProvider from "./context/HomeContextProvider";
 import reportWebVitals from "./reportWebVitals";
 import LayoutContextProvider from "./context/LayoutContextProvider";
 import AuthContextProvider from "./context/AuthContextProvider";
@@ -14,19 +13,15 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={rootStore}>
-      <LayoutContextProvider>
-        <SettingContextProvider>
-          <AuthContextProvider>
-            <HomeContextProvider>
-              <App />
-            </HomeContextProvider>
-          </AuthContextProvider>
-        </SettingContextProvider>
-      </LayoutContextProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={rootStore}>
+    <LayoutContextProvider>
+      <SettingContextProvider>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </SettingContextProvider>
+    </LayoutContextProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

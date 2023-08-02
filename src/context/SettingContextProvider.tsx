@@ -12,7 +12,7 @@ const SettingContextProvider = ({ children }: any) => {
   const [togglePopup, setTogglePopup] = useState(false);
   const value = localStorage.getItem("theme");
   const value2 = localStorage.getItem("size");
-  const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
+
   let saveTheme: any;
   let saveSize: any;
   if (typeof value === "string") {
@@ -47,8 +47,6 @@ const SettingContextProvider = ({ children }: any) => {
     theme,
     size,
     setSize,
-    checkPopupHome,
-    setCheckPopupHome,
   };
 
   return (

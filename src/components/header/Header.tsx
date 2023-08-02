@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./header.scss";
 import { useOutSide } from "../../hookCustom/useOutSide";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import setToken from "../../ultis/setToken";
 
@@ -23,9 +23,7 @@ const Header = ({ cates, logo }: any) => {
   const menuRefPerLog = useOutSide(() => setTooglePersonalLogout(false));
   const PersonRef = useOutSide(() => setTooglePersonalLogoutMolie(false));
 
-  const navigate = useNavigate();
-
-  const { user, loaderUser }: any = useContext(AuthContext);
+  const { user, loaderUser, setLoaderUser }: any = useContext(AuthContext);
 
   const logout = () => {
     setToken("");
@@ -147,7 +145,7 @@ const Header = ({ cates, logo }: any) => {
           )}
         </div>
       </div>
-      <a
+      <button
         className="header__right--mobile center"
         onClick={() => {
           setToogleMenuMobile(!toogleMenuMobile);
@@ -162,7 +160,7 @@ const Header = ({ cates, logo }: any) => {
         ) : (
           <i className="fa fa-times" aria-hidden="true"></i>
         )}
-      </a>
+      </button>
       {toogleMenuMobile && (
         <div className="header__right--menu">
           <div className="screen-85">
@@ -207,16 +205,16 @@ const Header = ({ cates, logo }: any) => {
               {toogleMenuMobileList && (
                 <ul className="header__right--menulist">
                   <li>
-                    <a href="">bảng xếp hạng</a>
+                    <Link to="/danh-sach/truyen-vip">bảng xếp hạng</Link>
                   </li>
                   <li>
-                    <a href="">truyện miễn phí</a>
+                    <Link to="/danh-sach/truyen-mien-phi">truyện miễn phí</Link>
                   </li>
                   <li>
-                    <a href="">truyện đã hoàn</a>
+                    <Link to="/danh-sach/truyen-full">truyện đã hoàn</Link>
                   </li>
                   <li>
-                    <a href="">truyện mới cập nhật</a>
+                    <Link to="/danh-sach/truyen-moi">truyện mới cập nhật</Link>
                   </li>
                 </ul>
               )}

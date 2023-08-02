@@ -1,5 +1,5 @@
-import DragStory from "../../components/home/DragStory";
-import MainLayout from "../../layouts/MainLayout";
+import DragStory from "../../../components/home/DragStory";
+import MainLayout from "../../../layouts/MainLayout";
 import "./translator.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";

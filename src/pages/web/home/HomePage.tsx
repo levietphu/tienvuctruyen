@@ -1,19 +1,17 @@
 import "./home.scss";
-import MainLayout from "../../layouts/MainLayout";
-import GalleryCarousel from "../../components/home/GalleryCarousel";
-import Search from "../../components/home/Search";
-import DragStory from "../../components/home/DragStory";
-import NewUpdateStory from "../../components/home/NewUpdateStory";
-import FullStory from "../../components/home/FullStory";
-import { HomeContext } from "../../context/HomeContextProvider";
+import MainLayout from "../../../layouts/MainLayout";
+import GalleryCarousel from "../../../components/home/GalleryCarousel";
+import Search from "../../../components/home/Search";
+import DragStory from "../../../components/home/DragStory";
+import NewUpdateStory from "../../../components/home/NewUpdateStory";
+import FullStory from "../../../components/home/FullStory";
+import { HomeContext } from "../../../context/HomeContextProvider";
 import { useContext, useEffect } from "react";
-import PopupFull from "../../layouts/PopupFull";
-import { SettingContext } from "../../context/SettingContextProvider";
+import PopupFull from "../../../layouts/PopupFull";
 import DragLoader from "./LoaderHome/DragLoader";
 
 const HomePage = () => {
-  const { dataHome, loaderHome }: any = useContext(HomeContext);
-  const { checkPopupHome }: any = useContext(SettingContext);
+  const { dataHome, loaderHome, checkPopupHome }: any = useContext(HomeContext);
   useEffect(() => {
     if (checkPopupHome) {
       document.body.classList.add("hidden__scroll");

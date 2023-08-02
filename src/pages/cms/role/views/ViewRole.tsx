@@ -9,12 +9,14 @@ import {
   Input,
   Modal,
   Select,
+  Checkbox,
 } from "antd";
-import "../styles/view-author.scss";
+import "../styles/view-role.scss";
 import type { ColumnsType } from "antd/es/table";
-import { createAuthor, deleteAuthor, getAuthor, updateAuthor } from "../api";
+import { createRole, deleteRole, getRole, updateRole } from "../api";
 import { useEffect, useState } from "react";
-import { changeToSlug } from "../../../../ultis/changeToSlug";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import type { CheckboxValueType } from "antd/es/checkbox/Group";
 
 interface DataType {
   id: number;
@@ -22,12 +24,16 @@ interface DataType {
   status: number;
 }
 
-const ViewAuthor: React.FC = () => {
-  const [dataAuthor, setDataAuthor] = useState<any>();
+const ViewRole: React.FC = () => {
+  const [dataRole, setDataRole] = useState<any>();
+  const [dataPer, setDataPer] = useState<any>();
   const [open, setOpen] = useState(false);
-  const [errorAuthor, setErrorAuthor] = useState<any>();
+  const [errorRole, setErrorRole] = useState<any>();
   const [alert, setAlert] = useState("");
-  const [idAuthor, setIdAuthor] = useState<any>();
+  const [idRole, setIdRole] = useState<any>();
+
+  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>();
+  const [checkAll, setCheckAll] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -46,12 +52,25 @@ const ViewAuthor: React.FC = () => {
       key: "name",
     },
     {
+      title: "Số quyền",
+      key: "role_per_count",
+      render: (value) => {
+        return (
+          <span>
+            {value.role_per.length === dataPer.length
+              ? "full"
+              : value.role_per.length}
+          </span>
+        );
+      },
+    },
+    {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
       render: (_, record) => {
         return (
-          <Button type="primary" danger={record.status !== 1}>
+          <Button size="middle" type="primary" danger={record.status !== 1}>
             {record.status === 1 ? "Publish" : "Unpublish"}
           </Button>
         );
@@ -62,32 +81,36 @@ const ViewAuthor: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <span style={{ cursor: "pointer" }} onClick={() => showModal(value)}>
+          <Button size="middle" type="primary" onClick={() => showModal(value)}>
             Sửa
-          </span>
-          <span
-            style={{ marginLeft: "10px", cursor: "pointer", background: "red" }}
+          </Button>
+          <Button
+            size="middle"
+            type="primary"
+            danger
+            style={{ marginLeft: "10px" }}
             onClick={() => {
               if (
                 // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa Tác giả ${value.name} này không`) ===
+                confirm(`Bạn có muốn xóa Vai trò ${value.name} này không`) ===
                 true
               ) {
-                destroyAuthor(value.id);
+                destroyRole(value.id);
               }
             }}
           >
             Delete
-          </span>
+          </Button>
         </>
       ),
     },
   ];
 
   useEffect(() => {
-    getAuthor()
+    getRole()
       .then((res: any) => {
-        setDataAuthor(res.data.author);
+        setDataRole(res.data.role);
+        setDataPer(res.data.per);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -106,10 +129,11 @@ const ViewAuthor: React.FC = () => {
     if (value) {
       form.setFieldsValue({
         name: value.name,
-        slug: value.slug,
         status: value.status,
       });
-      setIdAuthor(value.id);
+      setCheckedList(value.role_per.map((item: any) => item.id));
+      setCheckAll(value.role_per.length === dataPer.length);
+      setIdRole(value.id);
     }
   };
 
@@ -122,70 +146,76 @@ const ViewAuthor: React.FC = () => {
   const handleCancel = () => {
     setOpen(false);
     form.resetFields();
-    setErrorAuthor("");
-    setIdAuthor("");
+    setErrorRole("");
+    setIdRole("");
+    setCheckedList([]);
+    setCheckAll(false);
   };
 
-  // Thêm mới tác giả
-  const postAuthor = async (values: any) => {
-    await createAuthor(values)
+  // Thêm mới Vai trò
+  const postRole = async (values: any) => {
+    await createRole(values)
       .then((res: any) => {
         setAlert(res.data.message);
         handleCancel();
-        getAuthor().then((res: any) => {
-          setDataAuthor(res.data.author);
+        getRole().then((res: any) => {
+          setDataRole(res.data.role);
         });
       })
-      .catch((err) => setErrorAuthor(err.response.data.errors));
+      .catch((err) => setErrorRole(err.response.data.errors));
   };
 
-  // Cập nhật tác giả
-  const changeAuthor = async (values: any) => {
-    values.id = idAuthor;
-    await updateAuthor(idAuthor, values)
+  // Cập nhật Vai trò
+  const changeRole = async (values: any) => {
+    values.id = idRole;
+    await updateRole(idRole, values)
       .then((res) => {
         setAlert(res.data.message);
         handleCancel();
-        getAuthor().then((res: any) => {
-          setDataAuthor(res.data.author);
+        getRole().then((res: any) => {
+          setDataRole(res.data.role);
         });
       })
-      .catch((err) => setErrorAuthor(err.response.data.errors));
+      .catch((err) => setErrorRole(err.response.data.errors));
   };
 
-  //Xóa tác giả
-  const destroyAuthor = async (id: number) => {
-    await deleteAuthor(id)
+  //Xóa Vai trò
+  const destroyRole = async (id: number) => {
+    await deleteRole(id)
       .then((res) => {
         setAlert(res.data.message);
-        getAuthor().then((res: any) => {
-          setDataAuthor(res.data.author);
+        getRole().then((res: any) => {
+          setDataRole(res.data.role);
         });
       })
       .catch((err) => console.log(err));
   };
 
-  const saveAuthor = (values: any) => {
-    if (!idAuthor) {
-      postAuthor(values);
+  const saveRole = (values: any) => {
+    values.id_per = checkedList;
+    if (!idRole) {
+      postRole(values);
     } else {
-      changeAuthor(values);
+      changeRole(values);
     }
   };
 
-  const handleChange = (changedValues: any, allValues: any) => {
-    allValues.slug = changeToSlug(changedValues.name);
-    form.setFieldsValue({
-      slug: changeToSlug(allValues.name),
-    });
+  const onChange = (list: CheckboxValueType[]) => {
+    setCheckedList(list);
+    setCheckAll(list.length === dataPer.length);
+  };
+
+  const onCheckAllChange = (e: CheckboxChangeEvent) => {
+    setCheckedList(e.target.checked ? dataPer.map((item: any) => item.id) : []);
+    setCheckAll(e.target.checked);
   };
 
   return (
     <>
       <div className="top-main">
-        <p>Danh sách Tác giả</p>
+        <p>Danh sách Vai trò</p>
         <div className="top-main__right">
-          <a href="">Tác giả</a> / <span>Danh sách Tác giả</span>
+          <a href="">Vai trò</a> / <span>Danh sách Vai trò</span>
         </div>
       </div>
       <Card>
@@ -206,7 +236,7 @@ const ViewAuthor: React.FC = () => {
         )}
 
         <Modal
-          title={`${idAuthor ? "Sửa tác giả" : "Thêm mới tác giả"}`}
+          title={`${idRole ? "Sửa Vai trò" : "Thêm mới Vai trò"}`}
           open={open}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -221,20 +251,19 @@ const ViewAuthor: React.FC = () => {
             style={{ maxWidth: 600 }}
             initialValues={{ name: "", slug: "", status: 1 }}
             form={form}
-            onFinish={saveAuthor}
-            onValuesChange={handleChange}
+            onFinish={saveRole}
           >
             <Form.Item
-              label="Tên Tác giả"
+              label="Tên Vai trò"
               name="name"
               rules={[
                 {
                   required: true,
-                  message: "Tên Tác giả không được bỏ trống",
+                  message: "Tên Vai trò không được bỏ trống",
                 },
                 {
                   max: 255,
-                  message: "Tên Tác giả không được quá 255 ký tự",
+                  message: "Tên Vai trò không được quá 255 ký tự",
                 },
               ]}
             >
@@ -245,9 +274,9 @@ const ViewAuthor: React.FC = () => {
                 <div></div>
               </Col>
               <Col md={18}>
-                {errorAuthor &&
-                  errorAuthor.name &&
-                  errorAuthor.name.map((item: any, index: number) => {
+                {errorRole &&
+                  errorRole.name &&
+                  errorRole.name.map((item: any, index: number) => {
                     return (
                       <p key={index} style={{ color: "red" }}>
                         {item}
@@ -256,33 +285,41 @@ const ViewAuthor: React.FC = () => {
                   })}
               </Col>
             </Row>
-            <Form.Item
-              label="Slug"
-              name="slug"
-              rules={[
-                { required: true, message: "slug không được bỏ trống" },
-                { max: 255, message: "slug không được quá 255 ký tự" },
-              ]}
-            >
-              <Input type="text" name="slug" disabled />
-            </Form.Item>
+            <div style={{ margin: "10px 0" }}>
+              <p>Quyền</p>
+              <Checkbox onChange={onCheckAllChange} checked={checkAll}>
+                Check All
+              </Checkbox>
+              <Checkbox.Group
+                value={checkedList}
+                onChange={onChange}
+                options={
+                  dataPer
+                    ? dataPer.map((item: any) => ({
+                        value: item.id,
+                        label: item.name_per,
+                      }))
+                    : []
+                }
+              ></Checkbox.Group>
+              <Row className="error">
+                <Col md={6}>
+                  <div></div>
+                </Col>
+                <Col md={18}>
+                  {errorRole &&
+                    errorRole.id_per &&
+                    errorRole.id_per.map((item: any, index: number) => {
+                      return (
+                        <p key={index} style={{ color: "red" }}>
+                          {item}
+                        </p>
+                      );
+                    })}
+                </Col>
+              </Row>
+            </div>
 
-            <Row className="error">
-              <Col md={6}>
-                <div></div>
-              </Col>
-              <Col md={18}>
-                {errorAuthor &&
-                  errorAuthor.slug &&
-                  errorAuthor.slug.map((item: any, index: number) => {
-                    return (
-                      <p key={index} style={{ color: "red" }}>
-                        {item}
-                      </p>
-                    );
-                  })}
-              </Col>
-            </Row>
             <Form.Item label="Trạng thái" name="status">
               <Select
                 options={[
@@ -296,9 +333,9 @@ const ViewAuthor: React.FC = () => {
                 <div></div>
               </Col>
               <Col md={18}>
-                {errorAuthor &&
-                  errorAuthor.status &&
-                  errorAuthor.status.map((item: any, index: number) => {
+                {errorRole &&
+                  errorRole.status &&
+                  errorRole.status.map((item: any, index: number) => {
                     return (
                       <p key={index} style={{ color: "red" }}>
                         {item}
@@ -324,7 +361,7 @@ const ViewAuthor: React.FC = () => {
 
         <Table
           columns={columns}
-          dataSource={dataAuthor}
+          dataSource={dataRole}
           rowKey={(record) => record.id}
         />
       </Card>
@@ -332,4 +369,4 @@ const ViewAuthor: React.FC = () => {
   );
 };
 
-export default ViewAuthor;
+export default ViewRole;

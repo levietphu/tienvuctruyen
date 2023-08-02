@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SettingContext } from "../../context/SettingContextProvider";
+import { SettingContext } from "../../../context/SettingContextProvider";
 
 const Popup = () => {
   const { setTogglePopup }: any = useContext(SettingContext);

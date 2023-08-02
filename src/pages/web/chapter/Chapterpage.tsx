@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react";
-import MainLayout from "../../layouts/MainLayout";
+import MainLayout from "../../../layouts/MainLayout";
 import "./chapter.scss";
-import { SettingContext } from "../../context/SettingContextProvider";
+import { SettingContext } from "../../../context/SettingContextProvider";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import ChapterVip from "../../components/chapter/ChapterVip";
-import Loader from "../../components/chapter/Loader";
-import { AuthContext } from "../../context/AuthContextProvider";
-import ListChapter from "../../components/chapter/ListChapter";
+import ChapterVip from "../../../components/chapter/ChapterVip";
+import Loader from "../../../components/chapter/Loader";
+import { AuthContext } from "../../../context/AuthContextProvider";
+import ListChapter from "../../../components/chapter/ListChapter";
 import Popup from "./Popup";
 
 const Chapterpage = () => {

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import "./story.scss";
-import MainLayout from "../../layouts/MainLayout";
+import MainLayout from "../../../layouts/MainLayout";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import CommentStory from "../../components/story/CommentStory";
-import ChapterStory from "../../components/story/ChapterStory";
-import Loader from "../../components/story/Loader";
-import { AuthContext } from "../../context/AuthContextProvider";
+import CommentStory from "../../../components/story/CommentStory";
+import ChapterStory from "../../../components/story/ChapterStory";
+import Loader from "../../../components/story/Loader";
+import { AuthContext } from "../../../context/AuthContextProvider";
 
 const Story = () => {
   // data api
@@ -27,6 +27,9 @@ const Story = () => {
 
   const params = useParams();
   const navigate = useNavigate();
+  if (!params.slug?.includes("-")) {
+    navigate("/404");
+  }
 
   const callApi = async (id_user: string, page: number, id_parent: string) => {
     await axios

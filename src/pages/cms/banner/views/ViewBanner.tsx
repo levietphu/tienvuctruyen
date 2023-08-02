@@ -62,7 +62,7 @@ const ViewBanner: React.FC = () => {
         return (
           <Image
             width={200}
-            src={`${process.env.REACT_APP_UPLOADS}/${value}`}
+            src={`${process.env.REACT_APP_UPLOADS}${value}`}
             preview={false}
           />
         );
@@ -144,7 +144,7 @@ const ViewBanner: React.FC = () => {
           uid: values.id,
           name: values.name,
           status: "done",
-          url: `${process.env.REACT_APP_UPLOADS}/${values.image}`,
+          url: `${process.env.REACT_APP_UPLOADS}${values.image}`,
         },
       ]);
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ContainerOutlined,
   DesktopOutlined,
@@ -10,6 +10,8 @@ import { Button, Menu, Image } from "antd";
 import { LayoutContext } from "../../../../context/LayoutContextProvider";
 import "../styles/sidebar.scss";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthContextProvider";
+import { checkPer } from "../../../../ultis/checkPer";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,63 +31,88 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem(
-    "Thể loại",
-    "/dashboard/cate/view",
-    <PieChartOutlined rev={undefined} />
-  ),
-  getItem(
-    "Tác giả",
-    "/dashboard/author/view",
-    <DesktopOutlined rev={undefined} />
-  ),
-  getItem(
-    "Dịch giả",
-    "/dashboard/translator/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-  getItem(
-    "Truyện",
-    "/dashboard/story/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-  getItem(
-    "Banner",
-    "/dashboard/banner/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-
-  getItem("Config", "sub1", <MailOutlined rev={undefined} />, [
-    getItem("Logo", "/dashboard/logo/view"),
-    getItem("Ads", "/dashboard/ads/view"),
-    getItem("Contact", "/dashboard/contact/view"),
-  ]),
-  getItem(
-    "User",
-    "/dashboard/user/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-  getItem(
-    "Vai trò",
-    "/dashboard/role/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-  getItem(
-    "Quyền",
-    "/dashboard/permission/view",
-    <ContainerOutlined rev={undefined} />
-  ),
-];
-
 const SideBar: React.FC = () => {
+  const [checkPermission, setCheckPermission] = useState<any[]>();
+
   const { dataLayout }: any = React.useContext(LayoutContext);
+  const { user }: any = React.useContext(AuthContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const ChangeRoute = ({ key }: any) => {
     navigate(key);
   };
+
+  const items: MenuItem[] = [
+    user &&
+      checkPer(user.role, "cate-view") &&
+      getItem(
+        "Thể loại",
+        "/dashboard/cate/view",
+        <PieChartOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "author-view") &&
+      getItem(
+        "Tác giả",
+        "/dashboard/author/view",
+        <DesktopOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "author-view") &&
+      getItem(
+        "Dịch giả",
+        "/dashboard/trans/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "story-view") &&
+      getItem(
+        "Truyện",
+        "/dashboard/story/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "banner-view") &&
+      getItem(
+        "Banner",
+        "/dashboard/banner/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+
+    getItem("Config", "sub1", <MailOutlined rev={undefined} />, [
+      user &&
+        checkPer(user.role, "logo-view") &&
+        getItem("Logo", "/dashboard/logo/view"),
+      user &&
+        checkPer(user.role, "ads-view") &&
+        getItem("Ads", "/dashboard/ads/view"),
+      user &&
+        checkPer(user.role, "contact-view") &&
+        getItem("Contact", "/dashboard/contact/view"),
+    ]),
+    user &&
+      checkPer(user.role, "user-view") &&
+      getItem(
+        "User",
+        "/dashboard/user/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "role-view") &&
+      getItem(
+        "Vai trò",
+        "/dashboard/role/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+    user &&
+      checkPer(user.role, "per-view") &&
+      getItem(
+        "Quyền",
+        "/dashboard/per/view",
+        <ContainerOutlined rev={undefined} />
+      ),
+  ];
 
   return (
     <div className="sidebar">

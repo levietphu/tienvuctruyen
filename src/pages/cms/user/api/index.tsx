@@ -1,21 +1,16 @@
 import { callApi } from "../../api";
 
-//get category
-export const getAuthor = async () => {
-  return await callApi("get", "author/index", "");
+//get User
+export const getUser = async () => {
+  return await callApi("get", "user/index", "");
 };
 
-//create category
-export const createAuthor = async (data: any) => {
-  return await callApi("post", "author/create", data);
+// update role for user
+export const updateRole = async (id_user: number, data: any) => {
+  return await callApi("post", `user/${id_user}/update_role`, data);
 };
 
-//update category
-export const updateAuthor = async (id: number, data: any) => {
-  return await callApi("put", `author/${id}/update`, data);
-};
-
-//delete category
-export const deleteAuthor = async (id: number) => {
-  return await callApi("delete", `author/${id}/delete`, "");
+//block User
+export const blockUser = async (id: number) => {
+  return await callApi("post", `user/${id}/block`, "");
 };

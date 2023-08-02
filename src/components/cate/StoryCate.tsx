@@ -172,15 +172,24 @@ const StoryCate = () => {
                         })}
                       </div>
                       <div className="chapter__story">
-                        <Link to={`/${item.slug}/${item.chuong.slug}`}>
-                          <strong>{item.chuong?.chapter_number}</strong>.{" "}
-                          <span>{item.chuong?.name_chapter}</span>
-                        </Link>
-                        <p>
-                          <Moment fromNow locale="vi">
-                            {item.chuong?.created_at}
-                          </Moment>
-                        </p>
+                        {item.chuong ? (
+                          <Link to={`/${item.slug}/${item.chuong?.slug}`}>
+                            <strong>{item.chuong?.chapter_number}</strong>.{" "}
+                            <span>{item.chuong?.name_chapter}</span>
+                          </Link>
+                        ) : (
+                          <a href="">
+                            <span>Hiện chưa có chương</span>
+                          </a>
+                        )}
+
+                        {item.chuong && (
+                          <p>
+                            <Moment fromNow locale="vi">
+                              {item.chuong.created_at}
+                            </Moment>
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

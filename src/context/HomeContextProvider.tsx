@@ -9,12 +9,12 @@ const HomeContextProvider = ({ children }: any) => {
   const [keyword, setKeyword] = useState<string>("");
   const [dataSearch, setDataSearch] = useState<any>();
   const [loaderHome, setLoaderHome] = useState<boolean>(false);
+  const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
 
   const callApi = async () => {
     await axios.get(`${process.env.REACT_APP_API}home`).then((res) => {
       setDataHome(res.data.data.items);
       setLoaderHome(true);
-      window.scrollTo(0, 0);
     });
   };
 
@@ -42,6 +42,8 @@ const HomeContextProvider = ({ children }: any) => {
     keyword,
     dataSearch,
     loaderHome,
+    checkPopupHome,
+    setCheckPopupHome,
   };
 
   return <HomeContext.Provider value={data}>{children}</HomeContext.Provider>;

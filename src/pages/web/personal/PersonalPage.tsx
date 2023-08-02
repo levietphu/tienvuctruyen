@@ -1,10 +1,10 @@
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContextProvider";
-import MainLayout from "../../layouts/MainLayout";
+import { AuthContext } from "../../../context/AuthContextProvider";
+import MainLayout from "../../../layouts/MainLayout";
 import "./personal.scss";
 import { useContext, useEffect } from "react";
-import coinImage from "../../assets/coin.svg";
-import PopupPayment from "../../components/account/popup/PopupPayment";
+import coinImage from "../../../assets/coin.svg";
+import PopupPayment from "../../../components/account/popup/PopupPayment";
 
 const PersonalPage = () => {
   const { pathname } = useLocation();
