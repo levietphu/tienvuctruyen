@@ -24,6 +24,13 @@ const Register = () => {
 
   useEffect(() => {
     document.title = "Tạo tài khoản Tiên Vực";
+    return () => {
+      setCheckInputEmail(false);
+      setCheckInputPass(false);
+      setCheckInputName(false);
+      setCheckRules(false);
+      setErrorServer("");
+    };
   }, []);
 
   useEffect(() => {
@@ -41,6 +48,7 @@ const Register = () => {
     }
     return () => clearTimeout(id);
   }, [errorServer]);
+
   const registerTienVuc = () => {
     register()
       .then((res: any) => {

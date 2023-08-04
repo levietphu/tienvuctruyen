@@ -8,9 +8,8 @@ import image from "../../assets/mascot-02.235fd60.png";
 const StoryCate = () => {
   const [dataCate, setDataCate] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
-  const [halfTotalLinks, setHalfTotalLinks] = useState<number>(
-    Math.floor(2 / 2)
-  );
+  const halfTotalLinks = Math.floor(2 / 2);
+
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
 
@@ -94,8 +93,6 @@ const StoryCate = () => {
       callApi(Number(word));
     }
   };
-
-  console.log(dataCate);
 
   return (
     <div className="cate__page">
@@ -225,18 +222,18 @@ const StoryCate = () => {
                                           : e.preventDefault()
                                       }
                                     >
-                                      <a href="">{value.label}</a>
+                                      <a>{value.label}</a>
                                     </li>
                                   );
                                 }
                               }
                             }
                           )}
-                        <li style={{ border: "none", cursor: "default" }}>
-                          <a href="" style={{ cursor: "default" }}>
-                            ...
-                          </a>
-                        </li>
+                        {dataCate.items.last_page > 2 && (
+                          <li style={{ border: "none", cursor: "default" }}>
+                            <a style={{ cursor: "default" }}>...</a>
+                          </li>
+                        )}
 
                         <li
                           className={

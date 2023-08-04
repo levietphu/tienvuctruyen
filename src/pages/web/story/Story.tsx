@@ -7,17 +7,23 @@ import CommentStory from "../../../components/story/CommentStory";
 import ChapterStory from "../../../components/story/ChapterStory";
 import Loader from "../../../components/story/Loader";
 import { AuthContext } from "../../../context/AuthContextProvider";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
 const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
+
   const [loader, setLoader] = useState<boolean>(true);
   const [keyword, setKeyword] = useState<string>("");
   const [orderby, setOrderby] = useState<string>("asc");
-  const [content, setContent] = useState<string>("");
-  const [replyContent, setReplyContent] = useState<string>("");
+
   const [checkKeywordOrderby, setCheckKeywordOrderby] =
     useState<boolean>(false);
+  const [viewMore, setViewMore] = useState<any>({
+    height: "120px",
+    overflow: "hidden",
+  });
+  const [checkViewMore, setCheckViewMore] = useState(false);
 
   const { user, loaderUser }: any = useContext(AuthContext);
 
@@ -34,7 +40,7 @@ const Story = () => {
   const callApi = async (id_user: string, page: number, id_parent: string) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}&id_parent=${id_parent}&content=${content}&reply_content=${replyContent}`
+        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
       )
       .then((res) => {
         setStory(res.data.data.items);
@@ -104,6 +110,24 @@ const Story = () => {
     }
   }, [loader]);
 
+  const onViewMore = () => {
+    setCheckViewMore(!checkViewMore);
+  };
+
+  useEffect(() => {
+    if (checkViewMore) {
+      setViewMore({
+        height: "auto",
+        overflow: "auto",
+      });
+    } else {
+      setViewMore({
+        height: "120px",
+        overflow: "hidden",
+      });
+    }
+  }, [checkViewMore]);
+
   return (
     <MainLayout>
       {!loader ? (
@@ -165,13 +189,26 @@ const Story = () => {
                   ></div>
                 </div>
               )}
-
-              <div
-                className="header__story--introduce"
-                dangerouslySetInnerHTML={{
-                  __html: story.introduce,
-                }}
-              ></div>
+              <div className="view-more-introduce">
+                <div
+                  style={viewMore}
+                  className="header__story--introduce"
+                  dangerouslySetInnerHTML={{
+                    __html: story.introduce,
+                  }}
+                ></div>
+                <p className="view_more" onClick={onViewMore}>
+                  {!checkViewMore ? "Xem thêm" : "Xem ít hơn"}
+                  {!checkViewMore ? (
+                    <DownOutlined
+                      rev={undefined}
+                      style={{ fontSize: "12px" }}
+                    />
+                  ) : (
+                    <UpOutlined rev={undefined} style={{ fontSize: "12px" }} />
+                  )}
+                </p>
+              </div>
               <div className="header__stoty--read">
                 <button
                   className="bg-primary"
@@ -201,14 +238,7 @@ const Story = () => {
               setCheckKeywordOrderby={setCheckKeywordOrderby}
               checkKeywordOrderby={checkKeywordOrderby}
             />
-            <CommentStory
-              comments={story.comments_story}
-              setContent={setContent}
-              callApi={callApi}
-              content={content}
-              replyContent={replyContent}
-              setReplyContent={setReplyContent}
-            />
+            <CommentStory slug={params.slug} story={story} />
           </div>
         </>
       ) : (

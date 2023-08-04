@@ -7,7 +7,6 @@ import setToken from "../../../ultis/setToken";
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
-  const [errorLogin, setErrorLogin] = useState<any>();
 
   const {
     login,
@@ -25,6 +24,11 @@ const Login = () => {
 
   useEffect(() => {
     document.title = "Đăng nhập vào Tiên Vực";
+    return () => {
+      setCheckInputName(false);
+      setCheckInputPass(false);
+      setErrorServer("");
+    };
   }, []);
 
   useEffect(() => {
@@ -37,7 +41,6 @@ const Login = () => {
         // lần đầu đăng nhập cần gắn token vào header
         setToken(res.data.data.token);
         setLoaderUser("loader");
-
         getUser();
         //lưu đăng nhập
         localStorage.setItem("token", JSON.stringify(res.data.data.token));
@@ -50,7 +53,6 @@ const Login = () => {
             ? err.response.data.message
             : err.response.data.errors
         );
-        setTextLogin({ email: "", password: "" });
       });
   };
 
@@ -97,9 +99,6 @@ const Login = () => {
                     </p>
                   );
                 })}
-              {errorLogin && errorLogin.user && (
-                <p className="error">{errorLogin.user}</p>
-              )}
             </div>
             <div className="password__login">
               <p>Mật khẩu</p>

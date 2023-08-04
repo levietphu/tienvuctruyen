@@ -1,29 +1,93 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import Moment from "react-moment";
 import "moment/locale/vi";
+import axios from "axios";
 
-const CommentStory = ({
-  comments,
-  setContent,
-  callApi,
-  content,
-  replyContent,
-  setReplyContent,
-}: any) => {
+const CommentStory = ({ story, slug }: any) => {
+  const [comment, setComment] = useState<any>();
+  const [commentChidren, setCommentChidren] = useState<any>();
   const [checkComment, setCheckComment] = useState<boolean>(false);
   const [checkReply, setCheckReply] = useState<boolean>(false);
   const [answer, setAnswer] = useState<number>(0);
+  const [content, setContent] = useState<string>("");
+  const [replyContent, setReplyContent] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [lastPage, setLastPage] = useState<number>();
 
   const { user }: any = useContext(AuthContext);
 
-  const handeleComment = (word: string, id_parent: number) => {
+  const callApiComment = async (page = 1) => {
+    await axios
+      .get(`${process.env.REACT_APP_API}get_comment?slug=${slug}&page=${page}`)
+      .then((res) => {
+        if (comment && !content && !replyContent) {
+          setComment({
+            ...comment,
+            data: comment.data.concat(res.data.comments_story.data),
+          });
+          callApiCommentChidren();
+        } else if (!comment) {
+          setComment(res.data.comments_story);
+        } else if (content || replyContent) {
+          setComment({
+            ...comment,
+            data: res.data.comments_story.data.concat(comment.data),
+          });
+          callApiCommentChidren();
+        }
+        if (res.data.comments_story.last_page >= currentPage) {
+          setCurrentPage(currentPage + 1);
+        }
+        setLastPage(res.data.comments_story.last_page);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const callApiCommentChidren = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API}get_chidren_comment?slug=${slug}`)
+      .then((res) => {
+        setCommentChidren(res.data.children_comments);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    callApiComment();
+    callApiCommentChidren();
+  }, []);
+
+  const postComment = async (id_parent: number) => {
+    await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API}post_comment`,
+      headers: { accept: "application/json" },
+      data: {
+        content: content,
+        reply_content: replyContent,
+        slug: slug,
+        id_user: user.user.id,
+        id_parent: id_parent,
+      },
+    })
+      .then((res) => {
+        if (!id_parent) {
+          callApiComment();
+        } else {
+          callApiCommentChidren();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleComment = (word: string, id_parent: number) => {
     if (word === "comment") {
-      callApi(user.user.id, 1, id_parent);
+      postComment(id_parent);
       setContent("");
     } else {
-      callApi(user.user.id, 1, id_parent);
+      postComment(id_parent);
       setReplyContent("");
     }
   };
@@ -48,7 +112,7 @@ const CommentStory = ({
             ></textarea>
             <div
               className="click__comment"
-              onClick={() => user && content && handeleComment("comment", 0)}
+              onClick={() => user && content && handleComment("comment", 0)}
             >
               <button className={!content ? "active__comment__button" : ""}>
                 Bình luận
@@ -62,13 +126,17 @@ const CommentStory = ({
         )}
       </div>
       <div className="story__comment--list">
-        {comments.length > 0 ? (
-          comments.map((value: any, index: any) => {
+        {comment && comment.data && comment.data.length > 0 ? (
+          comment.data.map((value: any, index: any) => {
             return (
               <div key={index} className="story__comment--item">
                 <div className="comment--item">
                   <p>
-                    <span className="account__name">{value.user.name}</span> •
+                    <span className="account__name">{value.user.name}</span>{" "}
+                    {value.user.id === story.id_user && (
+                      <span className="role_name">Dịch giả</span>
+                    )}{" "}
+                    •
                     <span className="time__update">
                       {" "}
                       <Moment fromNow locale="vi">
@@ -77,30 +145,43 @@ const CommentStory = ({
                     </span>
                   </p>
                   <p className="comment">{value.content}</p>
-                  <a onClick={() => user && setAnswer(value.id)}>
-                    {value.commet_childrens.length} trả lời
-                  </a>
+                  <span
+                    className="show-input"
+                    onClick={() => user && setAnswer(value.id)}
+                  >
+                    {commentChidren &&
+                      commentChidren.filter(
+                        (item: any, key: any) => item.id_parent === value.id
+                      ).length}{" "}
+                    trả lời
+                  </span>
                 </div>
-                {value.commet_childrens.map((item: any, keygen: any) => {
-                  return (
-                    <div className="recomment--item" key={keygen}>
-                      <p>
-                        <span className="account__name">{item.user.name}</span>{" "}
-                        •
-                        <span className="time__update">
-                          {" "}
-                          <Moment fromNow locale="vi">
-                            {item.created_at}
-                          </Moment>
-                        </span>
-                      </p>
-                      <p className="comment">{item.content}</p>
-                    </div>
-                  );
-                })}
+                {commentChidren &&
+                  commentChidren.map((item: any, keygen: any) => {
+                    if (item.id_parent === value.id) {
+                      return (
+                        <div className="recomment--item" key={keygen}>
+                          <p>
+                            <span className="account__name">
+                              {item.user.name}
+                            </span>{" "}
+                            •
+                            <span className="time__update">
+                              {" "}
+                              <Moment fromNow locale="vi">
+                                {item.created_at}
+                              </Moment>
+                            </span>
+                          </p>
+                          <p className="comment">{item.content}</p>
+                        </div>
+                      );
+                    }
+                  })}
                 {answer === value.id && (
                   <div className="reply">
                     <input
+                      autoFocus
                       type="text"
                       className={checkReply ? "comment__text--active" : ""}
                       onClick={() => setCheckReply(!checkReply)}
@@ -112,9 +193,7 @@ const CommentStory = ({
                       className="fa-solid fa-paper-plane"
                       style={{ opacity: "1" }}
                       onClick={() =>
-                        user &&
-                        replyContent &&
-                        handeleComment("reply", value.id)
+                        user && replyContent && handleComment("reply", value.id)
                       }
                     ></i>
                   </div>
@@ -127,6 +206,20 @@ const CommentStory = ({
             <i>Truyện chưa có bình luận nào, hãy là người đầu tiên!</i>
           </div>
         )}
+        {comment &&
+          comment.data &&
+          comment.data.length >= 1 &&
+          lastPage &&
+          lastPage > currentPage && (
+            <div className="center">
+              <span
+                className="view-more-comment"
+                onClick={() => callApiComment(currentPage)}
+              >
+                Xem thêm bình luận
+              </span>
+            </div>
+          )}
       </div>
     </div>
   );

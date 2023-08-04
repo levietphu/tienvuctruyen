@@ -87,10 +87,22 @@
       border-left: 5px solid #a19f9f;
     }
 
-    .header__story--introduce {
-      line-height: 35px;
-      font-size: 1.25rem;
+    .view-more-introduce {
+      position: relative;
+      .header__story--introduce {
+        line-height: 35px;
+        font-size: 1.25rem;
+      }
+      .view_more {
+        color: #357376;
+        cursor: pointer;
+        position: absolute;
+        bottom: -20px;
+        right: 0;
+        z-index: 5;
+      }
     }
+
     .header__stoty--read {
       margin: 30px 0 0 0;
       display: flex;
@@ -391,6 +403,13 @@
           .account__name {
             font-weight: bold;
             font-size: 1.2rem;
+            opacity: 0.8;
+          }
+          .role_name {
+            background-color: #eff5fb;
+            color: #296fa8;
+            padding: 3px;
+            font-size: 14px;
           }
           .time__update {
             color: #444343;
@@ -399,8 +418,9 @@
         }
         .comment {
           font-size: 1.2rem;
+          opacity: 0.8;
         }
-        a {
+        span.show-input {
           color: #357376;
           cursor: pointer;
         }
@@ -443,6 +463,16 @@
         cursor: pointer;
       }
     }
+  }
+  .view-more-comment {
+    margin: 20px 0 10px 0;
+    color: #357376;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .view-more-comment:hover {
+    text-decoration: underline;
   }
 }
 

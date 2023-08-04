@@ -1,9 +1,10 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import "./header.scss";
 import { useOutSide } from "../../hookCustom/useOutSide";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import setToken from "../../ultis/setToken";
+import { Progress } from "antd";
 
 const Header = ({ cates, logo }: any) => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
@@ -23,7 +24,7 @@ const Header = ({ cates, logo }: any) => {
   const menuRefPerLog = useOutSide(() => setTooglePersonalLogout(false));
   const PersonRef = useOutSide(() => setTooglePersonalLogoutMolie(false));
 
-  const { user, loaderUser, setLoaderUser }: any = useContext(AuthContext);
+  const { user, loaderUser }: any = useContext(AuthContext);
 
   const logout = () => {
     setToken("");

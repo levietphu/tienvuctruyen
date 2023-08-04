@@ -24,11 +24,11 @@ const ChapterStory = ({
   const params = useParams();
 
   // pagination
-  const [halfTotalLinks, setHalfTotalLinks] = useState<number>(
-    Math.floor(2 / 2)
-  );
+  const halfTotalLinks = Math.floor(2 / 2);
+
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
+
   useEffect(() => {
     if (Ref.current) {
       setSaveRef(Ref.current);
@@ -210,8 +210,8 @@ const ChapterStory = ({
                       !value.label.includes("Prev")
                     ) {
                       if (
-                        from < index &&
-                        index <= to &&
+                        from < index + 1 &&
+                        index + 1 <= to &&
                         index !== story.chuongs.last_page
                       ) {
                         return (
@@ -224,17 +224,15 @@ const ChapterStory = ({
                                 : e.preventDefault()
                             }
                           >
-                            <a href="">{value.label}</a>
+                            <a>{value.label}</a>
                           </li>
                         );
                       }
                     }
                   })}
-                  {story.chuongs.last_page < 2 && (
+                  {story.chuongs.last_page > 2 && (
                     <li style={{ border: "none", cursor: "default" }}>
-                      <a href="" style={{ cursor: "default" }}>
-                        ...
-                      </a>
+                      <a style={{ cursor: "default" }}>...</a>
                     </li>
                   )}
 
@@ -250,7 +248,7 @@ const ChapterStory = ({
                         : e.preventDefault()
                     }
                   >
-                    <a href="">{story.chuongs && story.chuongs.last_page}</a>
+                    <a>{story.chuongs && story.chuongs.last_page}</a>
                   </li>
                 </ul>
               </div>
