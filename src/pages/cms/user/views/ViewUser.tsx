@@ -1,9 +1,16 @@
-import { Card, Button, Table, Alert, Checkbox } from "antd";
+import { Card, Button, Table, Alert, Checkbox, Modal, Tooltip } from "antd";
 import "../styles/view-user.scss";
 import type { ColumnsType } from "antd/es/table";
-import { updateRole, getUser, blockUser } from "../api";
+import { updateRole, getUser, blockUser, addCoin } from "../api";
 import { useEffect, useState } from "react";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
+import { EditOutlined } from "@ant-design/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCoins,
+  faUserSlash,
+  faUserCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -17,6 +24,7 @@ const ViewUser: React.FC = () => {
   const [dataRole, setDataRole] = useState<any>();
   const [alert, setAlert] = useState("");
   const [idRole, setIdRole] = useState<any>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -73,39 +81,70 @@ const ViewUser: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button
-            type="primary"
-            size="small"
-            onClick={() =>
-              updateRoleForUser(
-                value.id,
-                value.role.map((item: any) => item.id)
-              )
-            }
-          >
-            Cập nhật
-          </Button>
-          <Button
-            type="primary"
-            size="small"
-            danger={value.status === 1}
-            style={{ marginLeft: "5px" }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn block user ${value.name} này không`) ===
-                true
-              ) {
-                hiddenUser(value.id);
+          <Tooltip title="Thêm xu" color={"blue"}>
+            <Button
+              type="primary"
+              size="small"
+              onClick={showModal}
+              style={{ marginRight: "5px" }}
+            >
+              <FontAwesomeIcon icon={faCoins} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Cập nhật vai trò" color={"blue"}>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() =>
+                updateRoleForUser(
+                  value.id,
+                  value.role.map((item: any) => item.id)
+                )
               }
-            }}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip
+            title={value.status === 0 ? "Bỏ chặn" : "Chặn"}
+            color={value.status === 0 ? "blue" : "red"}
           >
-            {value.status === 0 ? "Bỏ chặn" : "Chặn"}
-          </Button>
+            <Button
+              type="primary"
+              size="small"
+              danger={value.status === 0}
+              style={{ marginLeft: "5px" }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn block user ${value.name} này không`) ===
+                  true
+                ) {
+                  hiddenUser(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon
+                icon={value.status === 1 ? faUserCheck : faUserSlash}
+              />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
   ];
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     getUser()
@@ -156,6 +195,13 @@ const ViewUser: React.FC = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const addCoinUser = (id_user: number, data: any) => {
+    addCoin(id_user, data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <div className="top-main">
@@ -172,7 +218,16 @@ const ViewUser: React.FC = () => {
             style={{ marginBottom: "20px", fontSize: "24px" }}
           />
         )}
-
+        <Modal
+          title="Basic Modal"
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
         <Table
           columns={columns}
           dataSource={dataUser}

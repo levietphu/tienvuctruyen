@@ -9,6 +9,7 @@ import {
   Input,
   Modal,
   Select,
+  Tooltip,
 } from "antd";
 import "../styles/view-translator.scss";
 import type { ColumnsType } from "antd/es/table";
@@ -21,6 +22,9 @@ import {
 import { useEffect, useState, useContext } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
 import { AuthContext } from "../../../../context/AuthContextProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -75,28 +79,37 @@ const ViewTranslator: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button size="middle" type="primary" onClick={() => showModal(value)}>
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            danger
-            type="primary"
-            style={{
-              marginLeft: "5px",
-            }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa dịch giả ${value.name} này không`) ===
-                true
-              ) {
-                destroyTranslator(value.id);
-              }
-            }}
-          >
-            Xóa
-          </Button>
+          <Tooltip title="Sửa dịch giả" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa dịch giả" color={"red"}>
+            <Button
+              size="middle"
+              danger
+              type="primary"
+              style={{
+                marginLeft: "5px",
+              }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(
+                    `Bạn có muốn xóa dịch giả ${value.name} này không`
+                  ) === true
+                ) {
+                  destroyTranslator(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -215,21 +228,23 @@ const ViewTranslator: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => showModal("")}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm dịch giả" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => showModal("")}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Modal
           title={`${idTranslator ? "Sửa dịch giả" : "Thêm mới dịch giả"}`}

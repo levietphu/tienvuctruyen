@@ -14,3 +14,8 @@ export const updateRole = async (id_user: number, data: any) => {
 export const blockUser = async (id: number) => {
   return await callApi("post", `user/${id}/block`, "");
 };
+
+//thêm xu
+export const addCoin = async (id: number, data: any) => {
+  return await callApi("post", `user/${id}/add_coin`, data);
+};

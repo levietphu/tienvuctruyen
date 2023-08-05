@@ -8,7 +8,7 @@ import {
   Form,
   Input,
   Modal,
-  Select,
+  Tooltip,
 } from "antd";
 import "../styles/view-chapter.scss";
 import type { ColumnsType } from "antd/es/table";
@@ -23,6 +23,9 @@ import { useParams } from "react-router-dom";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -73,27 +76,35 @@ const ViewChapter: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button size="middle" type="primary" onClick={() => showModal(value)}>
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            type="primary"
-            style={{ marginLeft: "10px" }}
-            danger
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(
-                  `Bạn có muốn xóa Chapter ${value.name_chapter} này không`
-                ) === true
-              ) {
-                destroyChapter(value.id);
-              }
-            }}
-          >
-            Xóa
-          </Button>
+          <Tooltip title="Sửa chương" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa chương" color={"red"}>
+            <Button
+              size="middle"
+              type="primary"
+              style={{ marginLeft: "10px" }}
+              danger
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(
+                    `Bạn có muốn xóa Chapter ${value.name_chapter} này không`
+                  ) === true
+                ) {
+                  destroyChapter(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -220,24 +231,25 @@ const ViewChapter: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => {
-            showModal("");
-          }}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
-
+        <Tooltip title="Thêm chương" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => {
+              showModal("");
+            }}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
         <Modal
           title={`${idChapter ? "Sửa Chapter" : "Thêm mới Chapter"}`}
           open={open}

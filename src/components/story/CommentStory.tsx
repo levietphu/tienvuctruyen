@@ -92,6 +92,19 @@ const CommentStory = ({ story, slug }: any) => {
     }
   };
 
+  const commentNameRole = (value: any) => {
+    let name;
+    if (value.user.id === story.id_user) {
+      name = "Dịch giả";
+    }
+    value.user.roles.forEach((item: any) => {
+      if (item.name === "admin") {
+        name = "Admin";
+      }
+    });
+    return name;
+  };
+
   return (
     <div className="story__comment">
       <div className="head__story__comment">
@@ -134,7 +147,9 @@ const CommentStory = ({ story, slug }: any) => {
                   <p>
                     <span className="account__name">{value.user.name}</span>{" "}
                     {value.user.id === story.id_user && (
-                      <span className="role_name">Dịch giả</span>
+                      <span className="role_name">
+                        {commentNameRole(value)}
+                      </span>
                     )}{" "}
                     •
                     <span className="time__update">
@@ -164,7 +179,12 @@ const CommentStory = ({ story, slug }: any) => {
                           <p>
                             <span className="account__name">
                               {item.user.name}
-                            </span>{" "}
+                            </span>
+                            {item.user.id === story.id_user && (
+                              <span className="role_name">
+                                {commentNameRole(item)}
+                              </span>
+                            )}{" "}
                             •
                             <span className="time__update">
                               {" "}
@@ -210,7 +230,7 @@ const CommentStory = ({ story, slug }: any) => {
           comment.data &&
           comment.data.length >= 1 &&
           lastPage &&
-          lastPage > currentPage && (
+          lastPage >= currentPage && (
             <div className="center">
               <span
                 className="view-more-comment"

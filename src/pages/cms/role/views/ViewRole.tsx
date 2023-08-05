@@ -10,6 +10,7 @@ import {
   Modal,
   Select,
   Checkbox,
+  Tooltip,
 } from "antd";
 import "../styles/view-role.scss";
 import type { ColumnsType } from "antd/es/table";
@@ -17,6 +18,9 @@ import { createRole, deleteRole, getRole, updateRole } from "../api";
 import { useEffect, useState } from "react";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -81,26 +85,34 @@ const ViewRole: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button size="middle" type="primary" onClick={() => showModal(value)}>
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            type="primary"
-            danger
-            style={{ marginLeft: "10px" }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa Vai trò ${value.name} này không`) ===
-                true
-              ) {
-                destroyRole(value.id);
-              }
-            }}
-          >
-            Delete
-          </Button>
+          <Tooltip title="Sửa vai trò" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa vai trò" color={"red"}>
+            <Button
+              size="middle"
+              type="primary"
+              danger
+              style={{ marginLeft: "10px" }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn xóa Vai trò ${value.name} này không`) ===
+                  true
+                ) {
+                  destroyRole(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -219,21 +231,23 @@ const ViewRole: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => showModal("")}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm vai trò" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => showModal("")}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Modal
           title={`${idRole ? "Sửa Vai trò" : "Thêm mới Vai trò"}`}

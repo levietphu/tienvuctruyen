@@ -9,12 +9,16 @@ import {
   Input,
   Modal,
   Select,
+  Tooltip,
 } from "antd";
 import "../styles/view-cate.scss";
 import type { ColumnsType } from "antd/es/table";
 import { createCate, deleteCate, getCate, updateCate } from "../api";
 import { useEffect, useState } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -62,30 +66,35 @@ const ViewCate: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button
-            size="middle"
-            type="primary"
-            style={{ marginRight: "5px" }}
-            onClick={() => showModal(value)}
-          >
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            type="primary"
-            danger
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa thể loại ${value.name} này không`) ===
-                true
-              ) {
-                destroyCate(value.id);
-              }
-            }}
-          >
-            Xóa
-          </Button>
+          <Tooltip title="Sửa thể loại" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              style={{ marginRight: "5px" }}
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa thể loại" color={"red"}>
+            <Button
+              size="middle"
+              type="primary"
+              danger
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(
+                    `Bạn có muốn xóa thể loại ${value.name} này không`
+                  ) === true
+                ) {
+                  destroyCate(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -187,7 +196,7 @@ const ViewCate: React.FC = () => {
         slug: changeToSlug(changedValues.name),
       });
     }
-    if(changedValues.name ===""){
+    if (changedValues.name === "") {
       form.setFieldsValue({
         slug: "",
       });
@@ -203,21 +212,23 @@ const ViewCate: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => showModal("")}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm thể loại" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => showModal("")}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Modal
           title={`${idCate ? "Sửa thể loại" : "Thêm mới thể loại"}`}

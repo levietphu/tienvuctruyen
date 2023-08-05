@@ -7,18 +7,14 @@ import CommentStory from "../../../components/story/CommentStory";
 import ChapterStory from "../../../components/story/ChapterStory";
 import Loader from "../../../components/story/Loader";
 import { AuthContext } from "../../../context/AuthContextProvider";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { DownOutlined, UpOutlined, CrownFilled } from "@ant-design/icons";
 
 const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
 
   const [loader, setLoader] = useState<boolean>(true);
-  const [keyword, setKeyword] = useState<string>("");
-  const [orderby, setOrderby] = useState<string>("asc");
 
-  const [checkKeywordOrderby, setCheckKeywordOrderby] =
-    useState<boolean>(false);
   const [viewMore, setViewMore] = useState<any>({
     height: "120px",
     overflow: "hidden",
@@ -37,11 +33,9 @@ const Story = () => {
     navigate("/404");
   }
 
-  const callApi = async (id_user: string, page: number, id_parent: string) => {
+  const callApi = async () => {
     await axios
-      .get(
-        `${process.env.REACT_APP_API}get_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
-      )
+      .get(`${process.env.REACT_APP_API}get_story?slug=${params.slug}`)
       .then((res) => {
         setStory(res.data.data.items);
         setLoader(false);
@@ -53,13 +47,7 @@ const Story = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      callApi(user.user.id, 1, "");
-    } else {
-      if (loaderUser !== "loader") {
-        callApi("", 1, "");
-      }
-    }
+    callApi();
     setLoader(true);
     if (checkStoryAddView.length === 0) {
       localStorage.setItem("checkStoryAddView", JSON.stringify([params.slug]));
@@ -78,31 +66,7 @@ const Story = () => {
         return () => clearTimeout(id);
       }
     }
-  }, [params.slug, loaderUser]);
-
-  useEffect(() => {
-    if (checkKeywordOrderby) {
-      if (user) {
-        callApi(user.user.id, 1, "");
-      } else {
-        if (loaderUser !== "loader") {
-          callApi("", 1, "");
-        }
-      }
-    }
-  }, [keyword]);
-
-  useEffect(() => {
-    if (checkKeywordOrderby) {
-      if (user) {
-        callApi(user.user.id, 1, "");
-      } else {
-        if (loaderUser !== "loader") {
-          callApi("", 1, "");
-        }
-      }
-    }
-  }, [orderby]);
+  }, []);
 
   useEffect(() => {
     if (!loader && params.slug) {
@@ -127,6 +91,7 @@ const Story = () => {
       });
     }
   }, [checkViewMore]);
+  console.log("123");
 
   return (
     <MainLayout>
@@ -139,6 +104,35 @@ const Story = () => {
                   src={`${process.env.REACT_APP_UPLOADS}${story.image}`}
                   alt=""
                 />
+                {story.rank.map((item: any, index: any) => {
+                  return (
+                    item.id === story.id && (
+                      <Link
+                        key={index}
+                        to="/danh-sach/truyen-vip"
+                        className="rank-story"
+                        style={{
+                          background: `${
+                            index + 1 === 2
+                              ? "#f14668"
+                              : index + 1 === 1
+                              ? "#ffe08a"
+                              : "#3e8ed0"
+                          }`,
+                          color: `${index + 1 > 1 ? "white" : "#363636"}`,
+                        }}
+                      >
+                        {index === 0 && (
+                          <CrownFilled
+                            style={{ marginRight: "5px" }}
+                            rev={undefined}
+                          />
+                        )}
+                        <span>Top {index + 1}</span>
+                      </Link>
+                    )
+                  );
+                })}
               </div>
             </div>
             <div className="header__story--right">
@@ -227,17 +221,7 @@ const Story = () => {
             </div>
           </div>
           <div className="main__story">
-            <ChapterStory
-              story={story}
-              callApi={callApi}
-              setKeyword={setKeyword}
-              keyword={keyword}
-              orderby={orderby}
-              setOrderby={setOrderby}
-              user={user}
-              setCheckKeywordOrderby={setCheckKeywordOrderby}
-              checkKeywordOrderby={checkKeywordOrderby}
-            />
+            <ChapterStory user={user} story={story} />
             <CommentStory slug={params.slug} story={story} />
           </div>
         </>

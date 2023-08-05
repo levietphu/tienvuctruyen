@@ -9,11 +9,13 @@ import {
   Input,
   Modal,
   Select,
+  Tooltip,
 } from "antd";
 import "../styles/view-contact.scss";
 import { getContact, updateContact } from "../api";
 import { useEffect, useState } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
+import { EditOutlined } from "@ant-design/icons";
 
 const ViewContact: React.FC = () => {
   const [dataContact, setDataContact] = useState<any>();
@@ -114,7 +116,7 @@ const ViewContact: React.FC = () => {
         )}
 
         <Modal
-          title={`${idContact ? "Sửa Liên lạc" : "Thêm mới Liên lạc"}`}
+          title={`"Sửa Liên lạc"`}
           open={open}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -200,40 +202,46 @@ const ViewContact: React.FC = () => {
               <p className="text-contact">
                 Địa chỉ:{" "}
                 <strong>{dataContact && dataContact.address.value}</strong>
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={() =>
-                    showModal(dataContact.address.id, dataContact.address)
-                  }
-                >
-                  Sửa
-                </Button>
+                <Tooltip title="Sửa liên lạc" color={"blue"}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() =>
+                      showModal(dataContact.address.id, dataContact.address)
+                    }
+                  >
+                    <EditOutlined rev={undefined} />
+                  </Button>
+                </Tooltip>
               </p>
               <p className="text-contact">
                 Email: <strong>{dataContact && dataContact.email.value}</strong>
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={() =>
-                    showModal(dataContact.email.id, dataContact.email)
-                  }
-                >
-                  Sửa
-                </Button>
+                <Tooltip title="Sửa liên lạc" color={"blue"}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() =>
+                      showModal(dataContact.email.id, dataContact.email)
+                    }
+                  >
+                    <EditOutlined rev={undefined} />
+                  </Button>
+                </Tooltip>
               </p>
               <p className="text-contact">
                 Số điện thoại:{" "}
                 <strong>{dataContact && dataContact.phone.value}</strong>
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={() =>
-                    showModal(dataContact.phone.id, dataContact.phone)
-                  }
-                >
-                  Sửa
-                </Button>
+                <Tooltip title="Sửa liên lạc" color={"blue"}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() =>
+                      showModal(dataContact.phone.id, dataContact.phone)
+                    }
+                  >
+                    <EditOutlined rev={undefined} />
+                  </Button>
+                </Tooltip>
               </p>
             </Card>
           </Col>
@@ -242,15 +250,17 @@ const ViewContact: React.FC = () => {
               <h2>Thời gian làm việc</h2>
               <p className="text-contact">
                 {dataContact && dataContact.worktime.value}
-                <Button
-                  size="small"
-                  type="primary"
-                  onClick={() =>
-                    showModal(dataContact.worktime.id, dataContact.worktime)
-                  }
-                >
-                  Sửa
-                </Button>
+                <Tooltip title="Sửa liên lạc" color={"blue"}>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() =>
+                      showModal(dataContact.worktime.id, dataContact.worktime)
+                    }
+                  >
+                    <EditOutlined rev={undefined} />
+                  </Button>
+                </Tooltip>
               </p>
             </Card>
           </Col>

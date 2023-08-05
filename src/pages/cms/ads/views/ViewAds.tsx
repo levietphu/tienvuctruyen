@@ -9,12 +9,16 @@ import {
   Input,
   Modal,
   Select,
+  Tooltip,
 } from "antd";
 import "../styles/view-ads.scss";
 import type { ColumnsType } from "antd/es/table";
 import { createAds, hiddenAds, getAds, updateAds } from "../api";
 import { useEffect, useState } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faUserNinja, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -68,29 +72,33 @@ const ViewAds: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button
-            size="middle"
-            type="primary"
-            style={{ marginRight: "5px" }}
-            onClick={() => showModal(value)}
-          >
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            type="primary"
-            danger
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn ẩn ${value.name} này không`) === true
-              ) {
-                destroyAds(value.id);
-              }
-            }}
-          >
-            Ẩn
-          </Button>
+          <Tooltip title="Sửa ads" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              style={{ marginRight: "5px" }}
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Ẩn ads" color={"red"}>
+            <Button
+              size="middle"
+              type="primary"
+              danger
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn ẩn ${value.name} này không`) === true
+                ) {
+                  destroyAds(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faUserNinja} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -209,13 +217,15 @@ const ViewAds: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => showModal("")}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
+        <Tooltip title="Thêm mới ads" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => showModal("")}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+        </Tooltip>
         {alert && (
           <Alert
             message={alert}

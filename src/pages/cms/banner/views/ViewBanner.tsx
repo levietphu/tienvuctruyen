@@ -12,6 +12,7 @@ import {
   Image,
   message,
   Upload,
+  Tooltip,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/view-banner.scss";
@@ -20,6 +21,9 @@ import { createBanner, deleteBanner, getBanner, updateBanner } from "../api";
 import { useEffect, useState } from "react";
 import type { UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -86,26 +90,34 @@ const ViewBanner: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button size="middle" type="primary" onClick={() => showModal(value)}>
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            danger
-            type="primary"
-            style={{ marginLeft: "5px" }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa Banner ${value.name} này không`) ===
-                true
-              ) {
-                destroyBanner(value.id);
-              }
-            }}
-          >
-            Xóa
-          </Button>
+          <Tooltip title="Sửa banner" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa banner" color={"red"}>
+            <Button
+              size="middle"
+              danger
+              type="primary"
+              style={{ marginLeft: "5px" }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn xóa Banner ${value.name} này không`) ===
+                  true
+                ) {
+                  destroyBanner(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -266,23 +278,25 @@ const ViewBanner: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => {
-            showModal("");
-          }}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm banner" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => {
+              showModal("");
+            }}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Modal
           title={`${idBanner ? "Sửa Banner" : "Thêm mới Banner"}`}

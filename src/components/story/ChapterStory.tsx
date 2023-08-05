@@ -3,18 +3,14 @@ import chicken from "../../assets/chicken.png";
 import Moment from "react-moment";
 import "moment/locale/vi";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
-const ChapterStory = ({
-  story,
-  callApi,
-  setKeyword,
-  keyword,
-  orderby,
-  setOrderby,
-  user,
-  setCheckKeywordOrderby,
-  checkKeywordOrderby,
-}: any) => {
+const ChapterStory = ({ story, user }: any) => {
+  const [chapterStory, setChapterStory] = useState<any>();
+  const [keyword, setKeyword] = useState<string>("");
+  const [orderby, setOrderby] = useState<string>("asc");
+  const [checkKeywordOrderby, setCheckKeywordOrderby] =
+    useState<boolean>(false);
   const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
   const [saveRef, setSaveRef]: any = useState();
@@ -29,7 +25,21 @@ const ChapterStory = ({
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
 
+  const callApiChapter = async (id_user: string, page: number) => {
+    await axios
+      .get(
+        `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
+      )
+      .then((res) => setChapterStory(res.data.chapter))
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
+    if (user) {
+      callApiChapter(user.user.id, 1);
+    } else {
+      callApiChapter("", 1);
+    }
     if (Ref.current) {
       setSaveRef(Ref.current);
     }
@@ -39,46 +49,65 @@ const ChapterStory = ({
   }, []);
 
   useEffect(() => {
-    if (story) {
-      setFrom(story.chuongs.current_page - halfTotalLinks);
-      setTo(story.chuongs.current_page + halfTotalLinks);
-      if (story.chuongs.current_page < halfTotalLinks) {
-        setTo(to + halfTotalLinks - story.current_page);
+    if (checkKeywordOrderby) {
+      if (user) {
+        callApiChapter(user.user.id, 1);
+      } else {
+        callApiChapter("", 1);
       }
-      if (story.last_page - story.current_page < halfTotalLinks) {
+    }
+  }, [keyword]);
+
+  useEffect(() => {
+    if (checkKeywordOrderby) {
+      if (user) {
+        callApiChapter(user.user.id, 1);
+      } else {
+        callApiChapter("", 1);
+      }
+    }
+  }, [orderby]);
+
+  useEffect(() => {
+    if (chapterStory) {
+      setFrom(chapterStory.current_page - halfTotalLinks);
+      setTo(chapterStory.current_page + halfTotalLinks);
+      if (chapterStory.current_page < halfTotalLinks) {
+        setTo(to + halfTotalLinks - chapterStory.current_page);
+      }
+      if (chapterStory.last_page - chapterStory.current_page < halfTotalLinks) {
         setFrom(
-          from - (halfTotalLinks - (story.last_page - story.current_page))
+          from -
+            (halfTotalLinks -
+              (chapterStory.last_page - chapterStory.current_page))
         );
       }
     }
-  }, [story]);
+  }, [chapterStory]);
 
   const changePage = (e: any, word: string) => {
-    if (
-      word === "next" &&
-      story.chuongs.current_page < story.chuongs.last_page
-    ) {
+    if (word === "next" && chapterStory.current_page < chapterStory.last_page) {
       if (user) {
-        callApi(user.user.id, story.chuongs.current_page + 1, "");
+        callApiChapter(user.user.id, chapterStory.current_page + 1);
       } else {
-        callApi("", story.chuongs.current_page + 1, "");
+        callApiChapter("", chapterStory.current_page + 1);
       }
-      window.scrollTo(0, 1000);
-    } else if (word === "prev" && story.chuongs.current_page - 1 > 0) {
+      // window.scrollTo(0, 1000);
+    } else if (word === "prev" && chapterStory.current_page - 1 > 0) {
       if (user) {
-        callApi(user.user.id, story.chuongs.current_page - 1, "");
+        callApiChapter(user.user.id, chapterStory.current_page - 1);
       } else {
-        callApi("", story.chuongs.current_page - 1, "");
+        callApiChapter("", chapterStory.current_page - 1);
       }
-      window.scrollTo(0, 1000);
+      // window.scrollTo(0, 1000);
     } else if (word !== "next" && word !== "prev") {
       e.preventDefault();
       if (user) {
-        callApi(user.user.id, Number(word), "");
+        callApiChapter(user.user.id, Number(word));
       } else {
-        callApi("", Number(word), "");
+        callApiChapter("", Number(word));
       }
-      window.scrollTo(0, 1000);
+      // window.scrollTo(0, 1000);
     }
   };
 
@@ -91,7 +120,7 @@ const ChapterStory = ({
           }`}
           onClick={() => setPosition(0)}
         >
-          Ds Chương <span>{story.chuongs.total}</span>
+          Ds Chương <span>{story.total_chapter}</span>
         </div>
         <div
           className={`main__story--donate center ${
@@ -156,55 +185,56 @@ const ChapterStory = ({
             </div>
           </div>
           <div className="center__chapter--list" ref={Ref}>
-            {story.chuongs.data.map((value: any, index: number) => {
-              return (
-                <Link
-                  to={`/${params.slug}/${value.slug}`}
-                  className="center__chapter--item"
-                  key={index}
-                >
-                  <div className="center__chapter--left">
-                    <p>
-                      <span className="number__chapter">
-                        {value.chapter_number}.
-                      </span>
-                      <span className="name__chapter">
-                        {" "}
-                        {value.name_chapter}
-                      </span>
-                    </p>
-                    <i>
-                      <span>Cập nhật: </span>
-                      <span>
-                        <Moment fromNow locale="vi">
-                          {value.created_at}
-                        </Moment>
-                      </span>
-                    </i>
-                  </div>
+            {chapterStory &&
+              chapterStory.data.map((value: any, index: number) => {
+                return (
+                  <Link
+                    to={`/${params.slug}/${value.slug}`}
+                    className="center__chapter--item"
+                    key={index}
+                  >
+                    <div className="center__chapter--left">
+                      <p>
+                        <span className="number__chapter">
+                          {value.chapter_number}.
+                        </span>
+                        <span className="name__chapter">
+                          {" "}
+                          {value.name_chapter}
+                        </span>
+                      </p>
+                      <i>
+                        <span>Cập nhật: </span>
+                        <span>
+                          <Moment fromNow locale="vi">
+                            {value.created_at}
+                          </Moment>
+                        </span>
+                      </i>
+                    </div>
 
-                  {value.bought && (
-                    <>
-                      <span className="bought">
-                        <i className="fa-solid fa-lock-open"></i>
-                        <div className="hover__bought">
-                          {value.coin} xu - đã mua
-                        </div>
-                      </span>
-                    </>
-                  )}
-                  {!value.bought && value.coin > 0 && (
-                    <span className="coin">{value.coin} xu </span>
-                  )}
-                </Link>
-              );
-            })}
+                    {value.bought && (
+                      <>
+                        <span className="bought">
+                          <i className="fa-solid fa-lock-open"></i>
+                          <div className="hover__bought">
+                            {value.coin} xu - đã mua
+                          </div>
+                        </span>
+                      </>
+                    )}
+                    {!value.bought && value.coin > 0 && (
+                      <span className="coin">{value.coin} xu </span>
+                    )}
+                  </Link>
+                );
+              })}
           </div>
-          {story.chuongs.last_page > 1 && (
+          {chapterStory && chapterStory.last_page > 1 && (
             <div className={`pagination`}>
               <div className="pagination__left">
                 <ul className="pagination__left--list">
-                  {story.chuongs.links.map((value: any, index: number) => {
+                  {chapterStory.links.map((value: any, index: number) => {
                     if (
                       !value.label.includes("Next") &&
                       !value.label.includes("Prev")
@@ -212,7 +242,7 @@ const ChapterStory = ({
                       if (
                         from < index + 1 &&
                         index + 1 <= to &&
-                        index !== story.chuongs.last_page
+                        index !== chapterStory.last_page
                       ) {
                         return (
                           <li
@@ -230,7 +260,7 @@ const ChapterStory = ({
                       }
                     }
                   })}
-                  {story.chuongs.last_page > 2 && (
+                  {chapterStory.last_page > 2 && (
                     <li style={{ border: "none", cursor: "default" }}>
                       <a style={{ cursor: "default" }}>...</a>
                     </li>
@@ -238,24 +268,24 @@ const ChapterStory = ({
 
                   <li
                     className={
-                      story.chuongs.last_page === story.chuongs.current_page
+                      chapterStory.last_page === chapterStory.current_page
                         ? "active"
                         : ""
                     }
                     onClick={(e) =>
-                      story.chuongs.current_page !== story.chuongs.last_page
-                        ? changePage(e, story.chuongs.last_page)
+                      chapterStory.current_page !== chapterStory.last_page
+                        ? changePage(e, chapterStory.last_page)
                         : e.preventDefault()
                     }
                   >
-                    <a>{story.chuongs && story.chuongs.last_page}</a>
+                    <a>{chapterStory && chapterStory.last_page}</a>
                   </li>
                 </ul>
               </div>
               <div className="pagination__right">
                 <div
                   className={`pagination__right--prev mr-10 ${
-                    story.chuongs.current_page === 1 ? "forbidden" : ""
+                    chapterStory.current_page === 1 ? "forbidden" : ""
                   }`}
                   onClick={(e) => changePage(e, "prev")}
                 >
@@ -263,7 +293,7 @@ const ChapterStory = ({
                 </div>
                 <div
                   className={`pagination__right--next ${
-                    story.chuongs.last_page === story.chuongs.current_page
+                    chapterStory.last_page === chapterStory.current_page
                       ? "forbidden"
                       : ""
                   }`}

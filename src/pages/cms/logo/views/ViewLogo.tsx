@@ -12,6 +12,7 @@ import {
   Image,
   message,
   Upload,
+  Tooltip,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/view-logo.scss";
@@ -21,6 +22,9 @@ import { useEffect, useState } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import { faUserNinja, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -85,25 +89,34 @@ const ViewLogo: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button size="middle" type="primary" onClick={() => showModal(value)}>
-            Sửa
-          </Button>
-          <Button
-            size="middle"
-            type="primary"
-            danger
-            style={{ marginLeft: "10px" }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn ẩn Logo ${value.name} này không`) === true
-              ) {
-                destroyLogo(value.id);
-              }
-            }}
-          >
-            Ẩn
-          </Button>
+          <Tooltip title="Sửa logo" color={"blue"}>
+            <Button
+              size="middle"
+              type="primary"
+              onClick={() => showModal(value)}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Ẩn logo" color={"red"}>
+            <Button
+              size="middle"
+              type="primary"
+              danger
+              style={{ marginLeft: "10px" }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn ẩn Logo ${value.name} này không`) ===
+                  true
+                ) {
+                  destroyLogo(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faUserNinja} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -265,21 +278,23 @@ const ViewLogo: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => showModal("")}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alert && (
-          <Alert
-            message={alert}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm mới logo" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => showModal("")}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alert && (
+            <Alert
+              message={alert}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Modal
           title={`${idLogo ? "Sửa Logo" : "Thêm mới Logo"}`}

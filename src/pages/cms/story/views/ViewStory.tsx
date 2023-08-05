@@ -1,10 +1,17 @@
-import { Card, Button, Table, Alert, Typography } from "antd";
+import { Card, Button, Table, Alert, Typography, Tooltip } from "antd";
 import "../styles/view-story.scss";
 import type { ColumnsType } from "antd/es/table";
 import { deleteStory, getStory } from "../api";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hookStore";
 import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EditOutlined } from "@ant-design/icons";
+import {
+  faTrash,
+  faPlus,
+  faAddressBook,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
   id: number;
@@ -99,40 +106,46 @@ const ViewStory: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Button
-            size="small"
-            type="primary"
-            style={{ marginBottom: "5px" }}
-            onClick={() => navigate(`/dashboard/chapter/${value.id}/view`)}
-          >
-            Chương
-          </Button>
-          <Button
-            size="small"
-            type="primary"
-            onClick={() => {
-              navigate(`/dashboard/story/edit/${value.id}`);
-            }}
-          >
-            Sửa
-          </Button>
-          <Button
-            size="small"
-            type="primary"
-            danger
-            style={{ marginLeft: "5px" }}
-            onClick={() => {
-              if (
-                // eslint-disable-next-line no-restricted-globals
-                confirm(`Bạn có muốn xóa truyện ${value.name} này không`) ===
-                true
-              ) {
-                destroyStory(value.id);
-              }
-            }}
-          >
-            Xóa
-          </Button>
+          <Tooltip title="View chương" color={"blue"}>
+            <Button
+              size="small"
+              type="primary"
+              style={{ margin: "0 5px 5px 0" }}
+              onClick={() => navigate(`/dashboard/chapter/${value.id}/view`)}
+            >
+              <FontAwesomeIcon icon={faAddressBook} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Sửa truyện" color={"blue"}>
+            <Button
+              size="small"
+              type="primary"
+              onClick={() => {
+                navigate(`/dashboard/story/edit/${value.id}`);
+              }}
+            >
+              <EditOutlined rev={undefined} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xóa truyện" color={"red"}>
+            <Button
+              size="small"
+              type="primary"
+              danger
+              style={{ marginLeft: "5px" }}
+              onClick={() => {
+                if (
+                  // eslint-disable-next-line no-restricted-globals
+                  confirm(`Bạn có muốn xóa truyện ${value.name} này không`) ===
+                  true
+                ) {
+                  destroyStory(value.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
@@ -179,23 +192,25 @@ const ViewStory: React.FC = () => {
         </div>
       </div>
       <Card>
-        <Button
-          type="primary"
-          onClick={() => {
-            navigate("/dashboard/story/create");
-          }}
-          style={{ marginBottom: "20px" }}
-        >
-          Thêm mới
-        </Button>
-        {alertRedux && (
-          <Alert
-            message={alertRedux}
-            type="success"
-            closable
-            style={{ marginBottom: "20px", fontSize: "24px" }}
-          />
-        )}
+        <Tooltip title="Thêm mới truyện" color={"blue"}>
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate("/dashboard/story/create");
+            }}
+            style={{ marginBottom: "20px" }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </Button>
+          {alertRedux && (
+            <Alert
+              message={alertRedux}
+              type="success"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+        </Tooltip>
 
         <Table
           columns={columns}
