@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { AppContextInterface } from "./SettingContextProvider";
 import axios from "axios";
+import { getCookie } from "../ultis/getCookie";
 
 export const AuthContext = createContext<AppContextInterface | null>(null);
 
@@ -21,8 +22,9 @@ const AuthContextProvider = ({ children }: any) => {
   });
 
   const [errorServer, setErrorServer] = useState<any>();
+  const [reLogin, setReLogin] = useState<boolean>(false);
 
-  const token = JSON.parse(localStorage.getItem("token") || "[]");
+  const token = getCookie("token");
 
   const register = async () => {
     return await axios.post(`${process.env.REACT_APP_API}register`, {
@@ -42,21 +44,22 @@ const AuthContextProvider = ({ children }: any) => {
   const getUser = async () => {
     await axios
       .get(`${process.env.REACT_APP_API}getUser?token=${token}`)
-      .then((res) => {
+      .then((res: any) => {
         setUser(res.data.data.items);
         setLoaderUser("user");
       });
   };
 
   useEffect(() => {
-    if (token.length <= 0) {
+    if (token) {
+      getUser().catch((err) => {
+        if (err.response.status === 401) {
+          setLoaderUser("login");
+          setReLogin(true);
+        }
+      });
+    } else {
       setLoaderUser("login");
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (token.length > 0) {
-      getUser();
     }
   }, []);
 
@@ -77,6 +80,8 @@ const AuthContextProvider = ({ children }: any) => {
     checkLogin,
     popupPayment,
     setPopupPayment,
+    reLogin,
+    setReLogin,
   };
 
   return (

@@ -1,4 +1,14 @@
-import { Card, Button, Table, Alert, Checkbox, Modal, Tooltip } from "antd";
+import {
+  Card,
+  Button,
+  Table,
+  Alert,
+  Checkbox,
+  Modal,
+  Tooltip,
+  Input,
+  Form,
+} from "antd";
 import "../styles/view-user.scss";
 import type { ColumnsType } from "antd/es/table";
 import { updateRole, getUser, blockUser, addCoin } from "../api";
@@ -25,6 +35,9 @@ const ViewUser: React.FC = () => {
   const [alert, setAlert] = useState("");
   const [idRole, setIdRole] = useState<any>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [idUser, setIdUser] = useState<number>();
+
+  const [form] = Form.useForm();
 
   const columns: ColumnsType<DataType> = [
     {
@@ -85,7 +98,10 @@ const ViewUser: React.FC = () => {
             <Button
               type="primary"
               size="small"
-              onClick={showModal}
+              onClick={() => {
+                showModal();
+                setIdUser(value.id);
+              }}
               style={{ marginRight: "5px" }}
             >
               <FontAwesomeIcon icon={faCoins} />
@@ -144,6 +160,7 @@ const ViewUser: React.FC = () => {
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.resetFields();
   };
 
   useEffect(() => {
@@ -196,10 +213,17 @@ const ViewUser: React.FC = () => {
       .catch((err) => console.log(err));
   };
 
-  const addCoinUser = (id_user: number, data: any) => {
+  const addCoinUser = (id_user: any, data: any) => {
     addCoin(id_user, data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        setAlert(res.data.message);
+        handleCancel();
+      })
       .catch((err) => console.log(err));
+  };
+
+  type FieldType = {
+    coin?: number;
   };
 
   return (
@@ -219,14 +243,31 @@ const ViewUser: React.FC = () => {
           />
         )}
         <Modal
-          title="Basic Modal"
+          title="Thêm xu"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <Form
+            name="basic"
+            style={{ maxWidth: 600 }}
+            initialValues={{ coin: 0 }}
+            onFinish={(values: any) => addCoinUser(idUser, values)}
+          >
+            <Form.Item<FieldType>
+              label="Số xu"
+              name="coin"
+              rules={[{ required: true, message: "Nhập số xu của bạn!" }]}
+            >
+              <Input type="number" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Lưu
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
         <Table
           columns={columns}

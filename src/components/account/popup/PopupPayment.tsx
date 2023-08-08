@@ -1,4 +1,3 @@
-import "../../../layouts/popupfull.scss";
 import { useOutSide } from "../../../hookCustom/useOutSide";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";

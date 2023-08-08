@@ -1,10 +1,12 @@
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import { SettingContext } from "../context/SettingContextProvider";
-
 import { LayoutContext } from "../context/LayoutContextProvider";
+import { Modal } from "antd";
+import { AuthContext } from "../context/AuthContextProvider";
+import ModalReLogin from "./ModalReLogin";
 
 export interface Props {
   children?: ReactNode;
@@ -14,10 +16,34 @@ const MainLayout = ({ children }: Props) => {
   const params = useParams();
   const { theme }: any = useContext(SettingContext);
   const { dataLayout }: any = useContext(LayoutContext);
+  const { reLogin }: any = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (reLogin) {
+      showModal();
+    } else {
+      handleCancel();
+    }
+  }, [reLogin]);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -48,6 +74,9 @@ const MainLayout = ({ children }: Props) => {
           />
         </footer>
       )}
+      <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
+        <ModalReLogin />
+      </Modal>
     </>
   );
 };

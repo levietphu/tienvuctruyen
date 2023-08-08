@@ -6,19 +6,35 @@ import DragStory from "../../../components/home/DragStory";
 import NewUpdateStory from "../../../components/home/NewUpdateStory";
 import FullStory from "../../../components/home/FullStory";
 import { HomeContext } from "../../../context/HomeContextProvider";
-import { useContext, useEffect } from "react";
-import PopupFull from "../../../layouts/PopupFull";
+import { useContext, useEffect, useState } from "react";
+import PopupFull from "./components/PopupFull";
 import DragLoader from "./LoaderHome/DragLoader";
+import { Modal } from "antd";
 
 const HomePage = () => {
   const { dataHome, loaderHome, checkPopupHome }: any = useContext(HomeContext);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (checkPopupHome) {
-      document.body.classList.add("hidden__scroll");
+      showModal();
     } else {
-      document.body.classList.remove("hidden__scroll");
+      handleCancel();
     }
   }, [checkPopupHome]);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
@@ -56,7 +72,10 @@ const HomePage = () => {
           </div>
         </div>
       </MainLayout>
-      {checkPopupHome && <PopupFull />}
+      {/* {checkPopupHome && <PopupFull />} */}
+      <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
+        <PopupFull />
+      </Modal>
     </>
   );
 };

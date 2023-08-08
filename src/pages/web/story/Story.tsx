@@ -21,14 +21,15 @@ const Story = () => {
   });
   const [checkViewMore, setCheckViewMore] = useState(false);
 
-  const { user, loaderUser }: any = useContext(AuthContext);
+  const { user }: any = useContext(AuthContext);
 
   const checkStoryAddView = JSON.parse(
-    localStorage.getItem("checkStoryAddView") || "[]"
+    sessionStorage.getItem("checkStoryAddView") || "[]"
   );
 
   const params = useParams();
   const navigate = useNavigate();
+
   if (!params.slug?.includes("-")) {
     navigate("/404");
   }
@@ -49,55 +50,67 @@ const Story = () => {
   useEffect(() => {
     callApi();
     setLoader(true);
+
     if (checkStoryAddView.length === 0) {
-      localStorage.setItem("checkStoryAddView", JSON.stringify([params.slug]));
+      sessionStorage.setItem(
+        "checkStoryAddView",
+        JSON.stringify([{ slug: params.slug, timestamp: Date.now() }])
+      );
       addViewStory();
     } else {
-      if (!checkStoryAddView.includes(params.slug)) {
-        localStorage.setItem(
+      let itemStory = checkStoryAddView.find((item: any, i: number) => {
+        return item.slug === params.slug;
+      });
+      if (itemStory) {
+        if (Math.floor((Date.now() - itemStory.timestamp) / 1000) >= 60) {
+          sessionStorage.setItem(
+            "checkStoryAddView",
+            JSON.stringify(
+              checkStoryAddView.map((item: any) => {
+                if (item.slug === params.slug) {
+                  return {
+                    slug: item.slug,
+                    timestamp: Date.now(),
+                  };
+                } else {
+                  return item;
+                }
+              })
+            )
+          );
+          addViewStory();
+        }
+      } else {
+        sessionStorage.setItem(
           "checkStoryAddView",
-          JSON.stringify([...checkStoryAddView, params.slug])
+          JSON.stringify([
+            ...checkStoryAddView,
+            { slug: params.slug, timestamp: Date.now() },
+          ])
         );
         addViewStory();
-      } else {
-        let id = setTimeout(() => {
-          addViewStory();
-        }, 30000);
-        return () => clearTimeout(id);
       }
     }
   }, []);
 
   useEffect(() => {
-    if (!loader && params.slug) {
+    if (!loader) {
       document.title = story.name;
     }
   }, [loader]);
-
-  const onViewMore = () => {
-    setCheckViewMore(!checkViewMore);
-  };
-
-  useEffect(() => {
-    if (checkViewMore) {
-      setViewMore({
-        height: "auto",
-        overflow: "auto",
-      });
-    } else {
-      setViewMore({
-        height: "120px",
-        overflow: "hidden",
-      });
-    }
-  }, [checkViewMore]);
-  console.log("123");
 
   return (
     <MainLayout>
       {!loader ? (
         <>
           <div className="header__story">
+            <div
+              className="bg"
+              style={{
+                background: `url(${process.env.REACT_APP_UPLOADS}${story.image})`,
+                backgroundSize: "cover",
+              }}
+            ></div>
             <div className="header__story--left">
               <div className="header__story--image">
                 <img
@@ -185,13 +198,17 @@ const Story = () => {
               )}
               <div className="view-more-introduce">
                 <div
-                  style={viewMore}
-                  className="header__story--introduce"
+                  className={`header__story--introduce ${
+                    !checkViewMore ? "hidden-content" : ""
+                  }`}
                   dangerouslySetInnerHTML={{
                     __html: story.introduce,
                   }}
                 ></div>
-                <p className="view_more" onClick={onViewMore}>
+                <p
+                  className="view_more"
+                  onClick={() => setCheckViewMore(!checkViewMore)}
+                >
                   {!checkViewMore ? "Xem thêm" : "Xem ít hơn"}
                   {!checkViewMore ? (
                     <DownOutlined
@@ -207,7 +224,7 @@ const Story = () => {
                 <button
                   className="bg-primary"
                   onClick={() =>
-                    navigate(`/${params.slug}/${story.chuongs.data[0].slug}`)
+                    navigate(`/${params.slug}/${story.chapter_one.slug}`)
                   }
                 >
                   Đọc từ đầu

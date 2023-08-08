@@ -1,9 +1,9 @@
 import "./popupfull.scss";
-import xuly from "../assets/xuly.png";
-import xuly2 from "../assets/xuly2.png";
+import xuly from "../../../../assets/xuly.png";
+import xuly2 from "../../../../assets/xuly2.png";
 import { useContext } from "react";
-import { useOutSide } from "../hookCustom/useOutSide";
-import { HomeContext } from "../context/HomeContextProvider";
+import { useOutSide } from "../../../../hookCustom/useOutSide";
+import { HomeContext } from "../../../../context/HomeContextProvider";
 
 const PopupFull = () => {
   const { setCheckPopupHome }: any = useContext(HomeContext);
@@ -11,10 +11,6 @@ const PopupFull = () => {
   return (
     <div className="popup-full">
       <div className="popup-full__center" ref={Ref}>
-        <i
-          className="fa-solid fa-xmark"
-          onClick={() => setCheckPopupHome(false)}
-        ></i>
         <div className="popup-full__center--popup">
           <h3>
             Vì lý do: chứng chỉ ssl nên muốn vào trang cần làm theo hướng dẫn:

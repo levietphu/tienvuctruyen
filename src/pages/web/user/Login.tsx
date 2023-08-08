@@ -3,11 +3,17 @@ import "./user.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import setToken from "../../../ultis/setToken";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
+  const [loaderLogin, setLoaderLogin] = useState(false);
 
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
+  );
   const {
     login,
     setTextLogin,
@@ -18,6 +24,7 @@ const Login = () => {
     setErrorServer,
     getUser,
     setLoaderUser,
+    setReLogin,
   }: any = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -41,10 +48,13 @@ const Login = () => {
         // lần đầu đăng nhập cần gắn token vào header
         setToken(res.data.data.token);
         setLoaderUser("loader");
-        getUser();
+        setReLogin(false);
+        getUser().catch((err: any) => {
+          console.log(err);
+        });
+        setLoaderLogin(true);
         //lưu đăng nhập
-        localStorage.setItem("token", JSON.stringify(res.data.data.token));
-
+        document.cookie = `token=${res.data.data.token};max-age=604800`;
         !checkLogin ? navigate(-1) : navigate("/");
       })
       .catch((err: any) => {
@@ -128,7 +138,7 @@ const Login = () => {
             </div>
             <Link to="">Quên mật khẩu?</Link>
             <button className="" onClick={() => loginTienVuc()}>
-              Đăng nhập
+              {!loaderLogin ? "Đăng nhập" : <Spin indicator={antIcon} />}
             </button>
           </div>
           <div className="change__register">

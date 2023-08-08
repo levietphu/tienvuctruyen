@@ -5,6 +5,7 @@
   }
   .personal__left {
     margin-right: 20px;
+    flex: 2;
     @media screen and (max-width: 1023px) {
       margin-right: 0;
     }
@@ -79,7 +80,7 @@
     }
   }
   .personal__right {
-    flex: 1;
+    flex: 6;
     .list__bookcase {
       display: flex;
       flex-wrap: wrap;
