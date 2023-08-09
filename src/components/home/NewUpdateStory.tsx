@@ -12,7 +12,7 @@ const NewUpdateStory = ({ data }: any) => {
               <div className="image__story mr-10">
                 <img
                   src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
-                  alt=""
+                  alt="webtruyen"
                 />
               </div>
 

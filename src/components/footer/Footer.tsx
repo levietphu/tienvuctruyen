@@ -9,17 +9,17 @@ const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
       <div className="footer__logo center">
         <img
           src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
-          alt=""
+          alt="webtruyen"
         />
         <span>tiên vực</span>
       </div>
       <p>{catalog?.value}</p>
       <div className="footer__download center">
         <a href={link_androi?.value} className="mr-5">
-          <img src={androi} alt="" />
+          <img src={androi} alt="webtruyen" />
         </a>
         <a href={link_apple?.value}>
-          <img src={ios} alt="" />
+          <img src={ios} alt="webtruyen" />
         </a>
       </div>
       <div className="center mt-20 footer__support">

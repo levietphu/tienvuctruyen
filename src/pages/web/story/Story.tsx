@@ -8,17 +8,18 @@ import ChapterStory from "../../../components/story/ChapterStory";
 import Loader from "../../../components/story/Loader";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { DownOutlined, UpOutlined, CrownFilled } from "@ant-design/icons";
+import { Modal } from "antd";
+import ModalDonate from "./components/ModalDonate";
+import ModalChapterVip from "./components/ModalChapterVip";
 
 const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
 
   const [loader, setLoader] = useState<boolean>(true);
+  const [isModalDonateOpen, setIsModalDonateOpen] = useState(false);
+  const [isModalChapterVipOpen, setIsModalChapterVipOpen] = useState(false);
 
-  const [viewMore, setViewMore] = useState<any>({
-    height: "120px",
-    overflow: "hidden",
-  });
   const [checkViewMore, setCheckViewMore] = useState(false);
 
   const { user }: any = useContext(AuthContext);
@@ -115,7 +116,7 @@ const Story = () => {
               <div className="header__story--image">
                 <img
                   src={`${process.env.REACT_APP_UPLOADS}${story.image}`}
-                  alt=""
+                  alt="webtruyen"
                 />
                 {story.rank.map((item: any, index: any) => {
                   return (
@@ -229,11 +230,19 @@ const Story = () => {
                 >
                   Đọc từ đầu
                 </button>
-                <button className="bg-blue">
+                <button
+                  className="bg-blue"
+                  onClick={() => setIsModalDonateOpen(true)}
+                >
                   Ủng hộ truyện
                   <i className="fa-solid fa-circle-dollar-to-slot"></i>
                 </button>
-                <button className="bg-vip">Mua chương vip</button>
+                <button
+                  className="bg-vip"
+                  onClick={() => setIsModalChapterVipOpen(true)}
+                >
+                  Mua chương vip
+                </button>
               </div>
             </div>
           </div>
@@ -241,6 +250,24 @@ const Story = () => {
             <ChapterStory user={user} story={story} />
             <CommentStory slug={params.slug} story={story} />
           </div>
+          <Modal
+            title={`Ủng hộ truyện ${story.name}`}
+            open={isModalDonateOpen}
+            onOk={() => setIsModalDonateOpen(true)}
+            onCancel={() => setIsModalDonateOpen(false)}
+          >
+            <ModalDonate setIsModalDonateOpen={setIsModalDonateOpen} />
+          </Modal>
+          <Modal
+            title="Mua chương VIP"
+            open={isModalChapterVipOpen}
+            onOk={() => setIsModalChapterVipOpen(true)}
+            onCancel={() => setIsModalChapterVipOpen(false)}
+          >
+            <ModalChapterVip
+              setIsModalChapterVipOpen={setIsModalChapterVipOpen}
+            />
+          </Modal>
         </>
       ) : (
         <Loader />

@@ -14,13 +14,14 @@ import { Modal } from "antd";
 const HomePage = () => {
   const { dataHome, loaderHome, checkPopupHome }: any = useContext(HomeContext);
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (checkPopupHome) {
-      showModal();
-    } else {
-      handleCancel();
-    }
-  }, [checkPopupHome]);
+
+  // useEffect(() => {
+  //   if (checkPopupHome) {
+  //     showModal();
+  //   } else {
+  //     handleCancel();
+  //   }
+  // }, [checkPopupHome]);
 
   const showModal = () => {
     setOpen(true);
@@ -47,19 +48,35 @@ const HomePage = () => {
         <Search />
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Truyện đề cử</h1>
-          <DragStory data={dataHome && dataHome.recommendedStory} />
+          {!loaderHome && dataHome.recommendedStory ? (
+            <DragStory data={dataHome.recommendedStory} />
+          ) : (
+            <DragLoader />
+          )}
         </div>
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Truyện yêu thích mỗi tuần</h1>
-          <DragStory data={dataHome && dataHome.truyenhot_sort_week} />
+          {!loaderHome ? (
+            <DragStory data={dataHome.truyenhot_sort_week} />
+          ) : (
+            <DragLoader />
+          )}
         </div>
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Bảng xếp hạng truyện vip</h1>
-          <DragStory data={dataHome && dataHome.rankVip} vip={1} />
+          {!loaderHome ? (
+            <DragStory data={dataHome.rankVip} vip={1} />
+          ) : (
+            <DragLoader />
+          )}
         </div>
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Truyện hot mới ra lò</h1>
-          <DragStory data={dataHome && dataHome.hotStory} />
+          {!loaderHome ? (
+            <DragStory data={dataHome.hotStory} />
+          ) : (
+            <DragLoader />
+          )}
         </div>
         <div className="main__content">
           <div className="story__newupdate">
@@ -71,11 +88,10 @@ const HomePage = () => {
             <FullStory data={dataHome && dataHome.fullStory} />
           </div>
         </div>
-      </MainLayout>
-      {/* {checkPopupHome && <PopupFull />} */}
-      <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
+      </MainLayout>{" "}
+      {/* <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
         <PopupFull />
-      </Modal>
+      </Modal> */}
     </>
   );
 };

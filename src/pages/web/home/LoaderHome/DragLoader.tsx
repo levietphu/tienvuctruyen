@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -20,59 +18,85 @@ const DragLoader = () => {
           dynamicBullets: true,
         }}
         breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
+          320: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          375: {
+            slidesPerView: 3.3,
+            spaceBetween: 15,
           },
           768: {
-            slidesPerView: 3.5,
+            slidesPerView: 6.5,
             spaceBetween: 50,
           },
+          810: {
+            slidesPerView: 3.5,
+            spaceBetween: 20,
+          },
           1024: {
+            slidesPerView: 4,
+            spaceBetween: 25,
+          },
+          1366: {
             slidesPerView: 5.3,
-            spaceBetween: 30,
+            spaceBetween: 25,
           },
         }}
         modules={[Pagination]}
         className="mySwiper drag__story--slider"
       >
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide className="story__slider--item">
-          <div className="box2" style={{ width: "100%" }}>
+          <div className="box2">
+            <div className="gallery-drag">
+              <div className="skeleton4"></div>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="story__slider--item">
+          <div className="box2">
+            <div className="gallery-drag">
+              <div className="skeleton4"></div>
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="story__slider--item">
+          <div className="box2">
             <div className="gallery-drag">
               <div className="skeleton4"></div>
             </div>

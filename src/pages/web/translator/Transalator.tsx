@@ -68,7 +68,7 @@ const Transalator = () => {
                       <div className="image__story">
                         <img
                           src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
-                          alt={item.name}
+                          alt="webtruyen"
                         />
                       </div>
                       <div className="hover__story">

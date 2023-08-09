@@ -37,7 +37,7 @@ const PopupPrev = ({
                 key={index}
                 onClick={() => setChangeCoin(item.name)}
               >
-                <img src={item.image} alt="" />
+                <img src={item.image} alt="webtruyen" />
               </div>
             );
           })}
@@ -65,7 +65,7 @@ const PopupPrev = ({
                   }}
                 >
                   <span>{item.coin}</span>
-                  <img src={coin} alt="" />
+                  <img src={coin} alt="webtruyen" />
                   {item.money === 500 && popupPayment !== "card" && (
                     <p className="add_coin">+500</p>
                   )}

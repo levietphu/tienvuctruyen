@@ -41,7 +41,7 @@ const Header = ({ cates, logo }: any) => {
             <Link className="header__left--logo" to="/">
               <img
                 src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
-                alt=""
+                alt="webtruyen"
               />
               <span>tiên vực</span>
             </Link>

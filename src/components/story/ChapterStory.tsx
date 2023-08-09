@@ -14,6 +14,8 @@ const ChapterStory = ({ story, user }: any) => {
   const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
   const [saveRef, setSaveRef]: any = useState();
+  const [checkDonateOrChapter, setCheckDonateOrChapter] =
+    useState<string>("chapter");
 
   const Ref = useRef<HTMLDivElement>(null);
 
@@ -40,12 +42,6 @@ const ChapterStory = ({ story, user }: any) => {
     } else {
       callApiChapter("", 1);
     }
-    if (Ref.current) {
-      setSaveRef(Ref.current);
-    }
-    const change = () => setPosition(-saveRef?.clientWidth);
-    window.addEventListener("resize", change);
-    return () => window.removeEventListener("resize", change);
   }, []);
 
   useEffect(() => {
@@ -92,14 +88,22 @@ const ChapterStory = ({ story, user }: any) => {
       } else {
         callApiChapter("", chapterStory.current_page + 1);
       }
-      // window.scrollTo(0, 1000);
+      window.scrollTo({
+        top:
+          Number(document.querySelector(".header__story")?.clientHeight) + 80,
+        behavior: "smooth",
+      });
     } else if (word === "prev" && chapterStory.current_page - 1 > 0) {
       if (user) {
         callApiChapter(user.user.id, chapterStory.current_page - 1);
       } else {
         callApiChapter("", chapterStory.current_page - 1);
       }
-      // window.scrollTo(0, 1000);
+      window.scrollTo({
+        top:
+          Number(document.querySelector(".header__story")?.clientHeight) + 80,
+        behavior: "smooth",
+      });
     } else if (word !== "next" && word !== "prev") {
       e.preventDefault();
       if (user) {
@@ -107,7 +111,11 @@ const ChapterStory = ({ story, user }: any) => {
       } else {
         callApiChapter("", Number(word));
       }
-      // window.scrollTo(0, 1000);
+      window.scrollTo({
+        top:
+          Number(document.querySelector(".header__story")?.clientHeight) + 80,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -116,29 +124,29 @@ const ChapterStory = ({ story, user }: any) => {
       <div className="list__chapter__donate">
         <div
           className={`main__story--chapter center ${
-            !position ? "active__chapter__donate" : ""
+            checkDonateOrChapter === "chapter" ? "active__chapter__donate" : ""
           }`}
-          onClick={() => setPosition(0)}
+          onClick={() => setCheckDonateOrChapter("chapter")}
         >
           Ds Chương <span>{story.total_chapter}</span>
         </div>
         <div
           className={`main__story--donate center ${
-            position === -saveRef?.clientWidth ? "active__chapter__donate" : ""
+            checkDonateOrChapter === "donate" ? "active__chapter__donate" : ""
           }`}
-          onClick={() => setPosition(-saveRef?.clientWidth)}
+          onClick={() => setCheckDonateOrChapter("donate")}
         >
           Ủng hộ
         </div>
       </div>
-      <div
-        className="center__chapter"
-        style={{
-          transform: `translateX(${position}px)`,
-          maxHeight: `${position === -saveRef?.clientWidth ? "360px" : "100%"}`,
-        }}
-      >
-        <div className="center__chapter--left">
+      <div className="center__chapter">
+        <div
+          className="center__chapter--left"
+          style={{
+            display: `${checkDonateOrChapter === "chapter" ? "" : "none"}`,
+          }}
+          tabIndex={checkDonateOrChapter === "chapter" ? 0 : -1}
+        >
           <div className="sort__search">
             {orderby === "asc" ? (
               <button
@@ -305,12 +313,18 @@ const ChapterStory = ({ story, user }: any) => {
             </div>
           )}
         </div>
-        <div className="center__chapter--right">
+        <div
+          className="center__chapter--right"
+          style={{
+            display: `${checkDonateOrChapter === "donate" ? "" : "none"}`,
+          }}
+          tabIndex={checkDonateOrChapter === "donate" ? 0 : -1}
+        >
           <h2>Danh sách ủng hộ</h2>
           <div className="donate__story center">
             <div>
               <div className="image__donate">
-                <img src={chicken} alt="" />
+                <img src={chicken} alt="webtruyen" />
               </div>
               <p>
                 Hãy bấm vào nút Ủng hộ truyện ở trên để ủng hộ dịch giả nhé!

@@ -8,13 +8,13 @@ const HomeContextProvider = ({ children }: any) => {
   const [dataHome, setDataHome] = useState<any>();
   const [keyword, setKeyword] = useState<string>("");
   const [dataSearch, setDataSearch] = useState<any>();
-  const [loaderHome, setLoaderHome] = useState<boolean>(false);
+  const [loaderHome, setLoaderHome] = useState<boolean>(true);
   const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
 
   const callApi = async () => {
     await axios.get(`${process.env.REACT_APP_API}home`).then((res) => {
       setDataHome(res.data.data.items);
-      setLoaderHome(true);
+      setLoaderHome(false);
     });
   };
 

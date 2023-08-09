@@ -84,7 +84,7 @@ const DragStory = ({ data, vip }: any) => {
                     </div>
                     <img
                       src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
-                      alt={item.name}
+                      alt="webtruyen"
                     />
                   </div>
                   <div className="hover__story">

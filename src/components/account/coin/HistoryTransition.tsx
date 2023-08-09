@@ -28,7 +28,7 @@ const HistoryTransition = () => {
               </td>
 
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -43,7 +43,7 @@ const HistoryTransition = () => {
                 </span>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -58,7 +58,7 @@ const HistoryTransition = () => {
                 </span>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -74,7 +74,7 @@ const HistoryTransition = () => {
                 </span>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -87,7 +87,7 @@ const HistoryTransition = () => {
                 <strong>Nạp Xu</strong>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -103,7 +103,7 @@ const HistoryTransition = () => {
                 </span>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>
@@ -119,7 +119,7 @@ const HistoryTransition = () => {
                 </span>
               </td>
               <td>
-                +2000 <img src={coin} alt="" width="16" height="16" />{" "}
+                +2000 <img src={coin} alt="webtruyen" width="16" height="16" />{" "}
               </td>
               <td>
                 <span>Thành công</span>

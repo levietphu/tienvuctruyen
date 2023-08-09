@@ -21,7 +21,12 @@ const PopupWallet = ({
         {changeCoin === "momo" && (
           <div className="qrcode">
             <div>
-              <img src={momoqr} alt="" width={"200px"} height={"200px"} />
+              <img
+                src={momoqr}
+                alt="webtruyen"
+                width={"200px"}
+                height={"200px"}
+              />
             </div>
           </div>
         )}
@@ -54,7 +59,7 @@ const PopupWallet = ({
           <p>Số xu nhận được</p>
           <p>
             {changeMoney === 500 ? "10,500" : numberCoin}
-            <img src={coin} alt="" width={"16px"} height={"16px"} />
+            <img src={coin} alt="webtruyen" width={"16px"} height={"16px"} />
           </p>
         </div>
       </div>

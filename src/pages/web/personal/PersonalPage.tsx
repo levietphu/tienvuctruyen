@@ -30,7 +30,7 @@ const PersonalPage = () => {
                 <div style={{ marginTop: "10px" }}>
                   <div className="image__coin">
                     <div>
-                      <img src={coinImage} alt="" />
+                      <img src={coinImage} alt="webtruyen" />
                     </div>
                     <span>{user.user.coin} xu</span>
                   </div>

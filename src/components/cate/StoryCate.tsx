@@ -24,7 +24,10 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          window.scrollTo(0, 0);
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         });
     } else {
       await axios
@@ -34,7 +37,10 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          window.scrollTo(0, 0);
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         });
     }
   };
@@ -121,7 +127,7 @@ const StoryCate = () => {
                     <div className="image__story mr-10">
                       <img
                         src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
-                        alt=""
+                        alt="webtruyen"
                       />
                       {params.sluglist && params.sluglist === "truyen-vip" && (
                         <div
@@ -287,7 +293,7 @@ const StoryCate = () => {
         ) : !loader && dataCate.items.data.length === 0 ? (
           <div className="no-view">
             <div>
-              <img src={image} alt="" />
+              <img src={image} alt="webtruyen" />
               <h4 className="center">Hiện chưa có truyện nào</h4>
               <p className="center">Bạn hãy quay lại sau nhé!</p>
               <span className="center">

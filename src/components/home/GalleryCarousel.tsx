@@ -52,7 +52,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
   return (
     <>
       <div className="carousel mb-20">
-        {loaderHome ? (
+        {!loaderHome ? (
           <>
             <Swiper
               pagination={{
@@ -72,7 +72,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
                     <Link to={`/${value.slugtruyen}`} target="_">
                       <img
                         src={`${process.env.REACT_APP_UPLOADS}${value?.image}`}
-                        alt=""
+                        alt="webtruyen"
                       />
                     </Link>
                   </SwiperSlide>

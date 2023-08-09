@@ -24,7 +24,7 @@ const VipBuy = () => {
                   <div className="image__story">
                     <img
                       src={`${process.env.REACT_APP_UPLOADS}${item.truyen.image}`}
-                      alt=""
+                      alt="webtruyen"
                     />
                   </div>
                   <div className="hover__story">
@@ -51,7 +51,7 @@ const VipBuy = () => {
         ) : (
           <div className="no-view">
             <div>
-              <img src={image} alt="" />
+              <img src={image} alt="webtruyen" />
               <h4 className="center">Hiện chưa có truyện nào</h4>
               <p className="center">Bạn hãy quay lại sau nhé!</p>
               <span className="center">

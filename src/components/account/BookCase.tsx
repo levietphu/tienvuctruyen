@@ -18,7 +18,7 @@ const BookCase = () => {
                     <Link to={`/${item[1].truyen.slug}`}>
                       <img
                         src={`${process.env.REACT_APP_UPLOADS}${item[1].truyen.image}`}
-                        alt=""
+                        alt="webtruyen"
                       />
                     </Link>
                   </div>

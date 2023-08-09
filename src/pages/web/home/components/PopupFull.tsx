@@ -4,6 +4,7 @@ import xuly2 from "../../../../assets/xuly2.png";
 import { useContext } from "react";
 import { useOutSide } from "../../../../hookCustom/useOutSide";
 import { HomeContext } from "../../../../context/HomeContextProvider";
+import { Image } from "antd";
 
 const PopupFull = () => {
   const { setCheckPopupHome }: any = useContext(HomeContext);
@@ -19,8 +20,8 @@ const PopupFull = () => {
             Nhấp vào đây nhé
           </a>
           <div>
-            <img src={xuly} alt="" />
-            <img src={xuly2} alt="" />
+            <Image src={xuly} />
+            <Image src={xuly2} />
           </div>
           <p>
             Đợi vào được bên backend thì chuyển lại vào trang này(Chỉ cần làm 1
