@@ -4,16 +4,16 @@ import Moment from "react-moment";
 import "moment/locale/vi";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import coin from "../../assets/coin.svg";
 
-const ChapterStory = ({ story, user }: any) => {
+const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [chapterStory, setChapterStory] = useState<any>();
+
   const [keyword, setKeyword] = useState<string>("");
   const [orderby, setOrderby] = useState<string>("asc");
   const [checkKeywordOrderby, setCheckKeywordOrderby] =
     useState<boolean>(false);
-  const [position, setPosition] = useState(0);
   const [checkInput, setCheckInput] = useState(false);
-  const [saveRef, setSaveRef]: any = useState();
   const [checkDonateOrChapter, setCheckDonateOrChapter] =
     useState<string>("chapter");
 
@@ -26,6 +26,8 @@ const ChapterStory = ({ story, user }: any) => {
 
   const [from, setFrom] = useState<number>(0);
   const [to, setTo] = useState<number>(0);
+  const [fromDonate, setFromDonate] = useState<number>(0);
+  const [toDonate, setToDonate] = useState<number>(0);
 
   const callApiChapter = async (id_user: string, page: number) => {
     await axios
@@ -81,6 +83,22 @@ const ChapterStory = ({ story, user }: any) => {
     }
   }, [chapterStory]);
 
+  useEffect(() => {
+    if (donates) {
+      setFromDonate(donates.current_page - halfTotalLinks);
+      setToDonate(donates.current_page + halfTotalLinks);
+      if (donates.current_page < halfTotalLinks) {
+        setToDonate(toDonate + halfTotalLinks - donates.current_page);
+      }
+      if (donates.last_page - donates.current_page < halfTotalLinks) {
+        setFromDonate(
+          fromDonate -
+            (halfTotalLinks - (donates.last_page - donates.current_page))
+        );
+      }
+    }
+  }, [donates]);
+
   const changePage = (e: any, word: string) => {
     if (word === "next" && chapterStory.current_page < chapterStory.last_page) {
       if (user) {
@@ -88,22 +106,12 @@ const ChapterStory = ({ story, user }: any) => {
       } else {
         callApiChapter("", chapterStory.current_page + 1);
       }
-      window.scrollTo({
-        top:
-          Number(document.querySelector(".header__story")?.clientHeight) + 80,
-        behavior: "smooth",
-      });
     } else if (word === "prev" && chapterStory.current_page - 1 > 0) {
       if (user) {
         callApiChapter(user.user.id, chapterStory.current_page - 1);
       } else {
         callApiChapter("", chapterStory.current_page - 1);
       }
-      window.scrollTo({
-        top:
-          Number(document.querySelector(".header__story")?.clientHeight) + 80,
-        behavior: "smooth",
-      });
     } else if (word !== "next" && word !== "prev") {
       e.preventDefault();
       if (user) {
@@ -111,12 +119,26 @@ const ChapterStory = ({ story, user }: any) => {
       } else {
         callApiChapter("", Number(word));
       }
-      window.scrollTo({
-        top:
-          Number(document.querySelector(".header__story")?.clientHeight) + 80,
-        behavior: "smooth",
-      });
     }
+    window.scrollTo({
+      top: Number(document.querySelector(".header__story")?.clientHeight) + 80,
+      behavior: "smooth",
+    });
+  };
+
+  const changePageDonate = (e: any, word: string) => {
+    if (word === "next" && donates.current_page < donates.last_page) {
+      callApiDonate(donates.current_page + 1);
+    } else if (word === "prev" && donates.current_page - 1 > 0) {
+      callApiDonate(donates.current_page - 1);
+    } else if (word !== "next" && word !== "prev") {
+      e.preventDefault();
+      callApiDonate(Number(word));
+    }
+    window.scrollTo({
+      top: Number(document.querySelector(".header__story")?.clientHeight) + 80,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -126,17 +148,21 @@ const ChapterStory = ({ story, user }: any) => {
           className={`main__story--chapter center ${
             checkDonateOrChapter === "chapter" ? "active__chapter__donate" : ""
           }`}
-          onClick={() => setCheckDonateOrChapter("chapter")}
+          onClick={() => {
+            setCheckDonateOrChapter("chapter");
+          }}
         >
           Ds Chương <span>{story.total_chapter}</span>
         </div>
         <div
-          className={`main__story--donate center ${
+          className={`main__story--chapter center ${
             checkDonateOrChapter === "donate" ? "active__chapter__donate" : ""
           }`}
-          onClick={() => setCheckDonateOrChapter("donate")}
+          onClick={() => {
+            setCheckDonateOrChapter("donate");
+          }}
         >
-          Ủng hộ
+          Ủng hộ<span>{donates && donates.total_donate}</span>
         </div>
       </div>
       <div className="center__chapter">
@@ -192,7 +218,7 @@ const ChapterStory = ({ story, user }: any) => {
               </div>
             </div>
           </div>
-          <div className="center__chapter--list" ref={Ref}>
+          <div className="center__chapter--list">
             {chapterStory &&
               chapterStory.data.map((value: any, index: number) => {
                 return (
@@ -248,8 +274,8 @@ const ChapterStory = ({ story, user }: any) => {
                       !value.label.includes("Prev")
                     ) {
                       if (
-                        from < index + 1 &&
-                        index + 1 <= to &&
+                        from < index &&
+                        index <= to &&
                         index !== chapterStory.last_page
                       ) {
                         return (
@@ -320,17 +346,139 @@ const ChapterStory = ({ story, user }: any) => {
           }}
           tabIndex={checkDonateOrChapter === "donate" ? 0 : -1}
         >
-          <h2>Danh sách ủng hộ</h2>
-          <div className="donate__story center">
-            <div>
-              <div className="image__donate">
-                <img src={chicken} alt="webtruyen" />
+          <p className="text-donate">Danh sách ủng hộ</p>
+
+          {donates && donates.data.length > 0 ? (
+            <div className="center__chapter--left">
+              <div className="center__chapter--list" ref={Ref}>
+                {donates.data.map((value: any, index: number) => {
+                  return (
+                    <div
+                      className="center__chapter--item"
+                      key={index}
+                      style={{ cursor: "default" }}
+                    >
+                      <div className="center__chapter--left">
+                        <p>
+                          <span
+                            className="number__chapter"
+                            style={{ textTransform: "unset" }}
+                          >
+                            {value.name_user_donate}
+                          </span>
+                        </p>
+                        <p className="name__chapter"> {value.message}</p>
+                        <i>
+                          <span style={{ fontSize: "14px" }}>
+                            <Moment fromNow locale="vi">
+                              {value.created_at}
+                            </Moment>
+                          </span>
+                        </i>
+                      </div>
+
+                      <span className="coin_donate center">
+                        <strong
+                          style={{ marginRight: "5px", fontSize: "24px" }}
+                        >
+                          {value.coin_donate}
+                        </strong>
+                        <img width={20} src={coin} alt="webtruyen" />
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-              <p>
-                Hãy bấm vào nút Ủng hộ truyện ở trên để ủng hộ dịch giả nhé!
-              </p>
+              {donates.last_page > 1 && (
+                <div
+                  className={`pagination`}
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div className="pagination__left">
+                    <ul className="pagination__left--list">
+                      {donates.links.map((value: any, index: number) => {
+                        if (
+                          !value.label.includes("Next") &&
+                          !value.label.includes("Prev")
+                        ) {
+                          if (
+                            fromDonate < index &&
+                            index <= toDonate &&
+                            index !== donates.last_page
+                          ) {
+                            return (
+                              <li
+                                className={value.active ? "active" : ""}
+                                key={index}
+                                onClick={(e) =>
+                                  !value.active
+                                    ? changePageDonate(e, value.label)
+                                    : e.preventDefault()
+                                }
+                              >
+                                <a>{value.label}</a>
+                              </li>
+                            );
+                          }
+                        }
+                      })}
+                      {donates.last_page > 2 && (
+                        <li style={{ border: "none", cursor: "default" }}>
+                          <a style={{ cursor: "default" }}>...</a>
+                        </li>
+                      )}
+
+                      <li
+                        className={
+                          donates.last_page === donates.current_page
+                            ? "active"
+                            : ""
+                        }
+                        onClick={(e) =>
+                          donates.current_page !== donates.last_page
+                            ? changePageDonate(e, donates.last_page)
+                            : e.preventDefault()
+                        }
+                      >
+                        <a>{donates && donates.last_page}</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="pagination__right">
+                    <div
+                      className={`pagination__right--prev mr-10 ${
+                        donates.current_page === 1 ? "forbidden" : ""
+                      }`}
+                      onClick={(e) => changePageDonate(e, "prev")}
+                    >
+                      <i className="fa-solid fa-chevron-left"></i>
+                    </div>
+                    <div
+                      className={`pagination__right--next ${
+                        donates.last_page === donates.current_page
+                          ? "forbidden"
+                          : ""
+                      }`}
+                      onClick={(e) => changePageDonate(e, "next")}
+                    >
+                      <i className="fa-solid fa-chevron-right"></i>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          ) : (
+            <div className="donate__story center">
+              <div>
+                <div className="image__donate">
+                  <img src={chicken} alt="webtruyen" />
+                </div>
+                <p>
+                  Hãy bấm vào nút Ủng hộ truyện ở trên để ủng hộ dịch giả nhé!
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

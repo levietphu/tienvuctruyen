@@ -43,6 +43,7 @@ const ViewChapter: React.FC = () => {
   const [errorChapter, setErrorChapter] = useState<any>();
   const [alert, setAlert] = useState("");
   const [idChapter, setIdChapter] = useState<any>();
+  const [errorChapterNumber, setErrorChapterNumber] = useState<string>("");
 
   const [form] = Form.useForm();
   const params = useParams();
@@ -131,7 +132,6 @@ const ViewChapter: React.FC = () => {
   const showModal = (values: any) => {
     setOpen(true);
     if (values) {
-      console.log(values);
       form.setFieldsValue({
         name_chapter: values.name_chapter,
         chapter_number: values.chapter_number,
@@ -170,9 +170,13 @@ const ViewChapter: React.FC = () => {
           setDataChapter(res.data.chapter);
         });
       })
-      .catch((err) => setErrorChapter(err.response.data.errors));
+      .catch((err) => {
+        setErrorChapter(err.response.data.errors);
+        if (err.response.data.status === 400) {
+          setErrorChapterNumber(err.response.data.message);
+        }
+      });
   };
-
   // Cập nhật Chapter
   const changeChapter = async (values: any) => {
     values.content = content;
@@ -185,7 +189,12 @@ const ViewChapter: React.FC = () => {
           setDataChapter(res.data.chapter);
         });
       })
-      .catch((err) => setErrorChapter(err.response.data.errors));
+      .catch((err) => {
+        setErrorChapter(err.response.data.errors);
+        if (err.response.status === 400) {
+          setErrorChapterNumber(err.response.data.message);
+        }
+      });
   };
 
   //Xóa Chapter
@@ -307,8 +316,15 @@ const ViewChapter: React.FC = () => {
                 },
               ]}
             >
-              <Input type="text" name="chapter_number" />
+              <Input
+                type="text"
+                name="chapter_number"
+                placeholder="Ví dụ chương 1(có thể thay bằng số khác)"
+              />
             </Form.Item>
+            {errorChapterNumber && (
+              <p style={{ color: "red" }}>{errorChapterNumber}</p>
+            )}
             <Row className="error">
               <Col md={6}>
                 <div></div>

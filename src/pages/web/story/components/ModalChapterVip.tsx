@@ -6,8 +6,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { Link } from "react-router-dom";
 
-const { TextArea } = Input;
-
 type FieldType = {
   toChapter?: number;
   fromChapter?: number;

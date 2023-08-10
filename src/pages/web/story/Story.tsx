@@ -15,11 +15,10 @@ import ModalChapterVip from "./components/ModalChapterVip";
 const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
-
+  const [donates, setDonates] = useState<any[]>();
   const [loader, setLoader] = useState<boolean>(true);
   const [isModalDonateOpen, setIsModalDonateOpen] = useState(false);
   const [isModalChapterVipOpen, setIsModalChapterVipOpen] = useState(false);
-
   const [checkViewMore, setCheckViewMore] = useState(false);
 
   const { user }: any = useContext(AuthContext);
@@ -44,6 +43,17 @@ const Story = () => {
       });
   };
 
+  const callApiDonate = async (pageDonate = 1) => {
+    await axios
+      .get(
+        `${process.env.REACT_APP_API}donate?page=${pageDonate}&slug=${params.slug}`
+      )
+      .then((res) => {
+        setDonates(res.data.donates);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const addViewStory = async () => {
     await axios.get(`${process.env.REACT_APP_API}addview?slug=${params.slug}`);
   };
@@ -51,7 +61,7 @@ const Story = () => {
   useEffect(() => {
     callApi();
     setLoader(true);
-
+    callApiDonate();
     if (checkStoryAddView.length === 0) {
       sessionStorage.setItem(
         "checkStoryAddView",
@@ -247,7 +257,12 @@ const Story = () => {
             </div>
           </div>
           <div className="main__story">
-            <ChapterStory user={user} story={story} />
+            <ChapterStory
+              callApiDonate={callApiDonate}
+              donates={donates}
+              user={user}
+              story={story}
+            />
             <CommentStory slug={params.slug} story={story} />
           </div>
           <Modal
@@ -256,7 +271,11 @@ const Story = () => {
             onOk={() => setIsModalDonateOpen(true)}
             onCancel={() => setIsModalDonateOpen(false)}
           >
-            <ModalDonate setIsModalDonateOpen={setIsModalDonateOpen} />
+            <ModalDonate
+              id_truyen={story.id}
+              setIsModalDonateOpen={setIsModalDonateOpen}
+              callApiDonate={callApiDonate}
+            />
           </Modal>
           <Modal
             title="Mua chương VIP"
@@ -265,6 +284,7 @@ const Story = () => {
             onCancel={() => setIsModalChapterVipOpen(false)}
           >
             <ModalChapterVip
+              id_truyen={story.id}
               setIsModalChapterVipOpen={setIsModalChapterVipOpen}
             />
           </Modal>

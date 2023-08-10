@@ -24,10 +24,6 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
         });
     } else {
       await axios
@@ -37,10 +33,6 @@ const StoryCate = () => {
         .then((res) => {
           setDataCate(res.data.data);
           setLoader(false);
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
         });
     }
   };
@@ -66,8 +58,10 @@ const StoryCate = () => {
   }, [dataCate]);
 
   useEffect(() => {
-    callApi(1);
-    setLoader(true);
+    if (params.slugcate || params.sluglist) {
+      callApi(1);
+      setLoader(true);
+    }
   }, [params.slugcate, params.sluglist]);
 
   useEffect(() => {
@@ -98,6 +92,10 @@ const StoryCate = () => {
       e.preventDefault();
       callApi(Number(word));
     }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (

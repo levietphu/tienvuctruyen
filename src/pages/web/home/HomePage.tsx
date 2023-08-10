@@ -15,13 +15,13 @@ const HomePage = () => {
   const { dataHome, loaderHome, checkPopupHome }: any = useContext(HomeContext);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (checkPopupHome) {
-      showModal();
-    } else {
-      handleCancel();
-    }
-  }, [checkPopupHome]);
+  // useEffect(() => {
+  //   if (checkPopupHome) {
+  //     showModal();
+  //   } else {
+  //     handleCancel();
+  //   }
+  // }, [checkPopupHome]);
 
   const showModal = () => {
     setOpen(true);
@@ -89,9 +89,9 @@ const HomePage = () => {
           </div>
         </div>
       </MainLayout>{" "}
-      <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
+      {/* <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
         <PopupFull />
-      </Modal>
+      </Modal> */}
     </>
   );
 };
