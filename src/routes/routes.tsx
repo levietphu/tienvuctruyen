@@ -34,6 +34,7 @@ import ViewRole from "../pages/cms/role/views/ViewRole";
 import HomeContextProvider from "../context/HomeContextProvider";
 import { checkPer } from "../ultis/checkPer";
 import NotFound from "../pages/web/NotFound/view/NotFound";
+import ViewDiscount from "../pages/cms/discount/views/ViewDiscount";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -201,6 +202,7 @@ const routes = ({ user, loaderUser }: any) => {
               )
             }
           />
+          <Route path="discount/:id_story/view" element={<ViewDiscount />} />
           <Route path="chapter/:id_story/view" element={<ViewChapter />} />
           <Route path="*" element={<a>Not Found</a>} />
         </Route>

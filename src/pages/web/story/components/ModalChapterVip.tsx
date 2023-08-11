@@ -11,7 +11,7 @@ type FieldType = {
   fromChapter?: number;
 };
 
-const ModalChapterVip = ({ setIsModalChapterVipOpen }: any) => {
+const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
   const { user }: any = useContext(AuthContext);
 
   const onFinish = (values: any) => {
@@ -53,7 +53,7 @@ const ModalChapterVip = ({ setIsModalChapterVipOpen }: any) => {
                   { required: true, message: "Vui lòng điền vào trường này!" },
                 ]}
               >
-                <Input type="number" />
+                <Input type="number" max={story.total_chapter} />
               </Form.Item>
               <p style={{ fontSize: "12px", marginBottom: "10px" }}>
                 * Hệ thống sẽ tự loại trừ các chương không phải VIP và các

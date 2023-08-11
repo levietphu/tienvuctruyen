@@ -11,6 +11,7 @@ import {
   faTrash,
   faPlus,
   faAddressBook,
+  faPercent,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface DataType {
@@ -46,7 +47,7 @@ const ViewStory: React.FC = () => {
       key: "name",
       render: (_, record) => {
         return (
-          <Text type="success" strong style={{ fontSize: "20px" }}>
+          <Text type="success" strong>
             {record.name}
           </Text>
         );
@@ -114,6 +115,16 @@ const ViewStory: React.FC = () => {
               onClick={() => navigate(`/dashboard/chapter/${value.id}/view`)}
             >
               <FontAwesomeIcon icon={faAddressBook} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="View giảm giá" color={"blue"}>
+            <Button
+              size="small"
+              type="primary"
+              style={{ margin: "0 5px 5px 0" }}
+              onClick={() => navigate(`/dashboard/discount/${value.id}/view`)}
+            >
+              <FontAwesomeIcon icon={faPercent} />
             </Button>
           </Tooltip>
           <Tooltip title="Sửa truyện" color={"blue"}>

@@ -284,7 +284,7 @@ const Story = () => {
             onCancel={() => setIsModalChapterVipOpen(false)}
           >
             <ModalChapterVip
-              id_truyen={story.id}
+              story={story}
               setIsModalChapterVipOpen={setIsModalChapterVipOpen}
             />
           </Modal>
