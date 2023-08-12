@@ -62,9 +62,6 @@
       border-radius: 5px;
       font-size: 14px;
     }
-    .btn__full {
-      margin-left: 5px;
-    }
     .cate__story {
       margin-left: 5px;
     }
@@ -325,6 +322,7 @@
           position: sticky;
           bottom: 0;
           background: white;
+          z-index: 12;
         }
       }
       .center__chapter--right {

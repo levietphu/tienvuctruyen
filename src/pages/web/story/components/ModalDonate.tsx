@@ -19,8 +19,8 @@ const ModalDonate = ({
     coin_donate: 10,
     message: "",
   });
-  const [errorCoin, setErrorCoin] = useState<string>("");
   const [remainingCoins, setRemainingCoins] = useState<string>("");
+  const [errorTextDonate, setErrorTextDonate] = useState<string>("");
 
   const postDonate = async () => {
     await axios({
@@ -43,7 +43,8 @@ const ModalDonate = ({
         setRemainingCoins(res.data.remaining_coins);
       })
       .catch((err) => {
-        err.response.status === 400 && setErrorCoin(err.response.data.message);
+        err.response.status === 400 &&
+          setErrorTextDonate(err.response.data.message);
       });
   };
 
@@ -56,9 +57,15 @@ const ModalDonate = ({
               Bạn đang có{" "}
               <FontAwesomeIcon style={{ margin: "0 5px" }} icon={faCoins} />{" "}
               {remainingCoins ? remainingCoins : user.user.coin}
-              <strong> XU</strong>.<Link to="/account/coin">Nạp thêm</Link>
+              <strong> XU</strong>.
+              {user.user.coin <= 0 && <Link to="/account/coin">Nạp thêm</Link>}
             </span>
           </div>
+          {errorTextDonate && (
+            <div className="errorModal">
+              <p>{errorTextDonate}</p>
+            </div>
+          )}
           <div className="content-modal">
             <div className="main-content-modal">
               <div className="coin-donate">
@@ -74,9 +81,6 @@ const ModalDonate = ({
                     })
                   }
                 />
-                {errorCoin && (
-                  <p style={{ color: "red", fontSize: "14px" }}>{errorCoin}</p>
-                )}
               </div>
               <div className="message-donate">
                 <p>Lời nhắn</p>
@@ -105,7 +109,7 @@ const ModalDonate = ({
           onClick={() => {
             setDataDonate({ coin_donate: 10, message: "" });
             setIsModalDonateOpen(false);
-            setErrorCoin("");
+            setErrorTextDonate("");
           }}
         >
           Hủy

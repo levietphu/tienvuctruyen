@@ -160,7 +160,11 @@ const Story = () => {
               </div>
             </div>
             <div className="header__story--right">
-              {story.vip === 1 && <span className="btn__vip">vip</span>}
+              {story.vip === 1 && (
+                <span className="btn__vip" style={{ marginRight: "5px" }}>
+                  vip
+                </span>
+              )}
               {story.full === 1 && <span className="btn__full">full</span>}
               <span className="cate__story header__story--cate">
                 {story.theloais.map((item: any) => {

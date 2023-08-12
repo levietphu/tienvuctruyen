@@ -2,20 +2,56 @@ import "./modal-story.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Button, Input, Form } from "antd";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 type FieldType = {
-  toChapter?: number;
-  fromChapter?: number;
+  toChapter: number;
+  fromChapter: number;
 };
 
 const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
   const { user }: any = useContext(AuthContext);
+  const [remainingCoin, setRemainingCoin] = useState<number>();
+  const [errorText, setErrorText] = useState<string>("");
+  const [dataRes, setDataRes] = useState<any>();
+  const [testPass, setTestPass] = useState(false);
+
+  const [form] = Form.useForm();
+
+  const callApiBuyMany = async (values: any) => {
+    await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API}check_price`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: values,
+    })
+      .then((res) => {
+        setDataRes(res.data.data);
+        setErrorText("");
+        setTestPass(res.data.success);
+      })
+      .catch((err) => {
+        setErrorText(err.response.data.message);
+        setDataRes(undefined);
+      });
+  };
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    values.id_user = user.user.id;
+    values.id_truyen = story.id;
+    callApiBuyMany(values);
+  };
+
+  const handleCancel = () => {
+    setIsModalChapterVipOpen(false);
+    form.resetFields();
+    setErrorText("");
+    setDataRes(undefined);
   };
 
   return (
@@ -24,17 +60,24 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
         <>
           <div className="alert-modal">
             <span>
-              Bạn đang có {user.user.coin}
+              Bạn đang có {remainingCoin ? remainingCoin : user.user.coin}
               <FontAwesomeIcon style={{ margin: "0 5px" }} icon={faCoins} />
-              <strong>XU</strong>.<a href="">Nạp thêm</a>
+              <strong>XU</strong>.
+              {user.user.coin <= 0 && <Link to="/account/coin">Nạp thêm</Link>}
             </span>
           </div>
+          {errorText && (
+            <div className="errorModal">
+              <p>{errorText}</p>
+            </div>
+          )}
+
           <div className="content-modal">
             <Form
               name="basic"
               layout="vertical"
-              initialValues={{ remember: true }}
               onFinish={onFinish}
+              form={form}
             >
               <Form.Item<FieldType>
                 label="Mua từ chương"
@@ -43,7 +86,7 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
                   { required: true, message: "Vui lòng điền vào trường này!" },
                 ]}
               >
-                <Input type="number" />
+                <Input type="number" min={1} />
               </Form.Item>
 
               <Form.Item<FieldType>
@@ -68,6 +111,67 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
               </Form.Item>
             </Form>
           </div>
+          {dataRes && (
+            <div className="test-number-chapter line">
+              <div className="fix-fontsize">
+                <p>Các chương sẽ mua:</p>
+                <span className="to-from-chapter">
+                  {dataRes.toChapter} -{dataRes.fromChapter}
+                </span>
+              </div>
+              <div className="flex-between fix-fontsize">
+                <p>Tổng:</p>
+                <span>
+                  <strong>{dataRes.totalChapter} Chương</strong>
+                </span>
+              </div>
+              <div className="flex-between fix-fontsize">
+                <p>Giá:</p>
+                <span>
+                  <strong>{dataRes.totalCoin} Xu</strong>
+                </span>
+              </div>
+              <div className="flex-between fix-fontsize">
+                <p>Giảm giá:</p>
+                <span>
+                  <strong>{dataRes.sale} Xu</strong>
+                </span>
+              </div>
+
+              <p
+                style={{
+                  fontSize: "12px",
+                  textAlign: "right",
+                  paddingBottom: "10px",
+                }}
+              >
+                {dataRes.discount_percent ? (
+                  <>
+                    Giảm {dataRes.sale} XU ({dataRes.discount_percent}%) khi mua
+                    từ {dataRes.discount_chapter} chương
+                  </>
+                ) : (
+                  <>Không được giảm giá</>
+                )}
+              </p>
+              <div className="flex-between fix-fontsize line">
+                <p>Thanh toán:</p>
+                <span>
+                  <strong>{dataRes.payment} Xu</strong>
+                </span>
+              </div>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: `${testPass ? "green" : "red"}`,
+                  textAlign: "right",
+                  paddingBottom: "20px",
+                }}
+              >
+                {dataRes.message}
+              </p>
+            </div>
+          )}
         </>
       ) : (
         <div className="change-login">
@@ -78,9 +182,14 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
       )}
 
       <div className="button-modal">
-        <Button size="large" onClick={() => setIsModalChapterVipOpen(false)}>
+        <Button size="large" onClick={handleCancel}>
           Hủy Bỏ
         </Button>
+        {testPass && (
+          <Button className="donate-button" size="large">
+            Xác nhận thanh toán
+          </Button>
+        )}
       </div>
     </div>
   );

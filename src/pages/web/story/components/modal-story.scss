@@ -17,6 +17,15 @@
       text-decoration: underline;
     }
   }
+  .errorModal {
+    color: #cc0f35;
+    background: #feecf0;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid #f14668;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
   .content-modal {
     margin-top: 20px;
     .main-content-modal {
@@ -37,6 +46,25 @@
       font-size: 18px;
       font-weight: 600;
     }
+  }
+  .test-number-chapter {
+    .fix-fontsize {
+      font-size: 22px;
+      font-weight: 550;
+      opacity: 0.8;
+      margin-bottom: 10px;
+      .to-from-chapter {
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        color: #4a4a4a;
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+    }
+  }
+  .line {
+    border-top: 2px solid rgb(216, 215, 215);
+    padding-top: 10px;
   }
   .change-login {
     margin-bottom: 30px;
@@ -63,11 +91,11 @@
       color: white !important;
     }
     button {
-      border-color: rgb(235, 232, 232);
+      border-color: #b8b7b7;
       flex: 1;
     }
     button:hover {
-      border-color: rgb(173, 173, 173) !important;
+      border-color: #777777 !important;
       color: black !important;
     }
   }
