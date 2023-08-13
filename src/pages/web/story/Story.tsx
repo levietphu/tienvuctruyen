@@ -8,7 +8,7 @@ import ChapterStory from "../../../components/story/ChapterStory";
 import Loader from "../../../components/story/Loader";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { DownOutlined, UpOutlined, CrownFilled } from "@ant-design/icons";
-import { Modal } from "antd";
+import { Alert, Modal } from "antd";
 import ModalDonate from "./components/ModalDonate";
 import ModalChapterVip from "./components/ModalChapterVip";
 
@@ -20,6 +20,8 @@ const Story = () => {
   const [isModalDonateOpen, setIsModalDonateOpen] = useState(false);
   const [isModalChapterVipOpen, setIsModalChapterVipOpen] = useState(false);
   const [checkViewMore, setCheckViewMore] = useState(false);
+  const [showMessage, setShowMessage] = useState<string>("");
+  const [showMessageDonate, setShowMessageDonate] = useState<string>("");
 
   const { user }: any = useContext(AuthContext);
 
@@ -109,6 +111,19 @@ const Story = () => {
       document.title = story.name;
     }
   }, [loader]);
+
+  useEffect(() => {
+    if (showMessage) {
+      var id = setTimeout(() => setShowMessage(""), 3000);
+    }
+    return () => clearTimeout(id);
+  }, [showMessage]);
+  useEffect(() => {
+    if (showMessageDonate) {
+      var id = setTimeout(() => setShowMessageDonate(""), 3000);
+    }
+    return () => clearTimeout(id);
+  }, [showMessageDonate]);
 
   return (
     <MainLayout>
@@ -270,28 +285,42 @@ const Story = () => {
             <CommentStory slug={params.slug} story={story} />
           </div>
           <Modal
+            className="modal-story"
             title={`Ủng hộ truyện ${story.name}`}
             open={isModalDonateOpen}
             onOk={() => setIsModalDonateOpen(true)}
-            onCancel={() => setIsModalDonateOpen(false)}
           >
             <ModalDonate
               id_truyen={story.id}
               setIsModalDonateOpen={setIsModalDonateOpen}
               callApiDonate={callApiDonate}
+              setShowMessageDonate={setShowMessageDonate}
             />
           </Modal>
           <Modal
+            className="modal-story"
             title="Mua chương VIP"
             open={isModalChapterVipOpen}
             onOk={() => setIsModalChapterVipOpen(true)}
-            onCancel={() => setIsModalChapterVipOpen(false)}
           >
             <ModalChapterVip
               story={story}
               setIsModalChapterVipOpen={setIsModalChapterVipOpen}
+              setShowMessage={setShowMessage}
             />
           </Modal>
+          <Alert
+            className="alert-success"
+            message={showMessageDonate ? showMessageDonate : showMessage}
+            type="success"
+            showIcon
+            style={{
+              top: `${showMessage || showMessageDonate ? "50%" : "-1000px"}`,
+              transition: `${
+                showMessage || showMessageDonate ? "0.3s" : "unset"
+              }`,
+            }}
+          />
         </>
       ) : (
         <Loader />

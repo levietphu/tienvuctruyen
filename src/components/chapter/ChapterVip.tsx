@@ -19,7 +19,7 @@ const ChapterVip = ({ coin, setError, callApi }: any) => {
           if (res.data.success) {
             callApi(user.user.id, 1);
           } else if (!res.data.success && res.data.status === 400) {
-            setError(true);
+            setError(res.data.data.hasMores);
           }
         });
     } else {

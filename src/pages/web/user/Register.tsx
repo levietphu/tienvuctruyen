@@ -22,15 +22,22 @@ const Register = () => {
     user,
   }: any = useContext(AuthContext);
 
+  const clearChangePage = () => {
+    setCheckInputEmail(false);
+    setCheckInputPass(false);
+    setCheckInputName(false);
+    setCheckRules(false);
+    setErrorServer("");
+    setDataRegister({
+      name: "",
+      email: "",
+      password: "",
+    });
+  };
+
   useEffect(() => {
     document.title = "Tạo tài khoản Tiên Vực";
-    return () => {
-      setCheckInputEmail(false);
-      setCheckInputPass(false);
-      setCheckInputName(false);
-      setCheckRules(false);
-      setErrorServer("");
-    };
+    return () => clearChangePage();
   }, []);
 
   useEffect(() => {

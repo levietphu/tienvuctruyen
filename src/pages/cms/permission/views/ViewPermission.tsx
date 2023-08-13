@@ -3,7 +3,7 @@ import "../styles/view-permission.scss";
 import { createPermission } from "../api";
 import { useEffect, useState } from "react";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
-import { per } from "../../../../store/per";
+import { per } from "../../../../sample/per";
 
 const ViewPermission: React.FC = () => {
   const [errorPermission, setErrorPermission] = useState<any>();

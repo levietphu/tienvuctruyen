@@ -3,7 +3,7 @@ import "../styles/view-story.scss";
 import type { ColumnsType } from "antd/es/table";
 import { deleteStory, getStory } from "../api";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hookStore";
+import { useAppDispatch, useAppSelector } from "../../../../store/hookStore";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditOutlined } from "@ant-design/icons";

@@ -12,12 +12,17 @@ type FieldType = {
   fromChapter: number;
 };
 
-const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
+const ModalChapterVip = ({
+  story,
+  setIsModalChapterVipOpen,
+  setShowMessage,
+}: any) => {
   const { user }: any = useContext(AuthContext);
   const [remainingCoin, setRemainingCoin] = useState<number>();
   const [errorText, setErrorText] = useState<string>("");
   const [dataRes, setDataRes] = useState<any>();
   const [testPass, setTestPass] = useState(false);
+  const [dataBuyChapterClick, setDataBuyChapterClick] = useState<any>();
 
   const [form] = Form.useForm();
 
@@ -41,9 +46,29 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
       });
   };
 
+  const paymentConfirm = async () => {
+    await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API}buy_many_chapters`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: dataBuyChapterClick,
+    })
+      .then((res) => {
+        handleCancel();
+        setRemainingCoin(res.data.remaining_coins);
+        setShowMessage("Mua chương vip thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onFinish = (values: any) => {
     values.id_user = user.user.id;
     values.id_truyen = story.id;
+    setDataBuyChapterClick(values);
     callApiBuyMany(values);
   };
 
@@ -52,6 +77,7 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
     form.resetFields();
     setErrorText("");
     setDataRes(undefined);
+    setTestPass(false);
   };
 
   return (
@@ -186,7 +212,11 @@ const ModalChapterVip = ({ story, setIsModalChapterVipOpen }: any) => {
           Hủy Bỏ
         </Button>
         {testPass && (
-          <Button className="donate-button" size="large">
+          <Button
+            className="donate-button"
+            size="large"
+            onClick={paymentConfirm}
+          >
             Xác nhận thanh toán
           </Button>
         )}

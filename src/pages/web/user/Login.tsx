@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import setToken from "../../../ultis/setToken";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, Alert } from "antd";
 
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
   const [loaderLogin, setLoaderLogin] = useState(false);
+  const [error, setError] = useState<string>("");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
@@ -29,13 +30,16 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const clearChangePage = () => {
+    setCheckInputName(false);
+    setCheckInputPass(false);
+    setErrorServer("");
+    setTextLogin({ email: "", password: "" });
+  };
+
   useEffect(() => {
     document.title = "Đăng nhập vào Tiên Vực";
-    return () => {
-      setCheckInputName(false);
-      setCheckInputPass(false);
-      setErrorServer("");
-    };
+    return () => clearChangePage();
   }, []);
 
   useEffect(() => {
@@ -43,16 +47,15 @@ const Login = () => {
   }, [user]);
 
   const loginTienVuc = () => {
+    setLoaderLogin(true);
     login()
       .then((res: any) => {
         // lần đầu đăng nhập cần gắn token vào header
         setToken(res.data.data.token);
+
         setLoaderUser("loader");
         setReLogin(false);
-        getUser().catch((err: any) => {
-          console.log(err);
-        });
-        setLoaderLogin(true);
+        getUser();
         //lưu đăng nhập
         document.cookie = `token=${res.data.data.token};max-age=604800`;
         !checkLogin ? navigate(-1) : navigate("/");
@@ -63,8 +66,18 @@ const Login = () => {
             ? err.response.data.message
             : err.response.data.errors
         );
+        err.response.status === 500 && setError("Lỗi hệ thống");
       });
   };
+
+  useEffect(() => {
+    if (error) {
+      var id = setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+    return () => clearTimeout(id);
+  }, [error]);
 
   return (
     <div className="login">
@@ -146,6 +159,16 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Alert
+        className="error_chapter"
+        message={error}
+        type="error"
+        showIcon
+        style={{
+          top: `${error ? "50%" : "-10000px"}`,
+          transition: `${error ? "0.3s" : "unset"}`,
+        }}
+      />
     </div>
   );
 };

@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import story from "../story/slice/storySlice";
+import story from "../pages/cms/story/slice/storySlice";
+import storyPage from "../pages/web/story/slice/storyPageSlice";
 
 const rootReducer = combineReducers({
   story,
+  storyPage,
 });
 
 export const rootStore = configureStore({

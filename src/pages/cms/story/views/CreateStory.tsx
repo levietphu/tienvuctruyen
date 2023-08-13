@@ -20,7 +20,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
 import { AuthContext } from "../../../../context/AuthContextProvider";
-import { useAppDispatch } from "../../store/hookStore";
+import { useAppDispatch } from "../../../../store/hookStore";
 
 const CreateStory: React.FC = () => {
   const [data, setData] = useState({

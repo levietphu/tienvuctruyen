@@ -9,13 +9,14 @@ import Loader from "../../../components/chapter/Loader";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import ListChapter from "../../../components/chapter/ListChapter";
 import Popup from "./Popup";
+import { Alert } from "antd";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
   const [bookMark, setBookMark] = useState<boolean>(false);
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [keyword, setKeyword] = useState<string>("");
   const [orderby, setOrderby] = useState<string>("asc");
   const [checkKeywordOrderby, setCheckKeywordOrderby] =
@@ -65,8 +66,8 @@ const Chapterpage = () => {
   useEffect(() => {
     if (error) {
       let id = setTimeout(() => {
-        setError(false);
-      }, 2000);
+        setError("");
+      }, 3000);
 
       return () => clearTimeout(id);
     }
@@ -86,14 +87,18 @@ const Chapterpage = () => {
   return (
     <>
       <MainLayout>
+        <Alert
+          className="error_chapter"
+          message={error}
+          type="error"
+          showIcon
+          style={{
+            top: `${error ? "15%" : "-10000px"}`,
+            transition: `${error ? "0.3s" : "unset"}`,
+          }}
+        />
         {!loader ? (
           <>
-            <span
-              className="error_chapter"
-              style={{ top: `${error ? "70px" : "0"}` }}
-            >
-              Xu của bạn không đủ. Vui lòng nạp thêm !
-            </span>
             <section className="screen-80">
               <div className="header__chapter">
                 <div className="name__story">

@@ -3,11 +3,11 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import PopupPrev from "./PopupPrev";
 import PopupNext from "./PopupNext";
-import { bank } from "../../../store/coin";
-import { card } from "../../../store/coin";
-import { bankImage } from "../../../store/coin";
-import { walletImage } from "../../../store/coin";
-import { cardImage } from "../../../store/coin";
+import { bank } from "../../../sample/coin";
+import { card } from "../../../sample/coin";
+import { bankImage } from "../../../sample/coin";
+import { walletImage } from "../../../sample/coin";
+import { cardImage } from "../../../sample/coin";
 
 const PopupPayment = () => {
   const { setPopupPayment, popupPayment }: any = useContext(AuthContext);

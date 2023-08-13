@@ -43,12 +43,14 @@ const PopupBank = ({ changeMoney, numberCoin, handleCoppy }: any) => {
         <div className="qrcode">
           <div>
             <i>Hoặc sử dụng app ngân hàng của bạn để quét mã QR thanh toán</i>
-            <img
-              src={qrcode}
-              alt="webtruyen"
-              width={"200px"}
-              height={"200px"}
-            />
+            <div className="center" style={{ marginBottom: "20px" }}>
+              <img
+                src={qrcode}
+                alt="webtruyen"
+                width={"200px"}
+                height={"200px"}
+              />
+            </div>
           </div>
         </div>
       </div>

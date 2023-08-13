@@ -13,6 +13,7 @@ const ModalDonate = ({
   callApiDonate,
   id_truyen,
   setIsModalDonateOpen,
+  setShowMessageDonate,
 }: any) => {
   const { user }: any = useContext(AuthContext);
   const [dataDonate, setDataDonate] = useState<any>({
@@ -38,14 +39,20 @@ const ModalDonate = ({
     })
       .then((res) => {
         callApiDonate();
-        setDataDonate({ coin_donate: 10, message: "" });
-        setIsModalDonateOpen(false);
+        handleCancel();
         setRemainingCoins(res.data.remaining_coins);
+        setShowMessageDonate("Cảm ơn bạn đã ủng hộ dịch giả");
       })
       .catch((err) => {
         err.response.status === 400 &&
           setErrorTextDonate(err.response.data.message);
       });
+  };
+
+  const handleCancel = () => {
+    setDataDonate({ coin_donate: 10, message: "" });
+    setIsModalDonateOpen(false);
+    setErrorTextDonate("");
   };
 
   return (
@@ -104,14 +111,7 @@ const ModalDonate = ({
       )}
 
       <div className="button-modal">
-        <Button
-          size="large"
-          onClick={() => {
-            setDataDonate({ coin_donate: 10, message: "" });
-            setIsModalDonateOpen(false);
-            setErrorTextDonate("");
-          }}
-        >
+        <Button size="large" onClick={handleCancel}>
           Hủy
         </Button>
         <Button

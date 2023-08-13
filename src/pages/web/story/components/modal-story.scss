@@ -1,3 +1,8 @@
+.modal-story {
+  .ant-modal-close {
+    display: none;
+  }
+}
 .modal-donate {
   border-top: 2px solid rgb(216, 215, 215);
   padding-top: 30px;
@@ -99,4 +104,12 @@
       color: black !important;
     }
   }
+}
+
+.alert-success {
+  position: fixed;
+  z-index: 30;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
 }
