@@ -1,4 +1,4 @@
-import "./modal-story.scss";
+import "../styles/modal-story.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Button, Input, Form } from "antd";

@@ -1,10 +1,10 @@
-import { Props } from "../../../../layouts/MainLayout";
 import { Row, Col } from "antd";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import "../styles/layout-cms.scss";
 import { useEffect } from "react";
+import Props from "../../../../ultis/typeChildren";
 
 const LayoutCms = ({ children }: Props) => {
   useEffect(() => {

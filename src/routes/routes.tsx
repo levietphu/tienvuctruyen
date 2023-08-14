@@ -4,15 +4,15 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import BookCase from "../components/account/BookCase";
-import Coin from "../components/account/Coin";
-import VipBuy from "../components/account/VipBuy";
-import CatePage from "../pages/web/cate/CatePage";
-import Chapterpage from "../pages/web/chapter/Chapterpage";
-import HomePage from "../pages/web/home/HomePage";
-import PersonalPage from "../pages/web/personal/PersonalPage";
-import Story from "../pages/web/story/Story";
-import Transalator from "../pages/web/translator/Transalator";
+import BookCase from "../pages/web/personal/view/BookCase";
+import Coin from "../pages/web/personal/view/Coin";
+import VipBuy from "../pages/web/personal/view/VipBuy";
+import CatePage from "../pages/web/cate/view/CatePage";
+import Chapterpage from "../pages/web/chapter/view/Chapterpage";
+import HomePage from "../pages/web/home/view/HomePage";
+import PersonalPage from "../pages/web/personal/view/PersonalPage";
+import Story from "../pages/web/story/view/Story";
+import Transalator from "../pages/web/translator/view/Transalator";
 import Login from "../pages/web/user/Login";
 import Register from "../pages/web/user/Register";
 import Dashboard from "../pages/cms/dashboard/view/Dashboard";

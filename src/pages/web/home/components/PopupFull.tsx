@@ -1,4 +1,4 @@
-import "./popupfull.scss";
+import "../styles/popupfull.scss";
 import xuly from "../../../../assets/xuly.png";
 import xuly2 from "../../../../assets/xuly2.png";
 import { useContext } from "react";
