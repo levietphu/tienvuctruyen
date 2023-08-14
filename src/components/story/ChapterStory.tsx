@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import chicken from "../../assets/chicken.png";
 import Moment from "react-moment";
 import "moment/locale/vi";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import coin from "../../assets/coin.svg";
+import Pagination from "../pagination/Pagination";
 
 const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [chapterStory, setChapterStory] = useState<any>();
@@ -17,25 +18,14 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [checkDonateOrChapter, setCheckDonateOrChapter] =
     useState<string>("chapter");
 
-  const Ref = useRef<HTMLDivElement>(null);
-
   const params = useParams();
-
-  // pagination
-  const halfTotalLinks = Math.floor(2 / 2);
-
-  const [from, setFrom] = useState<number>(0);
-  const [to, setTo] = useState<number>(0);
-  const [fromDonate, setFromDonate] = useState<number>(0);
-  const [toDonate, setToDonate] = useState<number>(0);
 
   const callApiChapter = async (id_user: string, page: number) => {
     await axios
       .get(
         `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
       )
-      .then((res) => setChapterStory(res.data.chapter))
-      .catch((err) => console.log(err));
+      .then((res) => setChapterStory(res.data.chapter));
   };
 
   useEffect(() => {
@@ -65,81 +55,6 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
       }
     }
   }, [orderby]);
-
-  useEffect(() => {
-    if (chapterStory) {
-      setFrom(chapterStory.current_page - halfTotalLinks);
-      setTo(chapterStory.current_page + halfTotalLinks);
-      if (chapterStory.current_page < halfTotalLinks) {
-        setTo(to + halfTotalLinks - chapterStory.current_page);
-      }
-      if (chapterStory.last_page - chapterStory.current_page < halfTotalLinks) {
-        setFrom(
-          from -
-            (halfTotalLinks -
-              (chapterStory.last_page - chapterStory.current_page))
-        );
-      }
-    }
-  }, [chapterStory]);
-
-  useEffect(() => {
-    if (donates) {
-      setFromDonate(donates.current_page - halfTotalLinks);
-      setToDonate(donates.current_page + halfTotalLinks);
-      if (donates.current_page < halfTotalLinks) {
-        setToDonate(toDonate + halfTotalLinks - donates.current_page);
-      }
-      if (donates.last_page - donates.current_page < halfTotalLinks) {
-        setFromDonate(
-          fromDonate -
-            (halfTotalLinks - (donates.last_page - donates.current_page))
-        );
-      }
-    }
-  }, [donates]);
-
-  const changePage = (e: any, word: string) => {
-    if (word === "next" && chapterStory.current_page < chapterStory.last_page) {
-      if (user) {
-        callApiChapter(user.user.id, chapterStory.current_page + 1);
-      } else {
-        callApiChapter("", chapterStory.current_page + 1);
-      }
-    } else if (word === "prev" && chapterStory.current_page - 1 > 0) {
-      if (user) {
-        callApiChapter(user.user.id, chapterStory.current_page - 1);
-      } else {
-        callApiChapter("", chapterStory.current_page - 1);
-      }
-    } else if (word !== "next" && word !== "prev") {
-      e.preventDefault();
-      if (user) {
-        callApiChapter(user.user.id, Number(word));
-      } else {
-        callApiChapter("", Number(word));
-      }
-    }
-    window.scrollTo({
-      top: Number(document.querySelector(".header__story")?.clientHeight) + 80,
-      behavior: "smooth",
-    });
-  };
-
-  const changePageDonate = (e: any, word: string) => {
-    if (word === "next" && donates.current_page < donates.last_page) {
-      callApiDonate(donates.current_page + 1);
-    } else if (word === "prev" && donates.current_page - 1 > 0) {
-      callApiDonate(donates.current_page - 1);
-    } else if (word !== "next" && word !== "prev") {
-      e.preventDefault();
-      callApiDonate(Number(word));
-    }
-    window.scrollTo({
-      top: Number(document.querySelector(".header__story")?.clientHeight) + 80,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <div className="chapter__donate">
@@ -264,80 +179,11 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
                 );
               })}
           </div>
-          {chapterStory && chapterStory.last_page > 1 && (
-            <div className={`pagination`}>
-              <div className="pagination__left">
-                <ul className="pagination__left--list">
-                  {chapterStory.links.map((value: any, index: number) => {
-                    if (
-                      !value.label.includes("Next") &&
-                      !value.label.includes("Prev")
-                    ) {
-                      if (
-                        from < index &&
-                        index <= to &&
-                        index !== chapterStory.last_page
-                      ) {
-                        return (
-                          <li
-                            className={value.active ? "active" : ""}
-                            key={index}
-                            onClick={(e) =>
-                              !value.active
-                                ? changePage(e, value.label)
-                                : e.preventDefault()
-                            }
-                          >
-                            <a>{value.label}</a>
-                          </li>
-                        );
-                      }
-                    }
-                  })}
-                  {chapterStory.last_page > 2 && (
-                    <li style={{ border: "none", cursor: "default" }}>
-                      <a style={{ cursor: "default" }}>...</a>
-                    </li>
-                  )}
-
-                  <li
-                    className={
-                      chapterStory.last_page === chapterStory.current_page
-                        ? "active"
-                        : ""
-                    }
-                    onClick={(e) =>
-                      chapterStory.current_page !== chapterStory.last_page
-                        ? changePage(e, chapterStory.last_page)
-                        : e.preventDefault()
-                    }
-                  >
-                    <a>{chapterStory && chapterStory.last_page}</a>
-                  </li>
-                </ul>
-              </div>
-              <div className="pagination__right">
-                <div
-                  className={`pagination__right--prev mr-10 ${
-                    chapterStory.current_page === 1 ? "forbidden" : ""
-                  }`}
-                  onClick={(e) => changePage(e, "prev")}
-                >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </div>
-                <div
-                  className={`pagination__right--next ${
-                    chapterStory.last_page === chapterStory.current_page
-                      ? "forbidden"
-                      : ""
-                  }`}
-                  onClick={(e) => changePage(e, "next")}
-                >
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              </div>
-            </div>
-          )}
+          <Pagination
+            data={chapterStory}
+            callApiPagination={callApiChapter}
+            check="chapter"
+          />
         </div>
         <div
           className="center__chapter--right"
@@ -350,7 +196,7 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
 
           {donates && donates.data.length > 0 ? (
             <div className="center__chapter--left">
-              <div className="center__chapter--list" ref={Ref}>
+              <div className="center__chapter--list">
                 {donates.data.map((value: any, index: number) => {
                   return (
                     <div
@@ -389,83 +235,11 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
                   );
                 })}
               </div>
-              {donates.last_page > 1 && (
-                <div
-                  className={`pagination`}
-                  style={{ justifyContent: "space-between" }}
-                >
-                  <div className="pagination__left">
-                    <ul className="pagination__left--list">
-                      {donates.links.map((value: any, index: number) => {
-                        if (
-                          !value.label.includes("Next") &&
-                          !value.label.includes("Prev")
-                        ) {
-                          if (
-                            fromDonate < index &&
-                            index <= toDonate &&
-                            index !== donates.last_page
-                          ) {
-                            return (
-                              <li
-                                className={value.active ? "active" : ""}
-                                key={index}
-                                onClick={(e) =>
-                                  !value.active
-                                    ? changePageDonate(e, value.label)
-                                    : e.preventDefault()
-                                }
-                              >
-                                <a>{value.label}</a>
-                              </li>
-                            );
-                          }
-                        }
-                      })}
-                      {donates.last_page > 2 && (
-                        <li style={{ border: "none", cursor: "default" }}>
-                          <a style={{ cursor: "default" }}>...</a>
-                        </li>
-                      )}
-
-                      <li
-                        className={
-                          donates.last_page === donates.current_page
-                            ? "active"
-                            : ""
-                        }
-                        onClick={(e) =>
-                          donates.current_page !== donates.last_page
-                            ? changePageDonate(e, donates.last_page)
-                            : e.preventDefault()
-                        }
-                      >
-                        <a>{donates && donates.last_page}</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="pagination__right">
-                    <div
-                      className={`pagination__right--prev mr-10 ${
-                        donates.current_page === 1 ? "forbidden" : ""
-                      }`}
-                      onClick={(e) => changePageDonate(e, "prev")}
-                    >
-                      <i className="fa-solid fa-chevron-left"></i>
-                    </div>
-                    <div
-                      className={`pagination__right--next ${
-                        donates.last_page === donates.current_page
-                          ? "forbidden"
-                          : ""
-                      }`}
-                      onClick={(e) => changePageDonate(e, "next")}
-                    >
-                      <i className="fa-solid fa-chevron-right"></i>
-                    </div>
-                  </div>
-                </div>
-              )}
+              <Pagination
+                check="donate"
+                data={donates}
+                callApiPagination={callApiDonate}
+              />
             </div>
           ) : (
             <div className="donate__story center">

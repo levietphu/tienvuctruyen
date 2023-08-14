@@ -12,7 +12,7 @@ const Loader = () => {
             Chương trước
           </span>
           <span
-            className={`prev__chapter 
+            className={`next__chapter 
       }`}
           >
             Chương sau
@@ -68,7 +68,7 @@ const Loader = () => {
           Chương trước
         </span>
         <span
-          className={`prev__chapter 
+          className={`next__chapter 
       }`}
         >
           Chương sau

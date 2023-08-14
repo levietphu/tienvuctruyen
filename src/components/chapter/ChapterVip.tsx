@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContextProvider";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const ChapterVip = ({ coin, setError, callApi }: any) => {
   const { user }: any = useContext(AuthContext);
@@ -44,16 +44,17 @@ const ChapterVip = ({ coin, setError, callApi }: any) => {
           <button className="btn-chapter" onClick={callApiBuy}>
             Mua Chương này
           </button>
-          <button
+          <Link
+            to={`${user ? "/account/coin" : "/login"}`}
             className="btn-coin"
-            onClick={() =>
-              user ? navigate("/account/coin") : navigate("/login")
-            }
           >
             Nạp xu
-          </button>
+          </Link>
         </div>
-        <div className="qa-buy center">
+        <div
+          className="qa-buy center"
+          onClick={() => navigate(`/${params.slugstory}/?buy=true`)}
+        >
           <button>Bạn muốn mua hết các chương VIP?</button>
         </div>
       </div>

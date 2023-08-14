@@ -57,7 +57,7 @@ const Login = () => {
         setReLogin(false);
         getUser();
         //lưu đăng nhập
-        document.cookie = `token=${res.data.data.token};max-age=604800`;
+        document.cookie = `token=${res.data.data.token};max-age=604800;path=/;`;
         !checkLogin ? navigate(-1) : navigate("/");
       })
       .catch((err: any) => {

@@ -29,8 +29,7 @@
 .next__prev--chapter {
   text-align: center;
   margin-bottom: 40px;
-  .next__chapter,
-  .prev__chapter {
+  .next__chapter {
     padding: 8px 10px;
     background: white;
     color: #363636;
@@ -45,15 +44,15 @@
     cursor: not-allowed;
     border: 1px solid #cbcbcb !important;
   }
-  a:hover {
-    border: 1px solid #363636;
+  .next__chapter:hover {
+    border-color: black;
   }
 }
 
 .content__chapter {
   background: white;
   margin-bottom: 40px;
-  color: #525252;
+  color: black;
   .main__content {
     padding: 20px;
     font-size: 1.2rem;
@@ -70,12 +69,12 @@
   border-radius: 3px;
   @media screen and (max-width: 1023px) {
     width: 100%;
-    background: white;
     top: unset;
     bottom: -1px;
     display: flex;
     justify-content: space-evenly;
     border-radius: 0;
+    padding: 5px 0;
   }
   .setting,
   .change__story,
@@ -104,21 +103,22 @@
   .setting {
     i {
       margin-top: 10px;
+      @media screen and (max-width: 1023px) {
+        margin-top: 0;
+      }
     }
   }
   .next__chapter {
-    i {
-      margin-bottom: 10px;
-      @media screen and (max-width: 1023px) {
-        margin-bottom: 0;
-      }
+    padding-bottom: 5px;
+    @media screen and (max-width: 1023px) {
+      padding-bottom: 0;
     }
   }
   .forbidden {
     i {
       opacity: 0.5;
-      cursor: not-allowed;
       background: white;
+      cursor: not-allowed;
     }
   }
 }
@@ -137,8 +137,6 @@
     top: unset;
     bottom: 0;
     border-radius: 0;
-    background: #2a2a2a;
-    color: white;
   }
   .setting__close {
     display: flex;

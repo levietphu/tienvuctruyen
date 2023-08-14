@@ -21,6 +21,8 @@ const Chapterpage = () => {
   const [orderby, setOrderby] = useState<string>("asc");
   const [checkKeywordOrderby, setCheckKeywordOrderby] =
     useState<boolean>(false);
+  const [alertBookMark, setAlertBookMark] = useState<string>("");
+  const [checkSuccess, setCheckSuccess] = useState<boolean>(true);
 
   const { setTogglePopup, setTheme, theme, size, setSize, togglePopup }: any =
     useContext(SettingContext);
@@ -40,28 +42,36 @@ const Chapterpage = () => {
       });
   };
 
+  const callAddBookMark = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API}add_bookmark`, {
+        slug_story: params.slugstory,
+        slug: params.slugchapter,
+        id_user: user ? user.user.id : "",
+      })
+      .then((res) => {
+        setAlertBookMark(res.data.message);
+        if (res.data.status === 400) {
+          setCheckSuccess(false);
+        } else {
+          setCheckSuccess(true);
+        }
+      });
+  };
+
   useEffect(() => {
     if (user) {
       callApi(user.user.id, 1);
-      window.scrollTo(0, 0);
     } else {
       if (loaderUser !== "loader") {
         callApi("", 1);
-        window.scrollTo(0, 0);
       }
     }
     setLoader(true);
     setTogglePopup(false);
     window.scrollTo(0, 0);
+    return () => setBookMark(false);
   }, [params.slugchapter, params.slugstory, loaderUser]);
-
-  const changeChapter = (word: string) => {
-    if (word === "prev") {
-      navigate(`/${params.slugstory}/${dataChapter.slug_prev}`);
-    } else {
-      navigate(`/${params.slugstory}/${dataChapter.slug_next}`);
-    }
-  };
 
   useEffect(() => {
     if (error) {
@@ -84,6 +94,21 @@ const Chapterpage = () => {
     }
   }, [loader]);
 
+  useEffect(() => {
+    if (bookMark) {
+      callAddBookMark();
+    }
+  }, [bookMark]);
+
+  useEffect(() => {
+    if (alertBookMark) {
+      let id = setTimeout(() => {
+        setAlertBookMark("");
+      }, 3000);
+      return () => clearTimeout(id);
+    }
+  }, [alertBookMark]);
+
   return (
     <>
       <MainLayout>
@@ -95,6 +120,15 @@ const Chapterpage = () => {
           style={{
             top: `${error ? "15%" : "-10000px"}`,
             transition: `${error ? "0.3s" : "unset"}`,
+          }}
+        />
+        <Alert
+          className="error_chapter"
+          message={alertBookMark}
+          type={checkSuccess ? "success" : "error"}
+          style={{
+            top: `${alertBookMark ? "15%" : "-10000px"}`,
+            transition: `${alertBookMark ? "0.3s" : "unset"}`,
           }}
         />
         {!loader ? (
@@ -115,26 +149,31 @@ const Chapterpage = () => {
                   </span>
                 </div>
                 <div className="next__prev--chapter">
-                  <span
-                    className={`next__chapter ${
-                      !dataChapter.slug_prev ? "forbidden__chapter" : ""
-                    }`}
-                    onClick={() =>
-                      dataChapter.slug_prev && changeChapter("prev")
-                    }
-                  >
-                    Chương trước
-                  </span>
-                  <span
-                    className={`prev__chapter ${
-                      !dataChapter.slug_next ? "forbidden__chapter" : ""
-                    }`}
-                    onClick={() =>
-                      dataChapter.slug_next && changeChapter("next")
-                    }
-                  >
-                    Chương sau
-                  </span>
+                  {!dataChapter.slug_prev ? (
+                    <span className="next__chapter forbidden__chapter">
+                      Chương trước
+                    </span>
+                  ) : (
+                    <Link
+                      to={`/${params.slugstory}/${dataChapter.slug_prev}`}
+                      className={`next__chapter`}
+                    >
+                      Chương trước
+                    </Link>
+                  )}
+
+                  {!dataChapter.slug_next ? (
+                    <span className="next__chapter forbidden__chapter">
+                      Chương sau
+                    </span>
+                  ) : (
+                    <Link
+                      to={`/${params.slugstory}/${dataChapter.slug_next}`}
+                      className={`next__chapter`}
+                    >
+                      Chương sau
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className="content__chapter">
@@ -158,22 +197,30 @@ const Chapterpage = () => {
                 )}
               </div>
               <div className="next__prev--chapter">
-                <span
-                  className={`next__chapter ${
-                    !dataChapter.slug_prev ? "forbidden__chapter" : ""
-                  }`}
-                  onClick={() => dataChapter.slug_prev && changeChapter("prev")}
-                >
-                  Chương trước
-                </span>
-                <span
-                  className={`prev__chapter ${
-                    !dataChapter.slug_next ? "forbidden__chapter" : ""
-                  }`}
-                  onClick={() => dataChapter.slug_next && changeChapter("next")}
-                >
-                  Chương sau
-                </span>
+                {!dataChapter.slug_prev ? (
+                  <span className="next__chapter forbidden__chapter">
+                    Chương trước
+                  </span>
+                ) : (
+                  <Link
+                    to={`/${params.slugstory}/${dataChapter.slug_prev}`}
+                    className={`next__chapter`}
+                  >
+                    Chương trước
+                  </Link>
+                )}
+                {!dataChapter.slug_next ? (
+                  <span className="next__chapter forbidden__chapter">
+                    Chương sau
+                  </span>
+                ) : (
+                  <Link
+                    to={`/${params.slugstory}/${dataChapter.slug_next}`}
+                    className={`next__chapter`}
+                  >
+                    Chương sau
+                  </Link>
+                )}
               </div>
             </section>
             {toggleSetting ? (
@@ -184,12 +231,17 @@ const Chapterpage = () => {
                 >
                   <i className="fa-solid fa-gear"></i>
                 </div>
-                <div
-                  className="change__story"
-                  onClick={() => navigate(`/${params.slugstory}`)}
+                <Link
+                  to={`/${params.slugstory}`}
+                  className="change__story center"
+                  style={{
+                    color: `${
+                      theme === "light" || theme === "book" ? "black" : "white"
+                    }`,
+                  }}
                 >
                   <i className="fa-solid fa-book"></i>
-                </div>
+                </Link>
                 <div
                   className="list__chapter"
                   onClick={() => {
@@ -208,22 +260,44 @@ const Chapterpage = () => {
                     <i className="fa-regular fa-bookmark"></i>
                   )}
                 </div>
-                <div
-                  className={`prev__chapter ${
-                    !dataChapter.slug_prev && "forbidden"
-                  }`}
-                  onClick={() => dataChapter.slug_prev && changeChapter("prev")}
-                >
-                  <i className="fa-sharp fa-solid fa-arrow-left"></i>
-                </div>
-                <div
-                  className={`next__chapter ${
-                    !dataChapter.slug_next && "forbidden"
-                  }`}
-                  onClick={() => dataChapter.slug_next && changeChapter("next")}
-                >
-                  <i className="fa-sharp fa-solid fa-arrow-right"></i>
-                </div>
+                {!dataChapter.slug_prev ? (
+                  <div className="next__chapter forbidden center">
+                    <i className="fa-sharp fa-solid fa-arrow-left"></i>
+                  </div>
+                ) : (
+                  <Link
+                    style={{
+                      color: `${
+                        theme === "light" || theme === "book"
+                          ? "black"
+                          : "white"
+                      }`,
+                    }}
+                    to={`/${params.slugstory}/${dataChapter.slug_prev}`}
+                    className={`prev__chapter center`}
+                  >
+                    <i className="fa-sharp fa-solid fa-arrow-left"></i>
+                  </Link>
+                )}
+                {!dataChapter.slug_next ? (
+                  <div className="next__chapter forbidden center">
+                    <i className="fa-sharp fa-solid fa-arrow-right"></i>
+                  </div>
+                ) : (
+                  <Link
+                    style={{
+                      color: `${
+                        theme === "light" || theme === "book"
+                          ? "black"
+                          : "white"
+                      }`,
+                    }}
+                    to={`/${params.slugstory}/${dataChapter.slug_next}`}
+                    className={`next__chapter center`}
+                  >
+                    <i className="fa-sharp fa-solid fa-arrow-right"></i>
+                  </Link>
+                )}
               </div>
             ) : (
               <div className="main__setting">

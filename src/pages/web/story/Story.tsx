@@ -1,7 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import "./story.scss";
 import MainLayout from "../../../layouts/MainLayout";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import axios from "axios";
 import CommentStory from "../../../components/story/CommentStory";
 import ChapterStory from "../../../components/story/ChapterStory";
@@ -22,6 +27,7 @@ const Story = () => {
   const [checkViewMore, setCheckViewMore] = useState(false);
   const [showMessage, setShowMessage] = useState<string>("");
   const [showMessageDonate, setShowMessageDonate] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { user }: any = useContext(AuthContext);
 
@@ -64,6 +70,9 @@ const Story = () => {
     callApi();
     setLoader(true);
     callApiDonate();
+    if (searchParams.get("buy")) {
+      setIsModalChapterVipOpen(true);
+    }
     if (checkStoryAddView.length === 0) {
       sessionStorage.setItem(
         "checkStoryAddView",
@@ -307,6 +316,7 @@ const Story = () => {
               story={story}
               setIsModalChapterVipOpen={setIsModalChapterVipOpen}
               setShowMessage={setShowMessage}
+              setSearchParams={setSearchParams}
             />
           </Modal>
           <Alert

@@ -16,6 +16,7 @@ const ModalChapterVip = ({
   story,
   setIsModalChapterVipOpen,
   setShowMessage,
+  setSearchParams,
 }: any) => {
   const { user }: any = useContext(AuthContext);
   const [remainingCoin, setRemainingCoin] = useState<number>();
@@ -74,10 +75,11 @@ const ModalChapterVip = ({
 
   const handleCancel = () => {
     setIsModalChapterVipOpen(false);
-    form.resetFields();
+    user && form.resetFields();
     setErrorText("");
     setDataRes(undefined);
     setTestPass(false);
+    setSearchParams("");
   };
 
   return (
