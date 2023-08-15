@@ -76,7 +76,7 @@ const ViewContact: React.FC = () => {
           setDataContact(res.data.contact);
         });
       })
-      .catch((err) => console.log(err.response.data.errors));
+      .catch((err) => console.log(err));
   };
 
   const saveContact = (values: any) => {

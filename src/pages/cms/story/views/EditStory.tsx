@@ -79,7 +79,8 @@ const EditStory: React.FC = () => {
         navigate("/dashboard/story/view");
       })
       .catch((err) => {
-        setErrorStory(err.response.data.errors);
+        err.response.status === 422 && setErrorStory(err.response.data.errors);
+        console.log(err);
       });
   };
 

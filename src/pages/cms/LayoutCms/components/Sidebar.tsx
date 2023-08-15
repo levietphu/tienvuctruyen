@@ -32,8 +32,6 @@ function getItem(
 }
 
 const SideBar: React.FC = () => {
-  const [checkPermission, setCheckPermission] = useState<any[]>();
-
   const { dataLayout }: any = React.useContext(LayoutContext);
   const { user }: any = React.useContext(AuthContext);
   const navigate = useNavigate();
@@ -91,6 +89,13 @@ const SideBar: React.FC = () => {
         checkPer(user.role, "contact-view") &&
         getItem("Contact", "/dashboard/contact/view"),
     ]),
+    user &&
+      checkPer(user.role, "bankinfo-view") &&
+      getItem(
+        "BankInfo",
+        "/dashboard/bankinfo/view",
+        <ContainerOutlined rev={undefined} />
+      ),
     user &&
       checkPer(user.role, "user-view") &&
       getItem(

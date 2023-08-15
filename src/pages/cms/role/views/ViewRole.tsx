@@ -174,7 +174,10 @@ const ViewRole: React.FC = () => {
           setDataRole(res.data.role);
         });
       })
-      .catch((err) => setErrorRole(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorRole(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật Vai trò
@@ -188,7 +191,10 @@ const ViewRole: React.FC = () => {
           setDataRole(res.data.role);
         });
       })
-      .catch((err) => setErrorRole(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorRole(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa Vai trò

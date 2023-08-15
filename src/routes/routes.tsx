@@ -35,6 +35,7 @@ import HomeContextProvider from "../context/HomeContextProvider";
 import { checkPer } from "../ultis/checkPer";
 import NotFound from "../pages/web/NotFound/view/NotFound";
 import ViewDiscount from "../pages/cms/discount/views/ViewDiscount";
+import ViewBankInfo from "../pages/cms/bankinfo/views/ViewBankInfo";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -137,6 +138,16 @@ const routes = ({ user, loaderUser }: any) => {
             element={
               user && checkPer(user.role, "banner-view") ? (
                 <ViewBanner />
+              ) : (
+                <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
+              )
+            }
+          />
+          <Route
+            path="bankinfo/view"
+            element={
+              user && checkPer(user.role, "bankinfo-view") ? (
+                <ViewBankInfo />
               ) : (
                 <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
               )

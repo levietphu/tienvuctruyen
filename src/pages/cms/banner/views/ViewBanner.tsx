@@ -187,7 +187,10 @@ const ViewBanner: React.FC = () => {
           setDataBanner(res.data.banner);
         });
       })
-      .catch((err) => setErrorBanner(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorBanner(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật Banner
@@ -202,7 +205,10 @@ const ViewBanner: React.FC = () => {
           setDataBanner(res.data.banner);
         });
       })
-      .catch((err) => setErrorBanner(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorBanner(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa Banner

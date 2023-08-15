@@ -29,7 +29,6 @@ const Chapterpage = () => {
   const { user, loaderUser }: any = useContext(AuthContext);
 
   const params = useParams();
-  const navigate = useNavigate();
 
   const callApi = async (id_user: string, page: number) => {
     await axios
@@ -56,6 +55,7 @@ const Chapterpage = () => {
         } else {
           setCheckSuccess(true);
         }
+        setBookMark(false);
       });
   };
 
@@ -118,8 +118,8 @@ const Chapterpage = () => {
           type="error"
           showIcon
           style={{
-            top: `${error ? "15%" : "-10000px"}`,
-            transition: `${error ? "0.3s" : "unset"}`,
+            top: `${error ? "15%" : "-100px"}`,
+            transition: `${error ? "0.8s" : "unset"}`,
           }}
         />
         <Alert
@@ -127,8 +127,8 @@ const Chapterpage = () => {
           message={alertBookMark}
           type={checkSuccess ? "success" : "error"}
           style={{
-            top: `${alertBookMark ? "15%" : "-10000px"}`,
-            transition: `${alertBookMark ? "0.3s" : "unset"}`,
+            top: `${alertBookMark ? "15%" : "-100px"}`,
+            transition: `${alertBookMark ? "0.8s" : "unset"}`,
           }}
         />
         {!loader ? (

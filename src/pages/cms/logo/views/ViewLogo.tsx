@@ -184,7 +184,10 @@ const ViewLogo: React.FC = () => {
           setDataLogo(res.data.logo);
         });
       })
-      .catch((err) => setErrorLogo(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorLogo(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật logo
@@ -198,7 +201,10 @@ const ViewLogo: React.FC = () => {
           setDataLogo(res.data.logo);
         });
       })
-      .catch((err) => setErrorLogo(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorLogo(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa logo

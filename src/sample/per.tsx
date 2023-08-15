@@ -38,4 +38,5 @@ export const per = [
   "role delete",
   "per view",
   "per create",
+  "bankinfo view",
 ];

@@ -34,7 +34,7 @@ const PopupNext = ({
         <>
           <div
             className="popup__coppy"
-            style={{ top: `${showCoppy ? "50px" : "-150px"}` }}
+            style={{ top: `${showCoppy ? "150px" : "-100px"}` }}
           >
             <span>Đã sao chép !</span>
           </div>

@@ -3,14 +3,21 @@ import "./user.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 const Register = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
   const [checkInputEmail, setCheckInputEmail] = useState(false);
   const [checkRules, setCheckRules] = useState(false);
+  const [loaderRegister, setLoaderRegister] = useState(false);
 
   const navigate = useNavigate();
+
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
+  );
 
   const {
     errorServer,
@@ -57,13 +64,16 @@ const Register = () => {
   }, [errorServer]);
 
   const registerTienVuc = () => {
+    setLoaderRegister(true);
     register()
       .then((res: any) => {
         navigate("/login");
         setCheckLogin(true);
+        setLoaderRegister(false);
       })
       .catch((err: any) => {
-        setErrorServer(err.response.data.errors);
+        err.response.status === 422 && setErrorServer(err.response.data.errors);
+        setLoaderRegister(false);
       });
   };
   return (
@@ -172,7 +182,7 @@ const Register = () => {
               className={`${checkRules ? "" : "forbiden"}`}
               onClick={() => checkRules && registerTienVuc()}
             >
-              Đăng ký
+              {!loaderRegister ? "Đăng ký" : <Spin indicator={antIcon} />}
             </button>
           </div>
           <div className="change__register">

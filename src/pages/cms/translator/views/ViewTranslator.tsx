@@ -168,7 +168,11 @@ const ViewTranslator: React.FC = () => {
           setDataTranslator(res.data.trans);
         });
       })
-      .catch((err) => setErrorTranslator(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 &&
+          setErrorTranslator(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật Dịch giả
@@ -182,7 +186,11 @@ const ViewTranslator: React.FC = () => {
           setDataTranslator(res.data.trans);
         });
       })
-      .catch((err) => setErrorTranslator(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 &&
+          setErrorTranslator(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa Dịch giả

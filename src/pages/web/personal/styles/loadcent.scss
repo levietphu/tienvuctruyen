@@ -66,13 +66,10 @@
       position: relative;
       width: 100%;
       .popup__coppy {
-        position: absolute;
-        top: -150px;
+        position: fixed;
         transition: 0.8s;
-        left: 43%;
-        @media screen and (max-width: 1023px) {
-          left: 30%;
-        }
+        left: 50%;
+        transform: translate(-50%, -50%);
         span {
           border-radius: 50px;
           background: #38b553;

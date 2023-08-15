@@ -152,7 +152,10 @@ const ViewCate: React.FC = () => {
           setDataCate(res.data.cate);
         });
       })
-      .catch((err) => setErrorCate(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorCate(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật thể loại
@@ -166,7 +169,10 @@ const ViewCate: React.FC = () => {
           setDataCate(res.data.cate);
         });
       })
-      .catch((err) => setErrorCate(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorCate(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa thể loại

@@ -157,7 +157,10 @@ const ViewAds: React.FC = () => {
           setDataAds(res.data.ads);
         });
       })
-      .catch((err) => setErrorAds(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorAds(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật ads
@@ -171,7 +174,10 @@ const ViewAds: React.FC = () => {
           setDataAds(res.data.ads);
         });
       })
-      .catch((err) => setErrorAds(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorAds(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa ads

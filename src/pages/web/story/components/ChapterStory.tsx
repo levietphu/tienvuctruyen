@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import chicken from "../../../../assets/chicken.png";
-import Moment from "react-moment";
 import "moment/locale/vi";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import coin from "../../../../assets/coin.svg";
 import Pagination from "../../pagination/Pagination";
+import ChapterItem from "./ChapterItem";
+import DonateItem from "./DonateItem";
 
 const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [chapterStory, setChapterStory] = useState<any>();
@@ -18,6 +19,7 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [checkDonateOrChapter, setCheckDonateOrChapter] =
     useState<string>("chapter");
 
+  useCallback(() => {}, []);
   const params = useParams();
 
   const callApiChapter = async (id_user: string, page: number) => {
@@ -137,45 +139,12 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
             {chapterStory &&
               chapterStory.data.map((value: any, index: number) => {
                 return (
-                  <Link
-                    to={`/${params.slug}/${value.slug}`}
-                    className="center__chapter--item"
+                  <ChapterItem
                     key={index}
-                  >
-                    <div className="center__chapter--left">
-                      <p>
-                        <span className="number__chapter">
-                          {value.chapter_number}.
-                        </span>
-                        <span className="name__chapter">
-                          {" "}
-                          {value.name_chapter}
-                        </span>
-                      </p>
-                      <i>
-                        <span>Cập nhật: </span>
-                        <span>
-                          <Moment fromNow locale="vi">
-                            {value.created_at}
-                          </Moment>
-                        </span>
-                      </i>
-                    </div>
-
-                    {value.bought && (
-                      <>
-                        <span className="bought">
-                          <i className="fa-solid fa-lock-open"></i>
-                          <div className="hover__bought">
-                            {value.coin} xu - đã mua
-                          </div>
-                        </span>
-                      </>
-                    )}
-                    {!value.bought && value.coin > 0 && (
-                      <span className="coin">{value.coin} xu </span>
-                    )}
-                  </Link>
+                    value={value}
+                    index={index}
+                    params={params}
+                  />
                 );
               })}
           </div>
@@ -199,39 +168,12 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
               <div className="center__chapter--list">
                 {donates.data.map((value: any, index: number) => {
                   return (
-                    <div
-                      className="center__chapter--item"
+                    <DonateItem
+                      value={value}
+                      index={index}
                       key={index}
-                      style={{ cursor: "default" }}
-                    >
-                      <div className="center__chapter--left">
-                        <p>
-                          <span
-                            className="number__chapter"
-                            style={{ textTransform: "unset" }}
-                          >
-                            {value.name_user_donate}
-                          </span>
-                        </p>
-                        <p className="name__chapter"> {value.message}</p>
-                        <i>
-                          <span style={{ fontSize: "14px" }}>
-                            <Moment fromNow locale="vi">
-                              {value.created_at}
-                            </Moment>
-                          </span>
-                        </i>
-                      </div>
-
-                      <span className="coin_donate center">
-                        <strong
-                          style={{ marginRight: "5px", fontSize: "24px" }}
-                        >
-                          {value.coin_donate}
-                        </strong>
-                        <img width={20} src={coin} alt="webtruyen" />
-                      </span>
-                    </div>
+                      coin={coin}
+                    />
                   );
                 })}
               </div>

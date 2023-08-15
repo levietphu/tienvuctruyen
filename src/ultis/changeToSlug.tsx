@@ -30,8 +30,6 @@ export const changeToSlug = (name: string) => {
     slug = "@" + slug + "@";
     slug = slug.replace(/\@\-|\-\@|\@/gi, "");
     //In slug ra textbox có id “slug”
-    //   setFormCate({ ...formCate, name: name });
-    // handler(name, slug);
     return slug;
   }
 };

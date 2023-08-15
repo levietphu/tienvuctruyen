@@ -151,7 +151,10 @@ const ViewAuthor: React.FC = () => {
           setDataAuthor(res.data.author);
         });
       })
-      .catch((err) => setErrorAuthor(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorAuthor(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   // Cập nhật tác giả
@@ -165,7 +168,10 @@ const ViewAuthor: React.FC = () => {
           setDataAuthor(res.data.author);
         });
       })
-      .catch((err) => setErrorAuthor(err.response.data.errors));
+      .catch((err) => {
+        err.response.status === 422 && setErrorAuthor(err.response.data.errors);
+        console.log(err);
+      });
   };
 
   //Xóa tác giả

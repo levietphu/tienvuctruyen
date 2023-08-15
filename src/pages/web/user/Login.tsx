@@ -59,6 +59,7 @@ const Login = () => {
         //lưu đăng nhập
         document.cookie = `token=${res.data.data.token};max-age=604800;path=/;`;
         !checkLogin ? navigate(-1) : navigate("/");
+        setLoaderLogin(false);
       })
       .catch((err: any) => {
         setErrorServer(
@@ -67,6 +68,7 @@ const Login = () => {
             : err.response.data.errors
         );
         err.response.status === 500 && setError("Lỗi hệ thống");
+        setLoaderLogin(false);
       });
   };
 
@@ -165,8 +167,8 @@ const Login = () => {
         type="error"
         showIcon
         style={{
-          top: `${error ? "50%" : "-10000px"}`,
-          transition: `${error ? "0.3s" : "unset"}`,
+          top: `${error ? "50%" : "-1000px"}`,
+          transition: `${error ? "0.8s" : "unset"}`,
         }}
       />
     </div>
