@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import Moment from "react-moment";
@@ -245,4 +245,4 @@ const CommentStory = ({ story, slug }: any) => {
   );
 };
 
-export default CommentStory;
+export default memo(CommentStory);

@@ -1,5 +1,6 @@
 import coin from "../../../../../assets/coin.svg";
 import qrcode from "../../../../../assets/qrcode.jpg";
+import { Image } from "antd";
 
 const PopupBank = ({ changeMoney, numberCoin, handleCoppy }: any) => {
   return (
@@ -44,12 +45,7 @@ const PopupBank = ({ changeMoney, numberCoin, handleCoppy }: any) => {
           <div>
             <i>Hoặc sử dụng app ngân hàng của bạn để quét mã QR thanh toán</i>
             <div className="center" style={{ marginBottom: "20px" }}>
-              <img
-                src={qrcode}
-                alt="webtruyen"
-                width={"200px"}
-                height={"200px"}
-              />
+              <Image width={200} src={qrcode} height={200} />
             </div>
           </div>
         </div>

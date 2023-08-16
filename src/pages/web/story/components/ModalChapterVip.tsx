@@ -2,7 +2,7 @@ import "../styles/modal-story.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Button, Input, Form } from "antd";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -17,6 +17,7 @@ const ModalChapterVip = ({
   setIsModalChapterVipOpen,
   setShowMessage,
   setSearchParams,
+  searchParams,
 }: any) => {
   const { user }: any = useContext(AuthContext);
   const [remainingCoin, setRemainingCoin] = useState<number>();
@@ -79,7 +80,9 @@ const ModalChapterVip = ({
     setErrorText("");
     setDataRes(undefined);
     setTestPass(false);
-    setSearchParams("");
+    if (searchParams.get("buy")) {
+      setSearchParams("");
+    }
   };
 
   return (
@@ -227,4 +230,4 @@ const ModalChapterVip = ({
   );
 };
 
-export default ModalChapterVip;
+export default memo(ModalChapterVip);

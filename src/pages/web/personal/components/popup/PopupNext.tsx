@@ -67,7 +67,9 @@ const PopupNext = ({
                 className="coin__button--continous"
                 onClick={() => setGiveMoney(true)}
               >
-                Tôi đã chuyển khoản
+                {popupPayment === "wallet"
+                  ? "Hoàn thành"
+                  : "Tôi đã chuyển khoản"}
               </div>
             </div>
           </div>

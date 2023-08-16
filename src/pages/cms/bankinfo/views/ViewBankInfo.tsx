@@ -67,7 +67,7 @@ const ViewBankInfo: React.FC = () => {
       key: "owner",
     },
     {
-      title: "Số tài khoản?sdt",
+      title: "Số tài khoản/sdt",
       dataIndex: "stk",
       key: "stk",
     },
@@ -106,7 +106,11 @@ const ViewBankInfo: React.FC = () => {
       render: (_, record) => {
         return (
           <Button size="small" type="primary">
-            {record.type === 1 ? "Ví" : "Ngân hàng"}
+            {record.type === 1
+              ? "Ví"
+              : record.type === 0
+              ? "Ngân hàng"
+              : "Thẻ cào"}
           </Button>
         );
       },
@@ -386,34 +390,14 @@ const ViewBankInfo: React.FC = () => {
                   })}
               </Col>
             </Row>
-            <Form.Item
-              label="Số tài khoản"
-              name="stk"
-              rules={[
-                {
-                  required: true,
-                  message: "Số tài khoản không được bỏ trống",
-                },
-              ]}
-            >
+            <Form.Item label="Email" name="email">
+              <Input type="text" name="email" />
+            </Form.Item>
+
+            <Form.Item label="Số tài khoản" name="stk">
               <Input type="number" name="stk" />
             </Form.Item>
-            <Row className="error">
-              <Col md={6}>
-                <div></div>
-              </Col>
-              <Col md={18}>
-                {errorBankInfo &&
-                  errorBankInfo.stk &&
-                  errorBankInfo.stk.map((item: any, index: number) => {
-                    return (
-                      <p key={index} style={{ color: "red" }}>
-                        {item}
-                      </p>
-                    );
-                  })}
-              </Col>
-            </Row>
+
             <Form.Item
               label="Tên tài khoản"
               name="owner"

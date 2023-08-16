@@ -2,7 +2,7 @@ import "../styles/modal-story.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Button, Input } from "antd";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -126,4 +126,4 @@ const ModalDonate = ({
   );
 };
 
-export default ModalDonate;
+export default memo(ModalDonate);

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, memo } from "react";
 import chicken from "../../../../assets/chicken.png";
 import "moment/locale/vi";
 import { useParams } from "react-router-dom";
@@ -19,7 +19,6 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   const [checkDonateOrChapter, setCheckDonateOrChapter] =
     useState<string>("chapter");
 
-  useCallback(() => {}, []);
   const params = useParams();
 
   const callApiChapter = async (id_user: string, page: number) => {
@@ -201,4 +200,4 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   );
 };
 
-export default ChapterStory;
+export default memo(ChapterStory);

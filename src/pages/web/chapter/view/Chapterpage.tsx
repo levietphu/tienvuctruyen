@@ -3,7 +3,7 @@ import MainLayout from "../../layout/view/MainLayout";
 import "../styles/chapter.scss";
 import { SettingContext } from "../../../../context/SettingContextProvider";
 import axios from "axios";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import ChapterVip from "../components/ChapterVip";
 import Loader from "../components/Loader";
 import { AuthContext } from "../../../../context/AuthContextProvider";
@@ -17,10 +17,7 @@ const Chapterpage = () => {
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  const [keyword, setKeyword] = useState<string>("");
-  const [orderby, setOrderby] = useState<string>("asc");
-  const [checkKeywordOrderby, setCheckKeywordOrderby] =
-    useState<boolean>(false);
+
   const [alertBookMark, setAlertBookMark] = useState<string>("");
   const [checkSuccess, setCheckSuccess] = useState<boolean>(true);
 
@@ -30,10 +27,10 @@ const Chapterpage = () => {
 
   const params = useParams();
 
-  const callApi = async (id_user: string, page: number) => {
+  const callApi = async (id_user: string) => {
     await axios
       .get(
-        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
+        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}`
       )
       .then((res) => {
         setDataChapter(res.data.data.items);
@@ -55,20 +52,18 @@ const Chapterpage = () => {
         } else {
           setCheckSuccess(true);
         }
-        setBookMark(false);
       });
   };
 
   useEffect(() => {
     if (user) {
-      callApi(user.user.id, 1);
+      callApi(user.user.id);
     } else {
       if (loaderUser !== "loader") {
-        callApi("", 1);
+        callApi("");
       }
     }
     setLoader(true);
-    setTogglePopup(false);
     window.scrollTo(0, 0);
     return () => setBookMark(false);
   }, [params.slugchapter, params.slugstory, loaderUser]);
@@ -358,17 +353,7 @@ const Chapterpage = () => {
           <Loader />
         )}
       </MainLayout>
-      <ListChapter
-        dataChapter={dataChapter}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        orderby={orderby}
-        setOrderby={setOrderby}
-        callApi={callApi}
-        loader={loader}
-        setCheckKeywordOrderby={setCheckKeywordOrderby}
-        checkKeywordOrderby={checkKeywordOrderby}
-      />
+      <ListChapter />
 
       {togglePopup && <Popup />}
     </>

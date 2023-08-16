@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import "../styles/story.scss";
 import MainLayout from "../../layout/view/MainLayout";
 import {
@@ -51,7 +51,7 @@ const Story = () => {
       });
   };
 
-  const callApiDonate = async (pageDonate = 1) => {
+  const callApiDonate = useCallback(async (pageDonate = 1) => {
     await axios
       .get(
         `${process.env.REACT_APP_API}donate?page=${pageDonate}&slug=${params.slug}`
@@ -60,7 +60,7 @@ const Story = () => {
         setDonates(res.data.donates);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
   const addViewStory = async () => {
     await axios.get(`${process.env.REACT_APP_API}addview?slug=${params.slug}`);
@@ -317,6 +317,7 @@ const Story = () => {
               setIsModalChapterVipOpen={setIsModalChapterVipOpen}
               setShowMessage={setShowMessage}
               setSearchParams={setSearchParams}
+              searchParams={searchParams}
             />
           </Modal>
           <Alert

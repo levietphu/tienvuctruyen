@@ -1,26 +1,48 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, memo } from "react";
 import { SettingContext } from "../../../../context/SettingContextProvider";
 import { useParams, Link } from "react-router-dom";
 import Moment from "react-moment";
 import { AuthContext } from "../../../../context/AuthContextProvider";
+import axios from "axios";
 
-const ListChapter = ({
-  callApi,
-  dataChapter,
-  keyword,
-  setKeyword,
-  orderby,
-  setOrderby,
-  loader,
-  setCheckKeywordOrderby,
-  checkKeywordOrderby,
-}: any) => {
+const ListChapter = () => {
   const { togglePopup }: any = useContext(SettingContext);
   const { user, loaderUser }: any = useContext(AuthContext);
 
+  const [dataChapter, setDataChapter] = useState<any>();
+  const [loader, setLoader] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>("");
+  const [orderby, setOrderby] = useState<string>("asc");
+  const [checkKeywordOrderby, setCheckKeywordOrderby] =
+    useState<boolean>(false);
   const [checkSearchChapter, setCheckSearchChapter] = useState(false);
 
   const params = useParams();
+
+  const callApi = async (id_user: string, page: number) => {
+    await axios
+      .get(
+        `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slugstory}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
+      )
+      .then((res) => {
+        setDataChapter(res.data.chapter);
+        setLoader(false);
+      });
+  };
+
+  useEffect(() => {
+    if (user) {
+      callApi(
+        user.user.id,
+        Math.ceil(Number(params.slugchapter?.split("-")[1]) / 20)
+      );
+    } else {
+      if (loaderUser !== "loader") {
+        callApi("", Math.ceil(Number(params.slugchapter?.split("-")[1])) / 20);
+      }
+    }
+    setLoader(true);
+  }, [params.slugstory, params.slugchapter, loaderUser]);
 
   useEffect(() => {
     if (togglePopup && checkKeywordOrderby) {
@@ -49,18 +71,18 @@ const ListChapter = ({
   const changePageChapter = (word: string) => {
     if (word === "next") {
       if (user) {
-        callApi(user.user.id, dataChapter.allChapter.current_page + 1);
+        callApi(user.user.id, dataChapter.current_page + 1);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", dataChapter.allChapter.current_page + 1);
+          callApi("", dataChapter.current_page + 1);
         }
       }
     } else {
       if (user) {
-        callApi(user.user.id, dataChapter.allChapter.current_page - 1);
+        callApi(user.user.id, dataChapter.current_page - 1);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", dataChapter.allChapter.current_page - 1);
+          callApi("", dataChapter.current_page - 1);
         }
       }
     }
@@ -126,7 +148,7 @@ const ListChapter = ({
               </div>
             </div>
             <div className="main__list">
-              {dataChapter.allChapter.data.map((item: any) => {
+              {dataChapter.data.map((item: any) => {
                 return (
                   <Link
                     to={`/${params.slugstory}/${item.slug}`}
@@ -168,25 +190,22 @@ const ListChapter = ({
               <div className="next__prev">
                 <button
                   className={`footer__list--prev ${
-                    dataChapter.allChapter.current_page === 1 ? "forbidden" : ""
+                    dataChapter.current_page === 1 ? "forbidden" : ""
                   }`}
                   onClick={() =>
-                    dataChapter.allChapter.current_page > 1 &&
-                    changePageChapter("prev")
+                    dataChapter.current_page > 1 && changePageChapter("prev")
                   }
                 >
                   Trang trước
                 </button>
                 <button
                   className={`footer__list--next ${
-                    dataChapter.allChapter.current_page ===
-                    dataChapter.allChapter.last_page
+                    dataChapter.current_page === dataChapter.last_page
                       ? "forbidden"
                       : ""
                   }`}
                   onClick={() =>
-                    dataChapter.allChapter.current_page !==
-                      dataChapter.allChapter.last_page &&
+                    dataChapter.current_page !== dataChapter.last_page &&
                     changePageChapter("next")
                   }
                 >
@@ -201,4 +220,4 @@ const ListChapter = ({
   );
 };
 
-export default ListChapter;
+export default memo(ListChapter);

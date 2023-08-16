@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
@@ -62,4 +62,4 @@ const ChapterVip = ({ coin, setError, callApi }: any) => {
   );
 };
 
-export default ChapterVip;
+export default memo(ChapterVip);

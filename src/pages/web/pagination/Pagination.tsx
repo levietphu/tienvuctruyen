@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 
 const Pagination = ({ data, callApiPagination, check }: any) => {
@@ -150,4 +149,4 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);
