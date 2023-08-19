@@ -41,8 +41,8 @@ const CatePage = () => {
 
   useEffect(() => {
     if (params.slugcate || params.sluglist) {
-      // callApi(1);
-      // setLoader(true);
+      callApi(1);
+      setLoader(true);
       window.scrollTo({
         top: 0,
       });
