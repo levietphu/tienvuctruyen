@@ -20,11 +20,13 @@ import {
   getBankInfo,
   updateBankInfo,
 } from "../api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditOutlined } from "@ant-design/icons";
-import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPlus, faEye } from "@fortawesome/free-solid-svg-icons";
 import { changeToSlug } from "../../../../ultis/changeToSlug";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthContextProvider";
 
 interface DataType {
   id: number;
@@ -46,6 +48,8 @@ const ViewBankInfo: React.FC = () => {
   const [qrCode, setQrCode] = useState<any>();
 
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const { user }: any = useContext(AuthContext);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -93,7 +97,9 @@ const ViewBankInfo: React.FC = () => {
         return (
           <Image
             width={50}
-            src={`${process.env.REACT_APP_UPLOADS}BankInfo/${value}`}
+            src={
+              value ? process.env.REACT_APP_UPLOADS + "BankInfo/" + value : ""
+            }
             preview={false}
           />
         );
@@ -120,35 +126,53 @@ const ViewBankInfo: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Tooltip title="Sửa BankInfo" color={"blue"}>
-            <Button
-              size="middle"
-              type="primary"
-              onClick={() => showModal(value)}
-            >
-              <EditOutlined rev={undefined} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Xóa BankInfo" color={"red"}>
-            <Button
-              size="middle"
-              danger
-              type="primary"
-              style={{ marginLeft: "5px" }}
-              onClick={() => {
-                if (
-                  // eslint-disable-next-line no-restricted-globals
-                  confirm(
-                    `Bạn có muốn xóa BankInfo ${value.name_bank} này không`
-                  ) === true
-                ) {
-                  destroyBankInfo(value.id);
-                }
-              }}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-          </Tooltip>
+          {user.user.id === value.id_user ? (
+            <>
+              <Tooltip title="View nạp xu" color={"blue"}>
+                <Button
+                  style={{ marginRight: "5px" }}
+                  size="middle"
+                  type="primary"
+                  onClick={() =>
+                    navigate(`/dashboard/loadcent/${value.id}/view`)
+                  }
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Sửa BankInfo" color={"blue"}>
+                <Button
+                  size="middle"
+                  type="primary"
+                  onClick={() => showModal(value)}
+                >
+                  <EditOutlined rev={undefined} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Xóa BankInfo" color={"red"}>
+                <Button
+                  size="middle"
+                  danger
+                  type="primary"
+                  style={{ marginLeft: "5px" }}
+                  onClick={() => {
+                    if (
+                      // eslint-disable-next-line no-restricted-globals
+                      confirm(
+                        `Bạn có muốn xóa BankInfo ${value.name_bank} này không`
+                      ) === true
+                    ) {
+                      destroyBankInfo(value.id);
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </Tooltip>
+            </>
+          ) : (
+            <div>Không có quyền</div>
+          )}
         </>
       ),
     },
@@ -179,6 +203,8 @@ const ViewBankInfo: React.FC = () => {
         slug: values.slug,
         stk: values.stk,
         owner: values.owner,
+        email: values.email,
+        note: values.note ? values.note : "",
         type: values.type,
       });
       setImage(values.image);
@@ -251,12 +277,15 @@ const ViewBankInfo: React.FC = () => {
   const saveBankInfo = (values: any) => {
     const data = new FormData();
     data.append("image", image);
-    data.append("qr_code", qrCode);
+    data.append("qr_code", qrCode ? qrCode : "");
     data.append("name_bank", values.name_bank);
     data.append("slug", values.slug);
     data.append("type", values.type);
     data.append("stk", values.stk);
     data.append("owner", values.owner);
+    data.append("email", values.email ? values.email : "");
+    data.append("note", values.note);
+    data.append("id_user", user.user.id);
     if (!idBankInfo) {
       postBankInfo(data);
     } else {
@@ -332,7 +361,7 @@ const ViewBankInfo: React.FC = () => {
             form={form}
             onFinish={saveBankInfo}
             onValuesChange={handleChange}
-            initialValues={{ type: 0 }}
+            initialValues={{ type: 0, note: "" }}
           >
             <Form.Item
               label="Tên bank"
@@ -508,12 +537,19 @@ const ViewBankInfo: React.FC = () => {
                   })}
               </Col>
             </Row>
-
+            <Form.Item label="Chú ý" name="note">
+              <textarea
+                name="note"
+                rows={4}
+                style={{ width: "100%" }}
+              ></textarea>
+            </Form.Item>
             <Form.Item label="Dạng tài khoản" name="type">
               <Select
                 options={[
                   { value: 1, label: "Ví" },
                   { value: 0, label: "Ngân hàng" },
+                  { value: 2, label: "Thẻ cào" },
                 ]}
               />
             </Form.Item>

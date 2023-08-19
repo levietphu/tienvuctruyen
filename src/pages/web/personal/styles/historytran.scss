@@ -2,7 +2,9 @@ h1 {
   margin-bottom: 20px;
 }
 .table {
+  margin-bottom: 20px;
   table {
+    width: 100%;
     border-collapse: collapse;
     overflow-x: scroll;
     @media screen and (max-width: 768px) {
@@ -43,28 +45,16 @@ h1 {
       }
     }
   }
-  .pagination__coin {
-    text-align: end;
-    margin: 20px 0 0 0;
-    button {
-      border: none;
-      outline: none;
-      padding: 10px 15px;
-      margin-right: 5px;
-      cursor: pointer;
-      border-radius: 3px;
+}
+.skeleton-his {
+  .ant-skeleton-paragraph {
+    li {
+      height: 80px !important;
+      margin: 0 !important;
+      border-bottom: 1px solid #eeeded;
     }
-    button:nth-child(1) {
-      color: white;
-    }
-    .ban__coin {
-      cursor: not-allowed;
-      background: #cfcece;
-      opacity: 0.4;
-    }
-    .not-active__coin {
-      cursor: default;
-      background: #357376;
+    li:nth-child(n) {
+      width: 100% !important;
     }
   }
 }

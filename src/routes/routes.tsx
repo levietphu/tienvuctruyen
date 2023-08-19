@@ -36,6 +36,7 @@ import { checkPer } from "../ultis/checkPer";
 import NotFound from "../pages/web/NotFound/view/NotFound";
 import ViewDiscount from "../pages/cms/discount/views/ViewDiscount";
 import ViewBankInfo from "../pages/cms/bankinfo/views/ViewBankInfo";
+import ViewLoadCent from "../pages/cms/loadcents/views/ViewLoadCent";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -215,6 +216,7 @@ const routes = ({ user, loaderUser }: any) => {
           />
           <Route path="discount/:id_story/view" element={<ViewDiscount />} />
           <Route path="chapter/:id_story/view" element={<ViewChapter />} />
+          <Route path="loadcent/:id_bankinfo/view" element={<ViewLoadCent />} />
           <Route path="*" element={<a>Not Found</a>} />
         </Route>
 

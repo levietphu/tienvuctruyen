@@ -41,8 +41,8 @@ const CatePage = () => {
 
   useEffect(() => {
     if (params.slugcate || params.sluglist) {
-      callApi(1);
-      setLoader(true);
+      // callApi(1);
+      // setLoader(true);
       window.scrollTo({
         top: 0,
       });
@@ -79,35 +79,37 @@ const CatePage = () => {
           {checkName()}
         </h1>
         <div className="cate-content">
-          {!loader && dataCate.data.length !== 0 ? (
-            <>
-              <div className="list__story--newupdate">
-                {dataCate.data.map((item: any, index: any) => {
-                  return <CateItem key={index} item={item} index={index} />;
-                })}
+          {!loader ? (
+            dataCate.data.length !== 0 ? (
+              <>
+                <div className="list__story--newupdate">
+                  {dataCate.data.map((item: any, index: any) => {
+                    return <CateItem key={index} item={item} index={index} />;
+                  })}
+                </div>
+                {(params.slugcate || params.sluglist) &&
+                  params.sluglist !== "truyen-vip" && (
+                    <Pagination
+                      data={dataCate}
+                      check="cate"
+                      callApiPagination={callApi}
+                    />
+                  )}
+              </>
+            ) : (
+              <div className="no-view">
+                <div>
+                  <img src={image} alt="webtruyen" />
+                  <h4 className="center">Hiện chưa có truyện nào</h4>
+                  <p className="center">Bạn hãy quay lại sau nhé!</p>
+                  <span className="center">
+                    <Link to="/">Về trang chủ</Link>
+                  </span>
+                </div>
               </div>
-              {(params.slugcate || params.sluglist) &&
-                params.sluglist !== "truyen-vip" && (
-                  <Pagination
-                    data={dataCate}
-                    check="cate"
-                    callApiPagination={callApi}
-                  />
-                )}
-            </>
-          ) : !loader && dataCate.data.length === 0 ? (
-            <div className="no-view">
-              <div>
-                <img src={image} alt="webtruyen" />
-                <h4 className="center">Hiện chưa có truyện nào</h4>
-                <p className="center">Bạn hãy quay lại sau nhé!</p>
-                <span className="center">
-                  <Link to="/">Về trang chủ</Link>
-                </span>
-              </div>
-            </div>
+            )
           ) : (
-            loader && <LoaderCate />
+            <LoaderCate />
           )}
         </div>
       </div>

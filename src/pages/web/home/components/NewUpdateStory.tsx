@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import "moment/locale/vi";
+import LoaderCate from "../../cate/components/LoaderCate";
 
 const NewUpdateStory = ({ data }: any) => {
   return (
     <div className="list__story--newupdate">
-      {data &&
+      {data ? (
         data.map((item: any, index: any) => {
           return (
             <div className="item__story--newupdate" key={item.id}>
@@ -51,7 +52,10 @@ const NewUpdateStory = ({ data }: any) => {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <LoaderCate />
+      )}
     </div>
   );
 };

@@ -57,7 +57,7 @@ const BookCase = () => {
       ) : (
         <div className="no-view">
           <div>
-            <img src={image} alt="" />
+            <img src={image} alt="webtruyen" />
             <h4 className="center">Hiện chưa có truyện nào</h4>
             <p className="center">Bạn hãy quay lại sau nhé!</p>
             <span className="center">

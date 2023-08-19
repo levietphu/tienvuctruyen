@@ -4,11 +4,10 @@ import MainLayout from "../../layout/view/MainLayout";
 import "../styles/personal.scss";
 import { useContext, useEffect } from "react";
 import coinImage from "../../../../assets/coin.svg";
-import PopupPayment from "../components/popup/PopupPayment";
 
 const PersonalPage = () => {
   const { pathname } = useLocation();
-  const { user, getUser, loaderUser, setCheckLogin, popupPayment }: any =
+  const { user, getUser, loaderUser, setCheckLogin }: any =
     useContext(AuthContext);
 
   useEffect(() => {
@@ -87,7 +86,6 @@ const PersonalPage = () => {
           </div>
         )}
       </MainLayout>
-      {popupPayment && <PopupPayment />}
     </>
   );
 };

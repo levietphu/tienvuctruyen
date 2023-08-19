@@ -294,74 +294,41 @@ h1 {
   overflow: hidden;
 }
 
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  .pagination__left {
-    .pagination__left--list {
-      display: flex;
-      margin: 0;
-      padding: 0;
-      li {
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        border: 1px solid #bfbfbf;
-        cursor: pointer;
-        a {
-          color: black;
-        }
-      }
-      li:hover {
-        border: 1px solid #7c7c7c;
-      }
-      li.active {
-        background: #357376;
-        border: none;
-        a {
-          color: white;
-          cursor: auto;
-        }
-      }
-      li.active:hover {
-        cursor: auto;
-      }
-    }
-  }
-  .pagination__right {
-    display: flex;
-    .pagination__right--prev,
-    .pagination__right--next {
-      width: 50px;
-      height: 40px;
-      border: 1px solid #bfbfbf;
-      border-radius: 5px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .forbidden {
-      cursor: not-allowed;
-      opacity: 0.4;
-      border: none;
-      background-color: #bfbfbf;
-    }
-    .pagination__right--next:hover,
-    .pagination__right--prev:hover {
-      border: 1px solid #7c7c7c;
-    }
-    .forbidden:hover {
-      border: none;
-    }
-  }
-}
 .flex-between {
   display: flex;
   justify-content: space-between;
+}
+
+//fix tabs antd
+.ant-tabs-ink-bar {
+  display: none;
+}
+.ant-tabs-nav::before {
+  border-bottom: unset !important;
+}
+.ant-tabs-nav {
+  margin: 10px 0 16px 0 !important;
+}
+.ant-tabs-nav-list {
+  width: 100%;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ant-tabs-tab {
+  margin: 0 !important;
+  background: #e7e3e3 !important;
+  border-radius: 5px;
+  border: 2px solid #e7e3e3 !important;
+  width: calc((100% - 30px) / 4);
+  justify-content: center;
+  @media screen and (max-width: 768px) {
+    width: calc((100% - 10px) / 2);
+  }
+}
+.ant-tabs-tab-active {
+  border: 2px solid #ffb01e !important;
+}
+.ant-btn-default:disabled {
+  opacity: 0.5;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, memo } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
+import "./pagination.scss";
 
 const Pagination = ({ data, callApiPagination, check }: any) => {
   // pagination
@@ -24,7 +25,11 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
   }, [data]);
 
   const changePage = (e: any, word: string) => {
-    if (check === "donate" || check === "cate") {
+    if (
+      check === "donate" ||
+      check === "cate" ||
+      check === "transactionHistory"
+    ) {
       if (word === "next" && data.current_page < data.last_page) {
         callApiPagination(data.current_page + 1);
       } else if (word === "prev" && data.current_page - 1 > 0) {
@@ -38,6 +43,13 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
             top:
               Number(document.querySelector(".header__story")?.clientHeight) +
               80,
+            behavior: "smooth",
+          })
+        : check === "cate"
+        ? window.scrollTo({
+            top:
+              Number(document.querySelector(".bookcase")?.clientHeight) +
+              Number(document.querySelector(".load__cents")?.clientHeight),
             behavior: "smooth",
           })
         : window.scrollTo({
@@ -80,7 +92,13 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
         <div
           className={`pagination`}
           style={{
-            justifyContent: `${check === "donate" ? "space-between" : ""}`,
+            justifyContent: `${
+              check === "donate"
+                ? "space-between"
+                : check === "cate"
+                ? ""
+                : "end"
+            }`,
           }}
         >
           <div className="pagination__left">
