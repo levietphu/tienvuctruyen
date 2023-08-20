@@ -49,7 +49,8 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
         ? window.scrollTo({
             top:
               Number(document.querySelector(".bookcase")?.clientHeight) +
-              Number(document.querySelector(".load__cents")?.clientHeight),
+              Number(document.querySelector(".load__cents")?.clientHeight) +
+              40,
             behavior: "smooth",
           })
         : window.scrollTo({
@@ -93,9 +94,9 @@ const Pagination = ({ data, callApiPagination, check }: any) => {
           className={`pagination`}
           style={{
             justifyContent: `${
-              check === "donate"
+              check === "donate" || check === "cate"
                 ? "space-between"
-                : check === "cate"
+                : check === "chapter"
                 ? ""
                 : "end"
             }`,

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FullStoryLoader from "./FullStoryLoader";
 
 const FullStory = ({ data }: any) => {
   return (
     <div className="full-story">
       <div className="full__story--list">
-        {data &&
+        {data ? (
           data.map((item: any) => {
             return (
               <Link
@@ -27,7 +28,10 @@ const FullStory = ({ data }: any) => {
                 </div>
               </Link>
             );
-          })}
+          })
+        ) : (
+          <FullStoryLoader />
+        )}
       </div>
     </div>
   );

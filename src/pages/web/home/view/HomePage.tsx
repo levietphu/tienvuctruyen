@@ -12,7 +12,7 @@ import DragLoader from "../components/DragLoader";
 import { Modal } from "antd";
 
 const HomePage = () => {
-  const { dataHome, loaderHome, checkPopupHome }: any = useContext(HomeContext);
+  const { dataHome, loaderHome }: any = useContext(HomeContext);
   const [open, setOpen] = useState(false);
 
   // useEffect(() => {

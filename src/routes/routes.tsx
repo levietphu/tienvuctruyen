@@ -66,7 +66,7 @@ const routes = ({ user, loaderUser }: any) => {
           element={
             user && user.role.length <= 0 ? (
               <a>Bạn không có quyền vào trang này</a>
-            ) : user || loaderUser !== "login" ? (
+            ) : user ? (
               <Dashboard />
             ) : (
               !user && loaderUser === "login" && <Navigate to="/login" />

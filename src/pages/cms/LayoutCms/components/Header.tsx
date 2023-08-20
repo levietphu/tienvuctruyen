@@ -1,5 +1,5 @@
 import "../styles/header.scss";
-import { Input, Space, Popover, Button, Badge, Avatar } from "antd";
+import { Input, Space, Popover, Badge, Avatar } from "antd";
 import { useState, useContext } from "react";
 import { UserOutlined, BellFilled, MailFilled } from "@ant-design/icons";
 import PopoverNoti from "./PopoverNoti";
@@ -22,12 +22,14 @@ const Header = () => {
     setOpenNoti(false);
   };
 
-  const { user, loaderUser }: any = useContext(AuthContext);
+  const { user, loaderUser, setLoaderUser, setUser }: any =
+    useContext(AuthContext);
 
   const logout = () => {
     setToken("");
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    setLoaderUser("login");
+    setUser(undefined);
   };
 
   return (

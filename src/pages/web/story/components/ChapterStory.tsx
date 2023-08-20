@@ -40,9 +40,13 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
   useEffect(() => {
     if (checkKeywordOrderby) {
       if (user) {
-        callApiChapter(user.user.id, 1);
+        let id = setTimeout(() => callApiChapter(user.user.id, 1), 600);
+
+        return () => clearTimeout(id);
       } else {
-        callApiChapter("", 1);
+        let id = setTimeout(() => callApiChapter("", 1), 600);
+
+        return () => clearTimeout(id);
       }
     }
   }, [keyword]);

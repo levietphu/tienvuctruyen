@@ -12,18 +12,20 @@ const LayoutCms = ({ children }: Props) => {
   }, []);
 
   return (
-    <Row>
-      <Col xs={0} sm={0} md={4} lg={4}>
-        <Sidebar />
-      </Col>
-      <Col xs={24} sm={24} md={20} lg={20}>
-        <Header />
-        <div className="main-layout-cms">
-          <div className="screen-95">{children}</div>
-        </div>
-        <Footer />
-      </Col>
-    </Row>
+    <div className="container">
+      <Row>
+        <Col xs={0} sm={0} md={4} lg={4}>
+          <Sidebar />
+        </Col>
+        <Col xs={24} sm={24} md={20} lg={20}>
+          <Header />
+          <div className="main-layout-cms">
+            <div className="screen-95">{children}</div>
+          </div>
+          <Footer />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

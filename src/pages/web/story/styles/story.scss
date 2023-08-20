@@ -537,3 +537,34 @@
   font-size: 1.1rem;
   margin: 20px 0;
 }
+
+.loader-story {
+  .ant-skeleton-header {
+    @media screen and (max-width: 1023px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-inline-end: 0 !important;
+    }
+    .ant-skeleton-avatar {
+      @media screen and (max-width: 1023px) {
+        width: 200px !important;
+        height: 300px !important;
+      }
+    }
+  }
+  .ant-skeleton-content {
+    @media screen and (max-width: 1023px) {
+      display: block;
+    }
+  }
+  .ant-skeleton-paragraph {
+    li:last-child {
+      width: 100% !important;
+      height: 250px !important;
+      @media screen and (max-width: 1023px) {
+        height: 100px !important;
+      }
+    }
+  }
+}

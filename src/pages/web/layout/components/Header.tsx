@@ -23,12 +23,15 @@ const Header = ({ cates, logo }: any) => {
   const menuRefPerLog = useOutSide(() => setTooglePersonalLogout(false));
   const PersonRef = useOutSide(() => setTooglePersonalLogoutMolie(false));
 
-  const { user, loaderUser }: any = useContext(AuthContext);
+  const { user, loaderUser, setLoaderUser, setUser }: any =
+    useContext(AuthContext);
 
   const logout = () => {
     setToken("");
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
     setTooglePersonalLogoutMolie(false);
+    setLoaderUser("login");
+    setUser(undefined);
   };
 
   return (
@@ -133,10 +136,10 @@ const Header = ({ cates, logo }: any) => {
                       <i className="fa-solid fa-user"></i>
                       <span>Trang cá nhân</span>
                     </Link>
-                    <a href="" className="logout" onClick={logout}>
+                    <button className="logout" onClick={logout}>
                       <i className="fa-solid fa-right-from-bracket"></i>
                       <span>Đăng xuất</span>
-                    </a>
+                    </button>
                   </div>
                 )}
               </>
@@ -268,10 +271,10 @@ const Header = ({ cates, logo }: any) => {
                     <i className="fa-solid fa-user"></i>
                     <span>Trang cá nhân</span>
                   </Link>
-                  <a className="logout" onClick={logout}>
+                  <button className="logout" onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Đăng xuất</span>
-                  </a>
+                  </button>
                 </div>
               )}
             </div>

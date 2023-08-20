@@ -47,10 +47,14 @@ const ListChapter = () => {
   useEffect(() => {
     if (togglePopup && checkKeywordOrderby) {
       if (user) {
-        callApi(user.user.id, 1);
+        let id = setTimeout(() => callApi(user.user.id, 1), 600);
+
+        return () => clearTimeout(id);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", 1);
+          let id = setTimeout(() => callApi("", 1), 600);
+
+          return () => clearTimeout(id);
         }
       }
     }

@@ -137,7 +137,7 @@ const Chapterpage = () => {
                 </div>
                 <div className="info__chapter">
                   <span className="number__chapter">
-                    {dataChapter.chuong.chapter_number}.
+                    {dataChapter.chuong.chapter_number}.{" "}
                   </span>
                   <span className="name__chapter">
                     {dataChapter.chuong.name_chapter}

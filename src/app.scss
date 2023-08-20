@@ -112,18 +112,11 @@
     }
   }
 
-  .login .login__center .login__container {
-    width: 90% !important;
-  }
   .load__cents {
     display: grid !important;
   }
 }
 body {
-  min-height: 100vh;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
   position: relative;
 }
 ul {
@@ -181,7 +174,7 @@ main {
     width: 95%;
   }
   @media screen and (min-width: 2550px) {
-    width: 50%;
+    width: 60%;
   }
 }
 .btn {

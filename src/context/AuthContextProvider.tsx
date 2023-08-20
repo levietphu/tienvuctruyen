@@ -71,6 +71,7 @@ const AuthContextProvider = ({ children }: any) => {
     login,
     setTextLogin,
     user,
+    setUser,
     textLogin,
     loaderUser,
     setLoaderUser,

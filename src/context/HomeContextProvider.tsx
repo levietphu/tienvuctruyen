@@ -6,8 +6,7 @@ export const HomeContext = createContext<AppContextInterface | null>(null);
 
 const HomeContextProvider = ({ children }: any) => {
   const [dataHome, setDataHome] = useState<any>();
-  const [keyword, setKeyword] = useState<string>("");
-  const [dataSearch, setDataSearch] = useState<any>();
+
   const [loaderHome, setLoaderHome] = useState<boolean>(true);
   const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
 
@@ -18,29 +17,12 @@ const HomeContextProvider = ({ children }: any) => {
     });
   };
 
-  const search = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}search?keyword=${keyword}`)
-      .then((res) => {
-        setDataSearch(res.data.data.items);
-      });
-  };
-
   useEffect(() => {
     callApi();
   }, []);
 
-  useEffect(() => {
-    if (keyword && keyword.length > 2) {
-      search();
-    }
-  }, [keyword]);
-
   const data: any = {
     dataHome,
-    setKeyword,
-    keyword,
-    dataSearch,
     loaderHome,
     checkPopupHome,
     setCheckPopupHome,

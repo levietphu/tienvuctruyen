@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import "moment/locale/vi";
-import LoaderCate from "../../cate/components/LoaderCate";
+import NewUpdateLoader from "./NewUpdateLoader";
 
 const NewUpdateStory = ({ data }: any) => {
   return (
@@ -54,7 +54,7 @@ const NewUpdateStory = ({ data }: any) => {
           );
         })
       ) : (
-        <LoaderCate />
+        <NewUpdateLoader />
       )}
     </div>
   );
