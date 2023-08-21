@@ -1,21 +1,54 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
+import { Card, Select, Image, Button, Alert, Row, Col } from "antd";
+import Table, { ColumnsType } from "antd/es/table";
+import { DataType } from "../model/transactionModel";
 
 const ViewDashboard = () => {
   const [data, setData] = useState<any>();
+  const [message, setMessage] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
 
   const { user }: any = useContext(AuthContext);
 
   const getApiDashboard = async () => {
     await axios({
       method: "get",
-      url: `${process.env.REACT_APP_API}cms/dashboard`,
+      url: `${process.env.REACT_APP_API}cms/dashboard?id_user=${user.user.id}`,
       headers: {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      setData(res.data.dashboard);
+      setData({
+        ...res.data.dashboard,
+        transaction: res.data.dashboard.transaction.filter((item: any) => {
+          return item.id_user_bank === user.user.id;
+        }),
+      });
+    });
+  };
+
+  const changeStatusPayment = (
+    id_transaction: number,
+    status: string,
+    coin_number: number
+  ) => {
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API}change_status_payment`,
+      data: {
+        id_transaction,
+        coin_number,
+        status,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      getApiDashboard();
+      setMessage(res.data.message);
+      setSuccess(res.data.success);
     });
   };
 
@@ -23,14 +56,157 @@ const ViewDashboard = () => {
     getApiDashboard();
   }, []);
 
+  useEffect(() => {
+    if (message) {
+      let id = setTimeout(() => setMessage(""), 2000);
+      return () => clearTimeout(id);
+    }
+  }, [message]);
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: "Stt",
+      dataIndex: "id",
+      key: "id",
+      render(value, record, index) {
+        return <a>{index + 1}</a>;
+      },
+    },
+    {
+      title: "Mã giao dịch",
+      dataIndex: "transaction_code",
+      key: "transaction_code",
+    },
+    {
+      title: "Số xu",
+      dataIndex: "coin_number",
+      key: "coin_number",
+    },
+    {
+      title: "Số tiền",
+      dataIndex: "money",
+      key: "money",
+    },
+    {
+      title: "Ảnh chuyển khoản",
+      dataIndex: "image",
+      key: "image",
+      render: (value) => {
+        return (
+          <>
+            {value && (
+              <Image
+                src={`${process.env.REACT_APP_UPLOADS}Transaction/${value}`}
+                width={100}
+              />
+            )}
+          </>
+        );
+      },
+    },
+    {
+      title: "User payment",
+      dataIndex: "name_user_payment",
+      key: "name_user_payment",
+    },
+    {
+      title: "Kiểu payment",
+      dataIndex: "type_bank",
+      key: "type_bank",
+      render: (value) => {
+        return (
+          <>
+            <Button
+              size="small"
+              style={{
+                background: `${
+                  value === 0 ? "orange" : value === 1 ? "red" : "green"
+                }`,
+                color: "white",
+              }}
+            >
+              {value === 0 ? "Ngân hàng" : value === 1 ? "Ví" : "Thẻ cào"}
+            </Button>
+          </>
+        );
+      },
+    },
+    {
+      title: "Trạng thái",
+      key: "status",
+      render: (value) => {
+        return (
+          <Select
+            defaultValue={value.status}
+            onChange={(key) =>
+              changeStatusPayment(value.id, key, value.coin_number)
+            }
+            options={[
+              { value: 0, label: "Chờ duyệt" },
+              { value: 1, label: "Lỗi nạp" },
+              { value: 2, label: "Thành công" },
+            ]}
+            disabled={value.status !== 0}
+          />
+        );
+      },
+    },
+  ];
+
   return (
-    <div>
-      {data &&
-        data.transaction.map((item: any, index: number) => {
-          if (item.bank_info.id_user === user.user.id) {
-            return <p>{item.transaction_code}</p>;
-          }
-        })}
+    <div className="" style={{ paddingTop: "40px" }}>
+      <Row gutter={[16, 16]}>
+        <Col md={6}>
+          <Card>
+            <h3>Doanh thu hôm nay</h3>
+            <p style={{ color: "green", fontSize: "20px" }}>
+              {data && data.revenue.today} XU
+            </p>
+            <p>Tháng này: {data && data.revenue.month} XU</p>
+            <p>Tháng trước: {data && data.revenue.last_month} XU</p>
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card>
+            <h3>Mua chương</h3>
+            <p style={{ color: "green", fontSize: "20px" }}>
+              {data && data.buy_chapter.today} chương
+            </p>
+            <p>Tháng này: {data && data.buy_chapter.month} chương</p>
+            <p>Tháng trước: {data && data.buy_chapter.last_month} chương</p>
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card>
+            <h3>Ủng hộ</h3>
+            <p style={{ color: "green", fontSize: "20px" }}>
+              {data && data.donate.today} XU
+            </p>
+            <p>Tháng này: {data && data.donate.month} XU</p>
+            <p>Tháng trước: {data && data.donate.last_month} XU</p>
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card>
+            <h3>Đã rút</h3>
+          </Card>
+        </Col>
+        <Col md={24}>
+          <Card>
+            <h3>
+              Các giao dịch trong ngày(Theo thông tin thanh toán của từng admin)
+            </h3>
+            {message && (
+              <Alert message={message} type={success ? "success" : "error"} />
+            )}
+            <Table
+              columns={columns}
+              dataSource={data && data.transaction}
+              rowKey={(record) => record.id}
+            />
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

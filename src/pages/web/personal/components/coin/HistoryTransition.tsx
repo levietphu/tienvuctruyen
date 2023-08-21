@@ -79,7 +79,17 @@ const HistoryTransition = () => {
                             />{" "}
                           </td>
                           <td>
-                            <span>
+                            <span
+                              style={{
+                                background: `${
+                                  item.status === 2
+                                    ? "green"
+                                    : item.status === 1
+                                    ? "red"
+                                    : "#4f4d47"
+                                }`,
+                              }}
+                            >
                               {item.status === 2
                                 ? "Thành công"
                                 : item.status === 1

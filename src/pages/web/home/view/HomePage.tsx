@@ -37,10 +37,6 @@ const HomePage = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
-  }, []);
-
   return (
     <>
       <MainLayout>

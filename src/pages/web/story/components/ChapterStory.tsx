@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import chicken from "../../../../assets/chicken.png";
 import "moment/locale/vi";
 import { useParams } from "react-router-dom";
@@ -21,13 +21,13 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
 
   const params = useParams();
 
-  const callApiChapter = async (id_user: string, page: number) => {
+  const callApiChapter = useCallback(async (id_user: string, page: number) => {
     await axios
       .get(
         `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
       )
       .then((res) => setChapterStory(res.data.chapter));
-  };
+  }, []);
 
   useEffect(() => {
     if (user) {
