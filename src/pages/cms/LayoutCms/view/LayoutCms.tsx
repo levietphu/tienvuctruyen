@@ -19,9 +19,7 @@ const LayoutCms = ({ children }: Props) => {
         </Col>
         <Col xs={24} sm={24} md={20} lg={20}>
           <Header />
-          <div className="main-layout-cms">
-            <div className="screen-95">{children}</div>
-          </div>
+          <div className="main-layout-cms">{children}</div>
           <Footer />
         </Col>
       </Row>

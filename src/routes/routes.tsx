@@ -37,6 +37,8 @@ import NotFound from "../pages/web/NotFound/view/NotFound";
 import ViewDiscount from "../pages/cms/discount/views/ViewDiscount";
 import ViewBankInfo from "../pages/cms/bankinfo/views/ViewBankInfo";
 import ViewLoadCent from "../pages/cms/loadcents/views/ViewLoadCent";
+import ViewTransaction from "../pages/cms/transaction/view/ViewTransaction";
+import WithdrawMoneyView from "../pages/cms/withdrawmoney/view/WithdrawMoneyView";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -129,6 +131,26 @@ const routes = ({ user, loaderUser }: any) => {
             element={
               user && checkPer(user.role, "logo-view") ? (
                 <ViewLogo />
+              ) : (
+                <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
+              )
+            }
+          />
+          <Route
+            path="transaction/view"
+            element={
+              user && checkPer(user.role, "transaction-view") ? (
+                <ViewTransaction />
+              ) : (
+                <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
+              )
+            }
+          />
+          <Route
+            path="withdraw_money/view"
+            element={
+              user && checkPer(user.role, "withdrawmoney-view") ? (
+                <WithdrawMoneyView />
               ) : (
                 <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
               )

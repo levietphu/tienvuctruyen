@@ -2,7 +2,7 @@ import { Card, Button, Table, Alert, Typography, Tooltip } from "antd";
 import "../styles/view-story.scss";
 import type { ColumnsType } from "antd/es/table";
 import { deleteStory, getStory } from "../api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../store/hookStore";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import {
   faAddressBook,
   faPercent,
 } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../../../context/AuthContextProvider";
 
 interface DataType {
   id: number;
@@ -32,6 +33,8 @@ const ViewStory: React.FC = () => {
 
   const alertRedux = useAppSelector((state) => state.story.alert);
   const dispatch = useAppDispatch();
+
+  const { user }: any = useContext(AuthContext);
   const columns: ColumnsType<DataType> = [
     {
       title: "Stt",
@@ -107,56 +110,67 @@ const ViewStory: React.FC = () => {
       key: "action",
       render: (value) => (
         <>
-          <Tooltip title="View chương" color={"blue"}>
-            <Button
-              size="small"
-              type="primary"
-              style={{ margin: "0 5px 5px 0" }}
-              onClick={() => navigate(`/dashboard/chapter/${value.id}/view`)}
-            >
-              <FontAwesomeIcon icon={faAddressBook} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="View giảm giá" color={"blue"}>
-            <Button
-              size="small"
-              type="primary"
-              style={{ margin: "0 5px 5px 0" }}
-              onClick={() => navigate(`/dashboard/discount/${value.id}/view`)}
-            >
-              <FontAwesomeIcon icon={faPercent} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Sửa truyện" color={"blue"}>
-            <Button
-              size="small"
-              type="primary"
-              onClick={() => {
-                navigate(`/dashboard/story/edit/${value.id}`);
-              }}
-            >
-              <EditOutlined rev={undefined} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Xóa truyện" color={"red"}>
-            <Button
-              size="small"
-              type="primary"
-              danger
-              style={{ marginLeft: "5px" }}
-              onClick={() => {
-                if (
-                  // eslint-disable-next-line no-restricted-globals
-                  confirm(`Bạn có muốn xóa truyện ${value.name} này không`) ===
-                  true
-                ) {
-                  destroyStory(value.id);
-                }
-              }}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-          </Tooltip>
+          {user.user.id === value.id_user ? (
+            <>
+              <Tooltip title="View chương" color={"blue"}>
+                <Button
+                  size="small"
+                  type="primary"
+                  style={{ margin: "0 5px 5px 0" }}
+                  onClick={() =>
+                    navigate(`/dashboard/chapter/${value.id}/view`)
+                  }
+                >
+                  <FontAwesomeIcon icon={faAddressBook} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="View giảm giá" color={"blue"}>
+                <Button
+                  size="small"
+                  type="primary"
+                  style={{ margin: "0 5px 5px 0" }}
+                  onClick={() =>
+                    navigate(`/dashboard/discount/${value.id}/view`)
+                  }
+                >
+                  <FontAwesomeIcon icon={faPercent} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Sửa truyện" color={"blue"}>
+                <Button
+                  size="small"
+                  type="primary"
+                  onClick={() => {
+                    navigate(`/dashboard/story/edit/${value.id}`);
+                  }}
+                >
+                  <EditOutlined rev={undefined} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Xóa truyện" color={"red"}>
+                <Button
+                  size="small"
+                  type="primary"
+                  danger
+                  style={{ marginLeft: "5px" }}
+                  onClick={() => {
+                    if (
+                      // eslint-disable-next-line no-restricted-globals
+                      confirm(
+                        `Bạn có muốn xóa truyện ${value.name} này không`
+                      ) === true
+                    ) {
+                      destroyStory(value.id);
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </Tooltip>
+            </>
+          ) : (
+            "Không có quyền"
+          )}
         </>
       ),
     },

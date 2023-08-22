@@ -89,6 +89,14 @@ const SideBar: React.FC = () => {
         checkPer(user.role, "contact-view") &&
         getItem("Contact", "/dashboard/contact/view"),
     ]),
+    getItem("Quản lý giao dịch", "sub2", <MailOutlined rev={undefined} />, [
+      user &&
+        checkPer(user.role, "transaction-view") &&
+        getItem("Giao dịch", "/dashboard/transaction/view"),
+      user &&
+        checkPer(user.role, "withdrawmoney-view") &&
+        getItem("Rút tiền", "/dashboard/withdraw_money/view"),
+    ]),
     user &&
       checkPer(user.role, "bankinfo-view") &&
       getItem(

@@ -39,4 +39,6 @@ export const per = [
   "per view",
   "per create",
   "bankinfo view",
+  "transaction view",
+  "withdraw_money view",
 ];

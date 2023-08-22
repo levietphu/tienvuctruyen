@@ -10,21 +10,22 @@ const ChapterVip = ({ coin, setError, callApi }: any) => {
   const navigate = useNavigate();
 
   const callApiBuy = async () => {
-    if (user) {
-      await axios
-        .get(
-          `${process.env.REACT_APP_API}buy_chapter?id_user=${user.user.id}&slug_story=${params.slugstory} &slug=${params.slugchapter}`
-        )
-        .then((res) => {
-          if (res.data.success) {
-            callApi(user.user.id, 1);
-          } else if (!res.data.success && res.data.status === 400) {
-            setError(res.data.data.hasMores);
-          }
-        });
-    } else {
-      navigate("/login");
-    }
+    await axios
+      .post(`${process.env.REACT_APP_API}buy_chapter`, {
+        id_user: user.user.id,
+        slug_story: params.slugstory,
+        slug: params.slugchapter,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          callApi(user.user.id, 1);
+        } else if (!res.data.success && res.data.status === 400) {
+          setError(res.data.data.hasMores);
+        }
+      })
+      .catch((err) => {
+        setError("Lỗi hệ thống");
+      });
   };
 
   return (
@@ -41,7 +42,10 @@ const ChapterVip = ({ coin, setError, callApi }: any) => {
           </p>
         </div>
         <div className="buy__chapter center">
-          <button className="btn-chapter" onClick={callApiBuy}>
+          <button
+            className="btn-chapter"
+            onClick={() => (user ? callApiBuy() : navigate("/login"))}
+          >
             Mua Chương này
           </button>
           <Link
