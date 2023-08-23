@@ -1,28 +1,30 @@
-import { Row, Col } from "antd";
-import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";
 import "../styles/layout-cms.scss";
 import { useEffect } from "react";
 import Props from "../../../../ultis/typeChildren";
+import Header from "../../../web/layout/components/Header";
+import { LayoutContext } from "../../../../context/LayoutContextProvider";
+import { useContext } from "react";
 
 const LayoutCms = ({ children }: Props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { dataLayout }: any = useContext(LayoutContext);
+
   return (
     <div className="container">
-      <Row>
-        <Col xs={0} sm={0} md={4} lg={4}>
-          <Sidebar />
-        </Col>
-        <Col xs={24} sm={24} md={20} lg={20}>
-          <Header />
-          <div className="main-layout-cms">{children}</div>
-          <Footer />
-        </Col>
-      </Row>
+      <header>
+        <Header
+          cates={dataLayout && dataLayout.cates}
+          logo={dataLayout && dataLayout.logo_header}
+        />
+      </header>
+      <div className="flex">
+        <Sidebar />
+        <div className="main-layout-cms">{children}</div>
+      </div>
     </div>
   );
 };

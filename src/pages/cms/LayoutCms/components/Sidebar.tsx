@@ -3,10 +3,12 @@ import {
   ContainerOutlined,
   DesktopOutlined,
   MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Button, Menu, Image } from "antd";
+import { Menu, Image, Button } from "antd";
 import { LayoutContext } from "../../../../context/LayoutContextProvider";
 import "../styles/sidebar.scss";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -42,6 +44,7 @@ const SideBar: React.FC = () => {
   };
 
   const items: MenuItem[] = [
+    getItem("Quản trị", "/dashboard", <PieChartOutlined rev={undefined} />),
     user &&
       checkPer(user.role, "cate-view") &&
       getItem(
@@ -77,6 +80,13 @@ const SideBar: React.FC = () => {
         "/dashboard/banner/view",
         <ContainerOutlined rev={undefined} />
       ),
+    user &&
+      checkPer(user.role, "affiliatedbank-view") &&
+      getItem(
+        "Ngân hàng liên kết",
+        "/dashboard/affiliated_bank/view",
+        <ContainerOutlined rev={undefined} />
+      ),
 
     getItem("Config", "sub1", <MailOutlined rev={undefined} />, [
       user &&
@@ -92,7 +102,7 @@ const SideBar: React.FC = () => {
     getItem("Quản lý giao dịch", "sub2", <MailOutlined rev={undefined} />, [
       user &&
         checkPer(user.role, "transaction-view") &&
-        getItem("Giao dịch", "/dashboard/transaction/view"),
+        getItem("Nạp tiền", "/dashboard/transaction/view"),
       user &&
         checkPer(user.role, "withdrawmoney-view") &&
         getItem("Rút tiền", "/dashboard/withdraw_money/view"),
@@ -126,23 +136,31 @@ const SideBar: React.FC = () => {
         <ContainerOutlined rev={undefined} />
       ),
   ];
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
-    <div className="sidebar">
-      <Link className="logo" to="/dashboard">
-        <Image
-          width={50}
-          src={`${process.env.REACT_APP_UPLOADS}Config${dataLayout?.logo_header?.value}`}
-          preview={false}
-        />
-        <span>Quản trị Tiên Vực</span>
-      </Link>
+    <div className="sidebar-cms">
+      <Button
+        type="primary"
+        onClick={toggleCollapsed}
+        style={{ marginBottom: 16 }}
+      >
+        {collapsed ? (
+          <MenuUnfoldOutlined rev={undefined} />
+        ) : (
+          <MenuFoldOutlined rev={undefined} />
+        )}
+      </Button>
       <Menu
         mode="inline"
+        theme="light"
+        inlineCollapsed={collapsed}
         items={items}
-        className="menu-cms"
         onClick={ChangeRoute}
-        selectedKeys={[pathname]}
       />
     </div>
   );

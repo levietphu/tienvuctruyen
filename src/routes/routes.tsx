@@ -39,6 +39,7 @@ import ViewBankInfo from "../pages/cms/bankinfo/views/ViewBankInfo";
 import ViewLoadCent from "../pages/cms/loadcents/views/ViewLoadCent";
 import ViewTransaction from "../pages/cms/transaction/view/ViewTransaction";
 import WithdrawMoneyView from "../pages/cms/withdrawmoney/view/WithdrawMoneyView";
+import ViewAffiliatedBank from "../pages/cms/affiliatedbank/view/ViewAffiliatedBank";
 
 const routes = ({ user, loaderUser }: any) => {
   return (
@@ -151,6 +152,16 @@ const routes = ({ user, loaderUser }: any) => {
             element={
               user && checkPer(user.role, "withdrawmoney-view") ? (
                 <WithdrawMoneyView />
+              ) : (
+                <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
+              )
+            }
+          />
+          <Route
+            path="affiliated_bank/view"
+            element={
+              user && checkPer(user.role, "affiliatedbank-view") ? (
+                <ViewAffiliatedBank />
               ) : (
                 <p style={{ fontSize: "24px" }}>Bạn không đủ quyền vào</p>
               )

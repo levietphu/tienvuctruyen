@@ -41,4 +41,5 @@ export const per = [
   "bankinfo view",
   "transaction view",
   "withdraw_money view",
+  "affiliatedbank view",
 ];

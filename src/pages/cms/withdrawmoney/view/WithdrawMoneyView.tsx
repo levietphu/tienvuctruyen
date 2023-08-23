@@ -7,7 +7,8 @@ import {
   Input,
   Modal,
   Tooltip,
-  Select,
+  Row,
+  Col,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useEffect, useState, useContext } from "react";
@@ -16,11 +17,15 @@ import { DataType } from "../model/withdrawMoneyModel";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import "../styles/withdraw-money.scss";
 
 const WithdrawMoneyView: React.FC = () => {
-  const [datawithdrawMoney, setDatawithdrawMoney] = useState<any>();
+  const [dataWithdrawMoney, setDataWithdrawMoney] = useState<any[]>([]);
+  const [dataAffiliatedBank, setDataAffiliatedBank] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState("");
+  const [error, setError] = useState("");
+  const [keyAffiliated, setKeyAffiliated] = useState(0);
 
   const { user }: any = useContext(AuthContext);
 
@@ -28,9 +33,13 @@ const WithdrawMoneyView: React.FC = () => {
 
   const getWithdrawMoneyHistory = async () => {
     axios
-      .get(`${process.env.REACT_APP_API}cms/withdraw_money/index`)
-      .then((res) => setDatawithdrawMoney(res.data.withdraw_money))
-      .catch((err) => console.log(err));
+      .get(
+        `${process.env.REACT_APP_API}cms/withdraw_money/index?id_user=${user.user.id}`
+      )
+      .then((res) => {
+        setDataWithdrawMoney(res.data.withdraw_money);
+        setDataAffiliatedBank(res.data.affiliated_banks);
+      });
   };
 
   // Thêm mới withdrawMoney
@@ -42,7 +51,11 @@ const WithdrawMoneyView: React.FC = () => {
         getWithdrawMoneyHistory();
         handleCancel();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setError(err.response.data.message);
+        }
+      });
   };
 
   const columns: ColumnsType<DataType> = [
@@ -72,20 +85,24 @@ const WithdrawMoneyView: React.FC = () => {
     {
       title: "Trạng thái",
       key: "status",
+      dataIndex: "status",
       render: (value) => {
         return (
-          <Select
-            defaultValue={value.status}
-            // onChange={(key) =>
-            //   changeStatusPayment(value.id, key, value.coin_number)
-            // }
-            options={[
-              { value: 0, label: "Chờ duyệt" },
-              { value: 1, label: "Không thành công" },
-              { value: 2, label: "Thành công" },
-            ]}
-            disabled={value.status !== 0}
-          />
+          <Button
+            size="small"
+            style={{
+              background: `${
+                value === 0 ? "#737170" : value === 1 ? "red" : "green"
+              }`,
+              color: "white",
+            }}
+          >
+            {value === 0
+              ? "Đang chờ duyệt"
+              : value === 1
+              ? "Không được duyệt"
+              : "Thành công"}
+          </Button>
         );
       },
     },
@@ -117,6 +134,7 @@ const WithdrawMoneyView: React.FC = () => {
   const handleCancel = () => {
     setOpen(false);
     form.resetFields();
+    setError("");
   };
 
   const handleChange = (changedValues: any, allValues: any) => {
@@ -128,7 +146,7 @@ const WithdrawMoneyView: React.FC = () => {
     }
     if (changedValues.coin === "") {
       form.setFieldsValue({
-        money: 0,
+        money: "",
       });
     }
   };
@@ -136,6 +154,7 @@ const WithdrawMoneyView: React.FC = () => {
   const handleSave = (values: any) => {
     values.transaction_code = "RT" + Math.floor(Math.random() * 100000000000);
     values.id_user = user.user.id;
+    values.id_affiliatedbank = dataAffiliatedBank[keyAffiliated].id;
     createWithdrawMoney(values);
   };
 
@@ -172,6 +191,15 @@ const WithdrawMoneyView: React.FC = () => {
           onOk={handleOk}
           onCancel={handleCancel}
         >
+          {error && (
+            <Alert
+              message={error}
+              type="error"
+              closable
+              style={{ marginBottom: "20px", fontSize: "24px" }}
+            />
+          )}
+
           <Form
             name="wrap"
             labelCol={{ flex: "110px" }}
@@ -195,6 +223,30 @@ const WithdrawMoneyView: React.FC = () => {
             <Form.Item label="Số tiền tương đương" name="money">
               <Input type="number" name="money" disabled />
             </Form.Item>
+            <Form.Item label="Ngân hàng liên kết">
+              <Row gutter={[16, 16]}>
+                {dataAffiliatedBank?.map((item: any, index: number) => {
+                  return (
+                    <Col key={item.id} md={12}>
+                      <Card
+                        className={
+                          keyAffiliated === index ? "affiliated_active" : ""
+                        }
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setKeyAffiliated(index)}
+                      >
+                        <img
+                          src={`${process.env.REACT_APP_UPLOADS}AffiliatedBank/${item.image}`}
+                          alt="webtruyen"
+                          width={50}
+                          height={30}
+                        />
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Form.Item>
 
             <div className="submit-button">
               <Button
@@ -213,7 +265,7 @@ const WithdrawMoneyView: React.FC = () => {
 
         <Table
           columns={columns}
-          dataSource={datawithdrawMoney}
+          dataSource={dataWithdrawMoney}
           rowKey={(record) => record.id}
         />
       </Card>

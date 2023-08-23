@@ -1,7 +1,10 @@
 .main-layout-cms {
   background: rgb(248, 246, 246);
+  padding: 70px 20px 0 20px;
+  flex: 1;
+  min-height: 100vh;
   .top-main {
-    padding: 50px 0 30px 0;
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,15 +23,7 @@
     }
   }
 }
-.screen-95 {
-  width: 95%;
-  margin: auto;
-}
-.add {
-  background: #357376;
-  margin-bottom: 20px;
-}
-#components-affix-demo-target .scrollable-container {
-  height: 100px;
-  overflow-y: scroll;
+
+.flex {
+  display: flex;
 }
