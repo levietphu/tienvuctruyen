@@ -4,7 +4,7 @@ import "moment/locale/vi";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import coin from "../../../../assets/coin.svg";
-import Pagination from "../../pagination/Pagination";
+import PaginationPage from "../../pagination/PaginationPage";
 import ChapterItem from "./ChapterItem";
 import DonateItem from "./DonateItem";
 
@@ -21,13 +21,16 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
 
   const params = useParams();
 
-  const callApiChapter = useCallback(async (id_user: string, page: number) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
-      )
-      .then((res) => setChapterStory(res.data.chapter));
-  }, []);
+  const callApiChapter = useCallback(
+    async (id_user: string, page: number) => {
+      await axios
+        .get(
+          `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
+        )
+        .then((res) => setChapterStory(res.data.chapter));
+    },
+    [keyword, orderby]
+  );
 
   useEffect(() => {
     if (user) {
@@ -151,7 +154,7 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
                 );
               })}
           </div>
-          <Pagination
+          <PaginationPage
             data={chapterStory}
             callApiPagination={callApiChapter}
             check="chapter"
@@ -180,7 +183,7 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
                   );
                 })}
               </div>
-              <Pagination
+              <PaginationPage
                 check="donate"
                 data={donates}
                 callApiPagination={callApiDonate}

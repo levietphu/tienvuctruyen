@@ -267,6 +267,7 @@ const WithdrawMoneyView: React.FC = () => {
           columns={columns}
           dataSource={dataWithdrawMoney}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

@@ -45,8 +45,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px 0;
   div {
-    padding: 50px;
     img {
       width: 300px;
       height: 150px;
@@ -55,10 +55,12 @@
       font-size: 25px;
       font-weight: bold;
       margin: 0;
+      text-align: center;
     }
     p {
       font-size: 20px;
       color: #2e2e2e;
+      text-align: center;
     }
     a {
       margin-top: 20px;
@@ -67,5 +69,34 @@
       padding: 10px 15px;
       border-radius: 3px;
     }
+  }
+}
+
+.pagination__right {
+  display: flex;
+  .pagination__right--prev,
+  .pagination__right--next {
+    width: 45px;
+    height: 40px;
+
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .forbidden {
+    cursor: not-allowed;
+    opacity: 0.4;
+    border: none;
+    background-color: #bfbfbf;
+  }
+  .pagination__right--next:hover,
+  .pagination__right--prev:hover {
+    border: 1px solid #7c7c7c;
+  }
+  .forbidden:hover {
+    border: none;
   }
 }

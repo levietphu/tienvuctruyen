@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
-import { Card, Row, Col, Table, Select, Alert } from "antd";
+import { Card, Row, Col, Table, Select, Alert, Spin, Pagination } from "antd";
 import "../styles/dashboard.scss";
 import { ColumnsType } from "antd/es/table";
 import { withdrawMoneyModel } from "../model/withdrawMoneyModel";
@@ -9,6 +9,9 @@ import { checkAdmin } from "../../../../ultis/checkPer";
 
 const ViewDashboard = () => {
   const [data, setData] = useState<any>();
+  const [dataStory, setDataStory] = useState<any>();
+  const [total, setTotal] = useState<number>();
+  const [loader, setLoader] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
 
   const { user }: any = useContext(AuthContext);
@@ -22,6 +25,20 @@ const ViewDashboard = () => {
       },
     }).then((res) => {
       setData(res.data.dashboard);
+      setLoader(false);
+    });
+  };
+
+  const getStoryDashboard = async (page = 1) => {
+    await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API}cms/get_story_dashboard?id_user=${user.user.id}&page=${page}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setDataStory(res.data.story_user);
+      setTotal(res.data.total);
     });
   };
 
@@ -44,6 +61,7 @@ const ViewDashboard = () => {
 
   useEffect(() => {
     getApiDashboard();
+    getStoryDashboard();
   }, []);
 
   const columns: ColumnsType<withdrawMoneyModel> = [
@@ -71,7 +89,7 @@ const ViewDashboard = () => {
       key: "coin",
     },
     {
-      title: "Số tiền tương đương",
+      title: "Số tiền",
       dataIndex: "money",
       key: "money",
     },
@@ -123,52 +141,100 @@ const ViewDashboard = () => {
       <Row gutter={[16, 16]}>
         <Col sm={24} xs={24} md={8} lg={6} xxl={6}>
           <Card>
-            <h3>Doanh thu hôm nay</h3>
-            <p className="today">{data && data.revenue.today} XU</p>
-            <p>Tháng này: {data && data.revenue.month} XU</p>
-            <p>Tháng trước: {data && data.revenue.last_month} XU</p>
+            <h3 className="text-h3">Doanh thu hôm nay</h3>
+            <div className="today">
+              {!loader ? data.revenue.today : <Spin />} XU
+            </div>
+            <div>Tháng này: {!loader ? data.revenue.month : <Spin />} XU</div>
+            <div>
+              Tháng trước: {!loader ? data.revenue.last_month : <Spin />} XU
+            </div>
           </Card>
         </Col>
         <Col sm={24} xs={24} md={8} lg={6} xxl={6}>
           <Card>
-            <h3>Mua chương</h3>
-            <p className="today">{data && data.buy_chapter.today} chương</p>
-            <p>Tháng này: {data && data.buy_chapter.month} chương</p>
-            <p>Tháng trước: {data && data.buy_chapter.last_month} chương</p>
+            <h3 className="text-h3">Mua chương</h3>
+            <div className="today">
+              {!loader ? data.buy_chapter.today : <Spin />} chương
+            </div>
+            <div>
+              Tháng này: {!loader ? data.buy_chapter.month : <Spin />} chương
+            </div>
+            <div>
+              Tháng trước: {!loader ? data.buy_chapter.last_month : <Spin />}{" "}
+              chương
+            </div>
           </Card>
         </Col>
         <Col sm={24} xs={24} md={8} lg={6} xxl={6}>
           <Card>
-            <h3>Ủng hộ</h3>
-            <p className="today">{data && data.donate.today} XU</p>
-            <p>Tháng này: {data && data.donate.month} XU</p>
-            <p>Tháng trước: {data && data.donate.last_month} XU</p>
+            <h3 className="text-h3">Ủng hộ</h3>
+            <div className="today">
+              {!loader ? data.donate.today : <Spin />} XU
+            </div>
+            <div>Tháng này: {!loader ? data.donate.month : <Spin />} XU</div>
+            <div>
+              Tháng trước: {!loader ? data.donate.last_month : <Spin />} XU
+            </div>
           </Card>
         </Col>
         <Col sm={24} xs={24} md={8} lg={6} xxl={6}>
           <Card>
-            <h3>Đã rút</h3>
-            <p className="today">{data && data.withdraw_money_success} lần</p>
-            <p>Đang chờ duyệt: {data && data.withdraw_money_waiting} </p>
-            <p style={{ visibility: "hidden" }}>tháng này</p>
+            <h3 className="text-h3">Đã rút</h3>
+            <div className="today">
+              {!loader ? data.withdraw_money_success : <Spin />} lần
+            </div>
+            <div>
+              Đang chờ duyệt: {!loader ? data.withdraw_money_waiting : <Spin />}{" "}
+            </div>
+            <div style={{ visibility: "hidden" }}>tháng này</div>
           </Card>
         </Col>
         <Col sm={24} xs={24} md={12} lg={12} xxl={12}>
           <Card>
-            <h3>Tổng: 0 truyện</h3>
-            <p className="today">{data && data.withdraw_money_success} lần</p>
-            <p>Đang chờ duyệt: {data && data.withdraw_money_waiting} </p>
-            <p style={{ visibility: "hidden" }}>tháng này</p>
+            <h3 className="text-h3">
+              Tổng: {!loader ? data.total_story : <Spin />} truyện (Đã được trả
+              tiền)
+            </h3>
+            <div className="dashboard-story">
+              {dataStory &&
+                dataStory.data.map((item: any, index: number) => {
+                  return (
+                    <div className="dashboard-story-item" key={index}>
+                      <img
+                        width={50}
+                        height={80}
+                        src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
+                        alt="webtruyen"
+                      />
+                      <div className="text-story">
+                        <h4>{item.name}</h4>
+                        <p>Tác giả: {item.name_author}</p>
+                        <p>Dịch giả: {item.name_trans}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              {dataStory && (
+                <Pagination
+                  current={dataStory.current_page}
+                  defaultCurrent={1}
+                  total={dataStory.total}
+                  onChange={(page: any, pageSize) => getStoryDashboard(page)}
+                  pageSize={dataStory.per_page}
+                />
+              )}
+            </div>
           </Card>
         </Col>
       </Row>
       {checkAdmin(user.role, 43) && (
         <>
           {message && <Alert message={message} type="success" />}
-          <h3>Thống kê các giao dịch rút tiền</h3>
+          <h3 className="text-h3">Thống kê các giao dịch rút tiền</h3>
           <Table
             columns={columns}
-            dataSource={data && data.all_withdraw_money}
+            dataSource={!loader && data.all_withdraw_money}
             rowKey={(record) => record.id}
             scroll={{ x: 0 }}
           />

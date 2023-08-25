@@ -446,6 +446,7 @@ const ViewBanner: React.FC = () => {
           columns={columns}
           dataSource={dataBanner}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

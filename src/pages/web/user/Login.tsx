@@ -46,8 +46,9 @@ const Login = () => {
     user && navigate("/");
   }, [user]);
 
-  const loginTienVuc = () => {
+  const loginTienVuc = (e: any) => {
     setLoaderLogin(true);
+    e.preventDefault();
     login()
       .then((res: any) => {
         // lần đầu đăng nhập cần gắn token vào header
@@ -56,6 +57,7 @@ const Login = () => {
         setLoaderUser("loader");
         setReLogin(false);
         getUser();
+
         //lưu đăng nhập
         document.cookie = `token=${res.data.data.token};max-age=604800;path=/;`;
         !checkLogin ? navigate(-1) : navigate("/");
@@ -99,63 +101,70 @@ const Login = () => {
                 <p>{errorServer}</p>
               </div>
             )}
-            <div className="name__login">
-              <p>Email hoặc tên tài khoản</p>
-              <input
-                className={`${checkInputName ? "comment__text--active" : ""} ${
-                  errorServer && errorServer.email ? "active_error" : ""
-                }`}
-                type="text"
-                placeholder="vidugmail.com"
-                onClick={() => setCheckInputName(!checkInputName)}
-                onBlur={() => setCheckInputName(false)}
-                value={textLogin.email}
-                onChange={(e) =>
-                  setTextLogin({ ...textLogin, email: e.target.value })
-                }
-                name="email"
-              />
-              {errorServer &&
-                errorServer.email &&
-                errorServer.email.map((item: any, index: any) => {
-                  return (
-                    <p className="error" key={index}>
-                      {item}
-                    </p>
-                  );
-                })}
-            </div>
-            <div className="password__login">
-              <p>Mật khẩu</p>
-              <input
-                className={`${checkInputPass ? "comment__text--active" : ""} ${
-                  errorServer && errorServer.email ? "active_error" : ""
-                }`}
-                type="password"
-                placeholder="*********"
-                onClick={() => setCheckInputPass(!checkInputPass)}
-                onBlur={() => setCheckInputPass(false)}
-                value={textLogin.password}
-                onChange={(e) =>
-                  setTextLogin({ ...textLogin, password: e.target.value })
-                }
-                name="password"
-              />
-              {errorServer &&
-                errorServer.password &&
-                errorServer.password.map((item: any, index: any) => {
-                  return (
-                    <p className="error" key={index}>
-                      {item}
-                    </p>
-                  );
-                })}
-            </div>
-            <Link to="">Quên mật khẩu?</Link>
-            <button className="" onClick={() => loginTienVuc()}>
-              {!loaderLogin ? "Đăng nhập" : <Spin indicator={antIcon} />}
-            </button>
+            <form onSubmit={loginTienVuc} method="post">
+              <div className="name__login">
+                <p>Email hoặc tên tài khoản</p>
+                <input
+                  className={`${
+                    checkInputName ? "comment__text--active" : ""
+                  } ${errorServer && errorServer.email ? "active_error" : ""}`}
+                  type="text"
+                  placeholder="vidugmail.com"
+                  onClick={() => setCheckInputName(!checkInputName)}
+                  onBlur={() => setCheckInputName(false)}
+                  value={textLogin.email}
+                  onChange={(e) =>
+                    setTextLogin({ ...textLogin, email: e.target.value })
+                  }
+                  name="email"
+                />
+                {errorServer &&
+                  errorServer.email &&
+                  errorServer.email.map((item: any, index: any) => {
+                    return (
+                      <p className="error" key={index}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </div>
+              <div className="password__login">
+                <p>Mật khẩu</p>
+                <input
+                  className={`${
+                    checkInputPass ? "comment__text--active" : ""
+                  } ${errorServer && errorServer.email ? "active_error" : ""}`}
+                  type="password"
+                  placeholder="*********"
+                  onClick={() => setCheckInputPass(!checkInputPass)}
+                  onBlur={() => setCheckInputPass(false)}
+                  value={textLogin.password}
+                  onChange={(e) =>
+                    setTextLogin({ ...textLogin, password: e.target.value })
+                  }
+                  name="password"
+                />
+                {errorServer &&
+                  errorServer.password &&
+                  errorServer.password.map((item: any, index: any) => {
+                    return (
+                      <p className="error" key={index}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </div>
+              <Link to="">Quên mật khẩu?</Link>
+              <button
+                type="submit"
+                // onClick={() => loginTienVuc()}
+                style={{ marginTop: "10px" }}
+              >
+                {!loaderLogin ? "Đăng nhập" : <Spin indicator={antIcon} />}
+              </button>
+            </form>
           </div>
+
           <div className="change__register">
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
           </div>

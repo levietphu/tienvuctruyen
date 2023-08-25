@@ -588,6 +588,7 @@ const ViewBankInfo: React.FC = () => {
           columns={columns}
           dataSource={dataBankInfo}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

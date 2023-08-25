@@ -444,6 +444,7 @@ const ViewLogo: React.FC = () => {
           columns={columns}
           dataSource={dataLogo}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>
@@ -451,8 +452,3 @@ const ViewLogo: React.FC = () => {
 };
 
 export default ViewLogo;
-function getBase64(
-  arg0: RcFile
-): string | PromiseLike<string | undefined> | undefined {
-  throw new Error("Function not implemented.");
-}

@@ -63,7 +63,8 @@ const Register = () => {
     return () => clearTimeout(id);
   }, [errorServer]);
 
-  const registerTienVuc = () => {
+  const registerTienVuc = (e: any) => {
+    e.preventDefault();
     setLoaderRegister(true);
     register()
       .then((res: any) => {
@@ -87,104 +88,114 @@ const Register = () => {
 
             <i className="fa-solid fa-clipboard-list"></i>
           </h1>
-          <div className="login__main">
-            <div className="name__login">
-              <p>Tên tài khoản</p>
-              <input
-                className={`${checkInputName ? "comment__text--active" : ""} ${
-                  errorServer && errorServer.name ? "active_error" : ""
-                }`}
-                type="text"
-                placeholder="Tên tài khoản từ 5-20 ký tự bao gồm a-z, 0-9 và _"
-                onClick={() => {
-                  setCheckInputName(!checkInputName);
-                }}
-                name="name"
-                value={dataRegister.name}
-                onChange={(e: any) => {
-                  setDataRegister({ ...dataRegister, name: e.target.value });
-                }}
-              />
-              {errorServer &&
-                errorServer.name &&
-                errorServer.name.map((item: any, index: any) => {
-                  return (
-                    <p className="error" key={index}>
-                      {item}
-                    </p>
-                  );
-                })}
+          <form
+            onSubmit={(e) => checkRules && registerTienVuc(e)}
+            method="post"
+          >
+            <div className="login__main">
+              <div className="name__login">
+                <p>Tên tài khoản</p>
+                <input
+                  className={`${
+                    checkInputName ? "comment__text--active" : ""
+                  } ${errorServer && errorServer.name ? "active_error" : ""}`}
+                  type="text"
+                  placeholder="Tên tài khoản từ 5-20 ký tự bao gồm a-z, 0-9 và _"
+                  onClick={() => {
+                    setCheckInputName(!checkInputName);
+                  }}
+                  name="name"
+                  value={dataRegister.name}
+                  onChange={(e: any) => {
+                    setDataRegister({ ...dataRegister, name: e.target.value });
+                  }}
+                />
+                {errorServer &&
+                  errorServer.name &&
+                  errorServer.name.map((item: any, index: any) => {
+                    return (
+                      <p className="error" key={index}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </div>
+              <div className={`name__login }`}>
+                <p>Email</p>
+                <input
+                  className={`${
+                    checkInputEmail ? "comment__text--active" : ""
+                  } ${errorServer && errorServer.email ? "active_error" : ""}`}
+                  type="email"
+                  placeholder="vidu@gmail.com"
+                  onClick={() => setCheckInputEmail(!checkInputEmail)}
+                  name="email"
+                  value={dataRegister.email}
+                  onChange={(e: any) =>
+                    setDataRegister({ ...dataRegister, email: e.target.value })
+                  }
+                />
+                {errorServer &&
+                  errorServer.email &&
+                  errorServer.email.map((item: any, index: any) => {
+                    return (
+                      <p className="error" key={index}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </div>
+              <div className="password__login">
+                <p>Mật khẩu</p>
+                <input
+                  className={`${
+                    checkInputPass ? "comment__text--active" : ""
+                  } ${
+                    errorServer && errorServer.password ? "active_error" : ""
+                  }`}
+                  type="password"
+                  placeholder="*********"
+                  onClick={() => setCheckInputPass(!checkInputPass)}
+                  onBlur={() => setCheckInputPass(false)}
+                  name="password"
+                  value={dataRegister.password}
+                  onChange={(e: any) =>
+                    setDataRegister({
+                      ...dataRegister,
+                      password: e.target.value,
+                    })
+                  }
+                />
+                {errorServer &&
+                  errorServer.password &&
+                  errorServer.password.map((item: any, index: any) => {
+                    return (
+                      <p className="error" key={index}>
+                        {item}
+                      </p>
+                    );
+                  })}
+              </div>
+              <div className="check">
+                <input
+                  type="checkbox"
+                  onChange={() => setCheckRules(!checkRules)}
+                  checked={checkRules}
+                />
+                <span>
+                  {" "}
+                  Đồng ý với các <Link to="">điều khoản</Link> và{" "}
+                  <Link to="">chính sách</Link> của tiên vực
+                </span>
+              </div>
+              <button
+                type="submit"
+                className={`${checkRules ? "" : "forbiden"}`}
+              >
+                {!loaderRegister ? "Đăng ký" : <Spin indicator={antIcon} />}
+              </button>
             </div>
-            <div className={`name__login }`}>
-              <p>Email</p>
-              <input
-                className={`${checkInputEmail ? "comment__text--active" : ""} ${
-                  errorServer && errorServer.email ? "active_error" : ""
-                }`}
-                type="email"
-                placeholder="vidu@gmail.com"
-                onClick={() => setCheckInputEmail(!checkInputEmail)}
-                name="email"
-                value={dataRegister.email}
-                onChange={(e: any) =>
-                  setDataRegister({ ...dataRegister, email: e.target.value })
-                }
-              />
-              {errorServer &&
-                errorServer.email &&
-                errorServer.email.map((item: any, index: any) => {
-                  return (
-                    <p className="error" key={index}>
-                      {item}
-                    </p>
-                  );
-                })}
-            </div>
-            <div className="password__login">
-              <p>Mật khẩu</p>
-              <input
-                className={`${checkInputPass ? "comment__text--active" : ""} ${
-                  errorServer && errorServer.password ? "active_error" : ""
-                }`}
-                type="password"
-                placeholder="*********"
-                onClick={() => setCheckInputPass(!checkInputPass)}
-                onBlur={() => setCheckInputPass(false)}
-                name="password"
-                value={dataRegister.password}
-                onChange={(e: any) =>
-                  setDataRegister({ ...dataRegister, password: e.target.value })
-                }
-              />
-              {errorServer &&
-                errorServer.password &&
-                errorServer.password.map((item: any, index: any) => {
-                  return (
-                    <p className="error" key={index}>
-                      {item}
-                    </p>
-                  );
-                })}
-            </div>
-            <div className="check">
-              <input
-                type="checkbox"
-                onChange={() => setCheckRules(!checkRules)}
-                checked={checkRules}
-              />
-              <span>
-                {" "}
-                Đồng ý với các <Link to="">điều khoản</Link> và{" "}
-                <Link to="">chính sách</Link> của tiên vực
-              </span>
-            </div>
-            <button
-              className={`${checkRules ? "" : "forbiden"}`}
-              onClick={() => checkRules && registerTienVuc()}
-            >
-              {!loaderRegister ? "Đăng ký" : <Spin indicator={antIcon} />}
-            </button>
-          </div>
+          </form>
           <div className="change__register">
             Bạn chưa có tài khoản? <Link to="/login">Đăng nhập</Link>
           </div>

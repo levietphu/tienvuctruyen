@@ -1,13 +1,10 @@
 import "../styles/popupfull.scss";
 import xuly from "../../../../assets/xuly.png";
 import xuly2 from "../../../../assets/xuly2.png";
-import { useContext } from "react";
 import { useOutSide } from "../../../../hookCustom/useOutSide";
-import { HomeContext } from "../../../../context/HomeContextProvider";
 import { Image } from "antd";
 
-const PopupFull = () => {
-  const { setCheckPopupHome }: any = useContext(HomeContext);
+const PopupFull = ({ setCheckPopupHome }: any) => {
   const Ref = useOutSide(() => setCheckPopupHome(false));
   return (
     <div className="popup-full">

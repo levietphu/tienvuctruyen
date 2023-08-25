@@ -33,6 +33,7 @@ const Header = ({ cates, logo }: any) => {
     setLoaderUser("login");
     setUser(undefined);
   };
+  console.log("header");
 
   return (
     <>
@@ -222,7 +223,15 @@ const Header = ({ cates, logo }: any) => {
               )}
             </div>
             <div className="person__page" ref={PersonRef}>
-              <div className="header__right--list">
+              <div
+                className="header__right--list"
+                style={{
+                  background: `${tooglePersonalLogoutMoblie ? "#eeeeee" : ""}`,
+                }}
+                onClick={() =>
+                  setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
+                }
+              >
                 {loaderUser === "loader" ? (
                   <div className="box2" style={{ width: "100%" }}>
                     <div className="gallery" style={{ height: "30px" }}>
@@ -245,11 +254,6 @@ const Header = ({ cates, logo }: any) => {
                   loaderUser === "user" && (
                     <>
                       <span
-                        onClick={() =>
-                          setTooglePersonalLogoutMolie(
-                            !tooglePersonalLogoutMoblie
-                          )
-                        }
                         style={{
                           color: `${
                             tooglePersonalLogoutMoblie ? "#357376" : ""
@@ -271,10 +275,10 @@ const Header = ({ cates, logo }: any) => {
                     <i className="fa-solid fa-user"></i>
                     <span>Trang cá nhân</span>
                   </Link>
-                  <button className="logout" onClick={logout}>
+                  <div className="logout" onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Đăng xuất</span>
-                  </button>
+                  </div>
                 </div>
               )}
             </div>

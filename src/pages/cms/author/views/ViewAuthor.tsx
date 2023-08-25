@@ -356,6 +356,7 @@ const ViewAuthor: React.FC = () => {
           columns={columns}
           dataSource={dataAuthor}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

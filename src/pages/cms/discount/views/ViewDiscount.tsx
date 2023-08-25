@@ -322,6 +322,7 @@ const ViewDiscount: React.FC = () => {
           columns={columns}
           dataSource={dataDiscount}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

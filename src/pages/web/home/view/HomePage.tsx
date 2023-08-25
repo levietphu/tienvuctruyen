@@ -5,15 +5,28 @@ import Search from "../components/Search";
 import DragStory from "../components/DragStory";
 import NewUpdateStory from "../components/NewUpdateStory";
 import FullStory from "../components/FullStory";
-import { HomeContext } from "../../../../context/HomeContextProvider";
 import { useContext, useEffect, useState } from "react";
 import PopupFull from "../components/PopupFull";
 import DragLoader from "../components/DragLoader";
 import { Modal } from "antd";
+import axios from "axios";
 
 const HomePage = () => {
-  const { dataHome, loaderHome }: any = useContext(HomeContext);
+  const [dataHome, setDataHome] = useState<any>();
+  const [loaderHome, setLoaderHome] = useState<boolean>(true);
+  const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
   const [open, setOpen] = useState(false);
+
+  const callApi = async () => {
+    await axios.get(`${process.env.REACT_APP_API}home`).then((res) => {
+      setDataHome(res.data.data.items);
+      setLoaderHome(false);
+    });
+  };
+
+  useEffect(() => {
+    callApi();
+  }, []);
 
   // useEffect(() => {
   //   if (checkPopupHome) {
@@ -86,7 +99,7 @@ const HomePage = () => {
         </div>
       </MainLayout>{" "}
       {/* <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
-        <PopupFull />
+        <PopupFull setCheckPopupHome={setCheckPopupHome} />
       </Modal> */}
     </>
   );

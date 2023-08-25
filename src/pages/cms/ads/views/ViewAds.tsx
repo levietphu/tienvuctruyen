@@ -387,6 +387,7 @@ const ViewAds: React.FC = () => {
           columns={columns}
           dataSource={dataAds}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

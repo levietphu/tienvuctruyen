@@ -241,6 +241,7 @@ const ViewStory: React.FC = () => {
           columns={columns}
           dataSource={dataStory}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

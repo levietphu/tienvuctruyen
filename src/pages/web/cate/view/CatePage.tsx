@@ -3,9 +3,9 @@ import MainLayout from "../../layout/view/MainLayout";
 import { Link, useParams } from "react-router-dom";
 import "moment/locale/vi";
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import image from "../../../../assets/mascot-02.235fd60.png";
-import Pagination from "../../pagination/Pagination";
+import PaginationPage from "../../pagination/PaginationPage";
 import LoaderCate from "../components/LoaderCate";
 import CateItem from "../components/CateItem";
 
@@ -89,7 +89,7 @@ const CatePage = () => {
                 </div>
                 {(params.slugcate || params.sluglist) &&
                   params.sluglist !== "truyen-vip" && (
-                    <Pagination
+                    <PaginationPage
                       data={dataCate}
                       check="cate"
                       callApiPagination={callApi}

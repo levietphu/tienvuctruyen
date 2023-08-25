@@ -304,7 +304,16 @@ const EditStory: React.FC = () => {
               </Row>
             </Col>
             <Col md={8}>
-              <Form.Item label="Thể loại" name="id_cate">
+              <Form.Item
+                label="Thể loại"
+                name="id_cate"
+                rules={[
+                  {
+                    required: true,
+                    message: "Thể loại không được bỏ trống",
+                  },
+                ]}
+              >
                 <Select
                   mode="multiple"
                   size="middle"

@@ -375,6 +375,7 @@ const ViewTranslator: React.FC = () => {
           columns={columns}
           dataSource={dataTranslator}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

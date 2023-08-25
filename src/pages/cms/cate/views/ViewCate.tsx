@@ -357,6 +357,7 @@ const ViewCate: React.FC = () => {
           columns={columns}
           dataSource={dataCate}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

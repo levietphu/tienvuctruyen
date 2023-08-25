@@ -21,10 +21,8 @@ const LayoutCms = ({ children }: Props) => {
           logo={dataLayout && dataLayout.logo_header}
         />
       </header>
-      <div className="flex">
-        <Sidebar />
-        <div className="main-layout-cms">{children}</div>
-      </div>
+      <Sidebar />
+      <div className="main-layout-cms">{children}</div>
     </div>
   );
 };

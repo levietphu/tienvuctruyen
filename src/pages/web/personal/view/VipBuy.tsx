@@ -51,11 +51,13 @@ const VipBuy = () => {
         ) : (
           <div className="no-view">
             <div>
-              <img src={image} alt="webtruyen" />
-              <h4 className="center">Hiện chưa có truyện nào</h4>
-              <p className="center">Bạn hãy quay lại sau nhé!</p>
-              <span className="center">
-                <Link to="/">Về trang chủ</Link>
+              <div className="center">
+                <img src={image} alt="webtruyen" />
+              </div>
+              <h4>Bạn chưa mua truyện nào cả</h4>
+              <p>Hãy nạp Xu và mua truyện để ủng hộ dịch giả nhé!</p>
+              <span className="center ">
+                <Link to="/account/coin">Nạp xu</Link>
               </span>
             </div>
           </div>

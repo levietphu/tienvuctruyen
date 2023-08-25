@@ -288,6 +288,7 @@ const ViewLoadCent: React.FC = () => {
           columns={columns}
           dataSource={dataLoadCent}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

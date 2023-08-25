@@ -326,3 +326,35 @@ h1 {
 .ant-btn-default:disabled {
   opacity: 0.5;
 }
+//pagination
+.pagination-page {
+  .ant-pagination-item {
+    border-color: #bfbfbf !important;
+    height: 40px !important;
+    width: 40px !important;
+    line-height: 38px !important;
+    background-color: transparent !important;
+    border-radius: 4px !important;
+    a {
+      font-size: 16px;
+    }
+  }
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    display: none !important;
+  }
+  .ant-pagination-item:hover {
+    border-color: #a3a3a3 !important;
+  }
+
+  .ant-pagination-item-active {
+    background-color: #357376 !important;
+    border-color: #357376 !important;
+    a {
+      color: #fff !important;
+    }
+  }
+  .ant-pagination-item-active:hover {
+    border-color: #357376 !important;
+  }
+}

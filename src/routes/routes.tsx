@@ -31,7 +31,6 @@ import ViewChapter from "../pages/cms/chapter/views/ViewChapter";
 import ViewUser from "../pages/cms/user/views/ViewUser";
 import ViewPermission from "../pages/cms/permission/views/ViewPermission";
 import ViewRole from "../pages/cms/role/views/ViewRole";
-import HomeContextProvider from "../context/HomeContextProvider";
 import { checkPer } from "../ultis/checkPer";
 import NotFound from "../pages/web/NotFound/view/NotFound";
 import ViewDiscount from "../pages/cms/discount/views/ViewDiscount";
@@ -49,14 +48,7 @@ const routes = ({ user, loaderUser }: any) => {
         <Route path="/danh-sach/:sluglist" element={<CatePage />} />
         <Route path="/dich-gia/:slugdichgia" element={<Transalator />} />
 
-        <Route
-          path="/"
-          element={
-            <HomeContextProvider>
-              <HomePage />
-            </HomeContextProvider>
-          }
-        />
+        <Route path="/" element={<HomePage />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

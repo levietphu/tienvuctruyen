@@ -14,8 +14,7 @@ const BookCase = () => {
       })
       .then((res) => {
         getUser();
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   return (
@@ -57,12 +56,11 @@ const BookCase = () => {
       ) : (
         <div className="no-view">
           <div>
-            <img src={image} alt="webtruyen" />
-            <h4 className="center">Hiện chưa có truyện nào</h4>
-            <p className="center">Bạn hãy quay lại sau nhé!</p>
-            <span className="center">
-              <Link to="/">Về trang chủ</Link>
-            </span>
+            <div className="center">
+              <img src={image} alt="webtruyen" />
+            </div>
+            <h4>Bạn chưa đánh dấu truyện nào cả</h4>
+            <p>Hãy đánh dấu truyện đang đọc để đưa vào Tủ sách nhé!</p>
           </div>
         </div>
       )}

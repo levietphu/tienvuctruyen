@@ -165,6 +165,7 @@ const ViewTransaction = () => {
           columns={columns}
           dataSource={data}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </div>

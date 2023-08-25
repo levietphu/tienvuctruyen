@@ -382,6 +382,7 @@ const ViewAffiliatedBank: React.FC = () => {
           columns={columns}
           dataSource={dataAffiliatedBank}
           rowKey={(record) => record.id}
+          scroll={{ x: 0 }}
         />
       </Card>
     </>

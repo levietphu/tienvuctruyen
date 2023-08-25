@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   ContainerOutlined,
   DesktopOutlined,
   MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Menu, Image, Button } from "antd";
-import { LayoutContext } from "../../../../context/LayoutContextProvider";
+import { Menu } from "antd";
 import "../styles/sidebar.scss";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { checkPer } from "../../../../ultis/checkPer";
+import useCurrentWidth from "../../../../hookCustom/useCurrentWidth";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -34,10 +32,9 @@ function getItem(
 }
 
 const SideBar: React.FC = () => {
-  const { dataLayout }: any = React.useContext(LayoutContext);
   const { user }: any = React.useContext(AuthContext);
+
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const ChangeRoute = ({ key }: any) => {
     navigate(key);
@@ -136,29 +133,13 @@ const SideBar: React.FC = () => {
         <ContainerOutlined rev={undefined} />
       ),
   ];
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
 
   return (
     <div className="sidebar-cms">
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {collapsed ? (
-          <MenuUnfoldOutlined rev={undefined} />
-        ) : (
-          <MenuFoldOutlined rev={undefined} />
-        )}
-      </Button>
       <Menu
         mode="inline"
         theme="light"
-        inlineCollapsed={collapsed}
+        inlineCollapsed={useCurrentWidth()}
         items={items}
         onClick={ChangeRoute}
       />
