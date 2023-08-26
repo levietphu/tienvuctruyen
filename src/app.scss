@@ -116,6 +116,7 @@
     display: grid !important;
   }
 }
+
 body {
   position: relative;
 }
@@ -291,6 +292,25 @@ h1 {
 .flex-between {
   display: flex;
   justify-content: space-between;
+}
+//scroll-bar
+.scroll-bar::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+.scroll-bar::-webkit-scrollbar-track {
+}
+
+/* Handle */
+.scroll-bar::-webkit-scrollbar-thumb {
+  background: rgb(168, 168, 168);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: grey;
 }
 
 //fix tabs antd

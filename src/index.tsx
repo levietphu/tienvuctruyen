@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={rootStore}>
-    <LayoutContextProvider>
-      <SettingContextProvider>
-        <AuthContextProvider>
+    <AuthContextProvider>
+      <LayoutContextProvider>
+        <SettingContextProvider>
           <App />
-        </AuthContextProvider>
-      </SettingContextProvider>
-    </LayoutContextProvider>
+        </SettingContextProvider>
+      </LayoutContextProvider>
+    </AuthContextProvider>
   </Provider>
 );
 

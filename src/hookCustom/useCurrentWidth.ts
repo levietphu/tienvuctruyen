@@ -26,5 +26,5 @@ export default function useCurrentWidth() {
     };
   }, []);
 
-  return width < 1024;
+  return width;
 }

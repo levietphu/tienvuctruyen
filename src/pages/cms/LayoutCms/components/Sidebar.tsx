@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ContainerOutlined,
   DesktopOutlined,
@@ -8,7 +8,7 @@ import {
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import "../styles/sidebar.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { checkPer } from "../../../../ultis/checkPer";
 import useCurrentWidth from "../../../../hookCustom/useCurrentWidth";
@@ -35,6 +35,7 @@ const SideBar: React.FC = () => {
   const { user }: any = React.useContext(AuthContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const ChangeRoute = ({ key }: any) => {
     navigate(key);
@@ -137,9 +138,10 @@ const SideBar: React.FC = () => {
   return (
     <div className="sidebar-cms">
       <Menu
+        defaultSelectedKeys={[location.pathname]}
         mode="inline"
         theme="light"
-        inlineCollapsed={useCurrentWidth()}
+        inlineCollapsed={useCurrentWidth() < 1024}
         items={items}
         onClick={ChangeRoute}
       />

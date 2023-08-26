@@ -1,4 +1,3 @@
-import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -10,45 +9,6 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper";
 
 const GalleryCarousel = ({ banners, loaderHome }: any) => {
-  const [countNotification, setCountNotification] = useState(1);
-
-  const notificationRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let a: any;
-    a = setTimeout(() => {
-      handlerNotification("Next");
-    }, 3000);
-    notificationRef.current?.addEventListener(
-      "transitionend",
-      checkNotification
-    );
-    return () => {
-      notificationRef.current?.removeEventListener(
-        "transitionend",
-        checkNotification
-      );
-      clearTimeout(a);
-    };
-  }, [countNotification]);
-  // Xử lý phần notification
-  const handlerNotification = (params: string) => {
-    notificationRef.current?.classList.add("active");
-    if ((params = "Next")) {
-      setCountNotification(countNotification + 1);
-    }
-  };
-
-  const checkNotification = () => {
-    notificationRef.current?.classList.remove("active");
-    if (countNotification >= 5) {
-      setCountNotification(1);
-    }
-    if (countNotification <= 0) {
-      setCountNotification(4);
-    }
-  };
-
   return (
     <>
       <div className="carousel mb-20">
@@ -92,48 +52,52 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
         <div className="notification__bell">
           <i className="fa-solid fa-bell"></i>
         </div>
-        <div
-          className="notification__animation"
-          style={{ left: `${countNotification * -3881.16}px` }}
-          ref={notificationRef}
+        <Swiper
+          modules={[Autoplay]}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          className="mySwiper notification__slider"
         >
-          <div className="notification__item">
-            <span>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>tvvinh</b> đã ủng hộ <b>100 xu</b> cho truyện{" "}
               <b>Người Đọc Sách Đại Ngụy</b>
-            </span>
-          </div>
-          <div className="notification__item">
-            <span>
+            </p>
+          </SwiperSlide>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>tiểu nam phong</b> đã ủng hộ <b>1000 xu</b> cho truyện{" "}
               <b>Ta thiên mệnh đại phản phái nhân vật (Dịch)</b>
-            </span>
-          </div>
-          <div className="notification__item">
-            <span>
+            </p>
+          </SwiperSlide>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>thanhhuynh132</b> đã bình luận trong truyện{" "}
               <b>Siêu Cấp Thần Cơ Nhân (Bản Dịch)</b>
-            </span>
-          </div>
-          <div className="notification__item">
-            <span>
+            </p>
+          </SwiperSlide>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>butter1</b> đã bình luận trong truyện
               <b>Trùng Sinh Chi Kiêu Hùng Quật Khởi (Dịch)</b>
-            </span>
-          </div>
-          <div className="notification__item">
-            <span>
+            </p>
+          </SwiperSlide>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>tvvinh</b> đã ủng hộ <b>100 xu</b> cho truyện{" "}
               <b>Người Đọc Sách Đại Ngụy</b>
-            </span>
-          </div>
-          <div className="notification__item">
-            <span>
+            </p>
+          </SwiperSlide>
+          <SwiperSlide className="notification__item">
+            <p>
               <b>tiểu nam phong</b> đã ủng hộ <b>1000 xu</b> cho truyện{" "}
               <b>Ta thiên mệnh đại phản phái nhân vật (Dịch)</b>
-            </span>
-          </div>
-        </div>
+            </p>
+          </SwiperSlide>
+        </Swiper>
       </div>
     </>
   );
