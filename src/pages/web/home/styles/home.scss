@@ -192,7 +192,18 @@
     }
   }
 }
-
+.a-h1 {
+  font-size: 2.25rem;
+  color: #3c3c3c;
+  font-weight: bold;
+  display: inline-block;
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+.a-h1:hover {
+  color: black;
+}
 .drag__story {
   // overflow: hidden;
   height: 320px;
@@ -325,21 +336,10 @@
   display: flex;
   .story__newupdate {
     width: 75%;
-    h1 {
-      color: #3c3c3c;
-      @media screen and (max-width: 768px) {
-        font-size: 1.5rem;
-      }
-    }
   }
   .story__full {
     width: 25%;
-    h1 {
-      color: #3c3c3c;
-      @media screen and (max-width: 768px) {
-        font-size: 1.5rem;
-      }
-    }
+
     .full-story {
       background: white;
       border-radius: 5px;

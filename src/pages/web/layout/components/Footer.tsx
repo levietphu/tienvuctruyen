@@ -1,10 +1,9 @@
 import "../styles/footer.scss";
 import androi from "../../../../assets/google-play-badge.0dbdf26.png";
 import ios from "../../../../assets/app-store-badge.fba0f3f.png";
+import { memo } from "react";
 
 const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
-  console.log("footer");
-
   return (
     <div className="footer">
       <div className="footer__logo center">
@@ -33,4 +32,4 @@ const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

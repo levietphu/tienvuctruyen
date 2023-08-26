@@ -2,5 +2,6 @@ export interface RouteProps {
   path: string;
   index: boolean;
   name?: string;
-  component: React.FC;
+  per: string;
+  component: React.ReactNode;
 }

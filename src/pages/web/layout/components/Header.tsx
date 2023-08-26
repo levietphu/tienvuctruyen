@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import "../styles/header.scss";
 import { useOutSide } from "../../../../hookCustom/useOutSide";
 import { Link } from "react-router-dom";
@@ -33,7 +33,6 @@ const Header = ({ cates, logo }: any) => {
     setLoaderUser("login");
     setUser(undefined);
   };
-  console.log("header");
 
   return (
     <>
@@ -289,4 +288,4 @@ const Header = ({ cates, logo }: any) => {
   );
 };
 
-export default Header;
+export default memo(Header);

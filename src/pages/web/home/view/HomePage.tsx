@@ -10,6 +10,7 @@ import PopupFull from "../components/PopupFull";
 import DragLoader from "../components/DragLoader";
 import { Modal } from "antd";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [dataHome, setDataHome] = useState<any>();
@@ -89,11 +90,23 @@ const HomePage = () => {
         </div>
         <div className="main__content">
           <div className="story__newupdate">
-            <h1 style={{ margin: "0.67em 0" }}>Truyện mới cập nhật</h1>
+            <Link
+              className="a-h1"
+              to="/danh-sach/truyen-moi"
+              style={{ margin: "0.67em 0" }}
+            >
+              Truyện mới cập nhật
+            </Link>
             <NewUpdateStory data={dataHome && dataHome.newUpdateStory} />
           </div>
           <div className="story__full">
-            <h1 style={{ margin: "0.67em 0" }}>Truyện đã full</h1>
+            <Link
+              className="a-h1"
+              to="/danh-sach/truyen-full"
+              style={{ margin: "0.67em 0" }}
+            >
+              Truyện đã full
+            </Link>
             <FullStory data={dataHome && dataHome.fullStory} />
           </div>
         </div>
