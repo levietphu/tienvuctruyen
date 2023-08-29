@@ -8,7 +8,7 @@ import FullStory from "../components/FullStory";
 import { useContext, useEffect, useState } from "react";
 import PopupFull from "../components/PopupFull";
 import DragLoader from "../components/DragLoader";
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -27,6 +27,7 @@ const HomePage = () => {
 
   useEffect(() => {
     callApi();
+    document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
   }, []);
 
   // useEffect(() => {
@@ -54,7 +55,11 @@ const HomePage = () => {
   return (
     <>
       <MainLayout>
-        <GalleryCarousel loaderHome={loaderHome} banners={dataHome?.banners} />
+        <GalleryCarousel
+          loaderHome={loaderHome}
+          banners={dataHome?.banners}
+          notifications={dataHome?.notifications}
+        />
         <Search />
         <div className="story">
           <h1 style={{ margin: "0.67em 0" }}>Truyện đề cử</h1>

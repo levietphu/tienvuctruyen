@@ -97,7 +97,7 @@ const HistoryTransition = () => {
                           </span>
                         </td>
                         <td>
-                          <Moment format="hh:mm:ss YYYY-MM-DD">
+                          <Moment format="hh-mm-ss DD-MM-YYYY">
                             {item.updated_at}
                           </Moment>
                         </td>

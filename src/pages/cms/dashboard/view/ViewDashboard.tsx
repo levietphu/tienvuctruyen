@@ -10,7 +10,6 @@ import { checkAdmin } from "../../../../ultis/checkPer";
 const ViewDashboard = () => {
   const [data, setData] = useState<any>();
   const [dataStory, setDataStory] = useState<any>();
-  const [total, setTotal] = useState<number>();
   const [loader, setLoader] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
 
@@ -38,7 +37,6 @@ const ViewDashboard = () => {
       },
     }).then((res) => {
       setDataStory(res.data.story_user);
-      setTotal(res.data.total);
     });
   };
 

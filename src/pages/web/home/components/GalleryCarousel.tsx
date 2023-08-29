@@ -7,8 +7,9 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Pagination, Autoplay } from "swiper";
+import { NotificationFilled } from "@ant-design/icons";
 
-const GalleryCarousel = ({ banners, loaderHome }: any) => {
+const GalleryCarousel = ({ banners, loaderHome, notifications }: any) => {
   return (
     <>
       <div className="carousel mb-20">
@@ -50,7 +51,7 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
       </div>
       <div className="notification mb-20">
         <div className="notification__bell">
-          <i className="fa-solid fa-bell"></i>
+          <NotificationFilled rev={undefined} />
         </div>
         <Swiper
           modules={[Autoplay]}
@@ -61,42 +62,28 @@ const GalleryCarousel = ({ banners, loaderHome }: any) => {
           loop={true}
           className="mySwiper notification__slider"
         >
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>tvvinh</b> đã ủng hộ <b>100 xu</b> cho truyện{" "}
-              <b>Người Đọc Sách Đại Ngụy</b>
-            </p>
-          </SwiperSlide>
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>tiểu nam phong</b> đã ủng hộ <b>1000 xu</b> cho truyện{" "}
-              <b>Ta thiên mệnh đại phản phái nhân vật (Dịch)</b>
-            </p>
-          </SwiperSlide>
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>thanhhuynh132</b> đã bình luận trong truyện{" "}
-              <b>Siêu Cấp Thần Cơ Nhân (Bản Dịch)</b>
-            </p>
-          </SwiperSlide>
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>butter1</b> đã bình luận trong truyện
-              <b>Trùng Sinh Chi Kiêu Hùng Quật Khởi (Dịch)</b>
-            </p>
-          </SwiperSlide>
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>tvvinh</b> đã ủng hộ <b>100 xu</b> cho truyện{" "}
-              <b>Người Đọc Sách Đại Ngụy</b>
-            </p>
-          </SwiperSlide>
-          <SwiperSlide className="notification__item">
-            <p>
-              <b>tiểu nam phong</b> đã ủng hộ <b>1000 xu</b> cho truyện{" "}
-              <b>Ta thiên mệnh đại phản phái nhân vật (Dịch)</b>
-            </p>
-          </SwiperSlide>
+          {!loaderHome &&
+            notifications.map((noti: any, index: number) => {
+              return (
+                <SwiperSlide className="notification__item" key={index}>
+                  <p>
+                    {noti.type === 2 ? (
+                      <>
+                        {" "}
+                        <b>{noti.user.name}</b> đã ủng hộ{" "}
+                        <b>{noti.coin_donate} xu</b> cho truyện{" "}
+                        <b>{noti.story.name}</b>
+                      </>
+                    ) : (
+                      <>
+                        <b>{noti.user.name}</b> đã bình luận trong truyện{" "}
+                        <b>{noti.story.name}</b>
+                      </>
+                    )}
+                  </p>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </>

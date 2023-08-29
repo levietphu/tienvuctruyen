@@ -154,7 +154,7 @@ const Login = () => {
                     );
                   })}
               </div>
-              <Link to="">Quên mật khẩu?</Link>
+              <Link to="/reset-password">Quên mật khẩu?</Link>
               <button
                 type="submit"
                 // onClick={() => loginTienVuc()}

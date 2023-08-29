@@ -6,6 +6,7 @@ import Story from "./story/view/Story";
 import Transalator from "./translator/view/Transalator";
 import Login from "./user/Login";
 import Register from "./user/Register";
+import ForgotPassword from "./user/ForgotPassword";
 
 export const routesWeb: any[] = [
   { path: "/", index: true, name: "Home", component: <HomePage /> },
@@ -30,6 +31,12 @@ export const routesWeb: any[] = [
   },
   { path: "/login", index: true, name: "Login", component: <Login /> },
   { path: "/register", index: true, name: "Register", component: <Register /> },
+  {
+    path: "/reset-password",
+    index: true,
+    name: "FogotPass",
+    component: <ForgotPassword />,
+  },
   { path: "/404", index: true, name: "NotFound", component: <NotFound /> },
   { path: "/:slug", index: true, name: "Story", component: <Story /> },
   {

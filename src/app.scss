@@ -378,3 +378,18 @@ h1 {
     border-color: #357376 !important;
   }
 }
+
+//badge
+.ant-badge-count {
+  top: -9px !important;
+}
+
+//popover
+.ant-popover-inner {
+  padding: 0 !important;
+}
+
+//modal
+.ant-modal-footer {
+  display: none;
+}

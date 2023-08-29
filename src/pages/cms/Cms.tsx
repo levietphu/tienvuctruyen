@@ -6,6 +6,7 @@ import { checkPer } from "../../ultis/checkPer";
 import Dashboard from "./dashboard/view/Dashboard";
 import NotFound from "../web/NotFound/view/NotFound";
 import { Spin } from "antd";
+import PermissionDenied from "./permission-dennied/view/PermissionDenied";
 
 const Cms = () => {
   const { user, loaderUser }: any = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Cms = () => {
           loaderUser === "loader" ? (
             <Spin />
           ) : user && user.role.length <= 0 ? (
-            <a>Bạn không có quyền vào trang này</a>
+            <PermissionDenied />
           ) : user ? (
             <Dashboard />
           ) : (

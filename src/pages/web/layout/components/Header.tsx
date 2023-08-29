@@ -1,11 +1,15 @@
-import { useState, useContext, memo } from "react";
+import { useState, useContext, memo, useEffect } from "react";
 import "../styles/header.scss";
 import { useOutSide } from "../../../../hookCustom/useOutSide";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import setToken from "../../../../ultis/setToken";
+import { BellFilled } from "@ant-design/icons";
+import { Popover, Badge } from "antd";
+import PopoverNoti from "./PopoverNoti";
+import axios from "axios";
 
-const Header = ({ cates, logo }: any) => {
+const Header = ({ cates, logo, notifications }: any) => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
   const [toogleMenuList, setToogleMenuList] = useState(false);
   const [toogleMenuMobile, setToogleMenuMobile] = useState(false);
@@ -15,6 +19,7 @@ const Header = ({ cates, logo }: any) => {
   const [tooglePersonalLogout, setTooglePersonalLogout] = useState(false);
   const [tooglePersonalLogoutMoblie, setTooglePersonalLogoutMolie] =
     useState(false);
+  const [showNoti, setShowNoti] = useState(false);
 
   const cateRef = useOutSide(() => setToogleMenuCate(false));
   const listRef = useOutSide(() => setToogleMenuList(false));
@@ -25,6 +30,15 @@ const Header = ({ cates, logo }: any) => {
 
   const { user, loaderUser, setLoaderUser, setUser }: any =
     useContext(AuthContext);
+
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname.includes("/dashboard")) {
+      setShowNoti(true);
+    } else {
+      setShowNoti(false);
+    }
+  }, [pathname]);
 
   const logout = () => {
     setToken("");
@@ -104,7 +118,25 @@ const Header = ({ cates, logo }: any) => {
             )}
           </div>
         </div>
-        <div className="header__right" ref={menuRefPerLog}>
+        <div className="header__right center" ref={menuRefPerLog}>
+          {showNoti && (
+            <div className="bell">
+              <Popover
+                content={<PopoverNoti notifications={notifications} />}
+                trigger="click"
+              >
+                <Badge
+                  count={notifications && notifications.data.length}
+                  overflowCount={999}
+                >
+                  <BellFilled
+                    rev={undefined}
+                    style={{ fontSize: "20px", cursor: "pointer" }}
+                  />
+                </Badge>
+              </Popover>
+            </div>
+          )}
           {loaderUser === "loader" ? (
             <div className="box2" style={{ width: "100%" }}>
               <div className="gallery" style={{ height: "30px" }}>
