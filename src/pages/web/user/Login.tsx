@@ -5,21 +5,23 @@ import { AuthContext } from "../../../context/AuthContextProvider";
 import setToken from "../../../ultis/setToken";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Alert } from "antd";
+import axios from "axios";
 
 const Login = () => {
   const [checkInputName, setCheckInputName] = useState(false);
   const [checkInputPass, setCheckInputPass] = useState(false);
   const [loaderLogin, setLoaderLogin] = useState(false);
   const [error, setError] = useState<string>("");
+  const [textLogin, setTextLogin] = useState({
+    email: "",
+    password: "",
+  });
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
   );
   const {
-    login,
-    setTextLogin,
     errorServer,
-    textLogin,
     checkLogin,
     user,
     setErrorServer,
@@ -45,6 +47,13 @@ const Login = () => {
   useEffect(() => {
     user && navigate("/");
   }, [user]);
+
+  const login = async () => {
+    return await axios.post(`${process.env.REACT_APP_API}login`, {
+      email: textLogin.email,
+      password: textLogin.password,
+    });
+  };
 
   const loginTienVuc = (e: any) => {
     setLoaderLogin(true);
@@ -97,7 +106,7 @@ const Login = () => {
 
           <div className="login__main">
             {errorServer && !errorServer.email && !errorServer.password && (
-              <div className="inforError">
+              <div className="info infoError">
                 <p>{errorServer}</p>
               </div>
             )}

@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Spin } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContextProvider";
 
 const ForgotPassword = () => {
   const [checkInputEmail, setCheckInputEmail] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string>("");
   const [loader, setLoader] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [isError, setIsError] = useState<boolean>();
+  const [checkOtp, setCheckOtp] = useState<string>("");
+  const [userResetPassword, setUserResetPassword] = useState<any>();
+  const [idCheckUser, setIdCheckUser] = useState<any>();
+
+  const { setCheckLogin }: any = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const callApiForgot = async () => {
     setLoader(true);
@@ -18,9 +27,61 @@ const ForgotPassword = () => {
         setLoader(false);
         setIsError(false);
         setEmail("");
+        setCheckOtp("checkOtp");
+        setIdCheckUser(res.data.id_check_user);
       })
       .catch((err) => {
-        setMessage(err.response.data.message);
+        if (err.response.status === 400) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("Hệ thống đang bận");
+        }
+        setIsError(true);
+        setLoader(false);
+      });
+  };
+
+  const callApiCheckOtp = async () => {
+    setLoader(true);
+    await axios
+      .post(`${process.env.REACT_APP_API}check_otp`, {
+        id: idCheckUser,
+        otp: email,
+      })
+      .then((res) => {
+        setLoader(false);
+        setIsError(false);
+        setEmail("");
+        setCheckOtp("pass");
+        setUserResetPassword(res.data.user_reset_password);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("Hệ thống đang bận");
+        }
+        setIsError(true);
+        setLoader(false);
+      });
+  };
+
+  const callApiChangePass = async () => {
+    setLoader(true);
+    await axios
+      .post(`${process.env.REACT_APP_API}change_pass`, {
+        id: userResetPassword.id,
+        password: email,
+      })
+      .then((res) => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("Hệ thống đang bận");
+        }
         setIsError(true);
         setLoader(false);
       });
@@ -28,8 +89,25 @@ const ForgotPassword = () => {
 
   const forgotPass = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    callApiForgot();
+    if (checkOtp === "checkOtp") {
+      callApiCheckOtp();
+    } else if (checkOtp === "") {
+      callApiForgot();
+    } else {
+      callApiChangePass();
+    }
   };
+
+  useEffect(() => {
+    setCheckLogin(true);
+  }, []);
+
+  useEffect(() => {
+    if (message) {
+      let id = setTimeout(() => setMessage(""), 4000);
+      return () => clearTimeout(id);
+    }
+  }, [message]);
 
   return (
     <div className="login">
@@ -47,13 +125,18 @@ const ForgotPassword = () => {
             )}
             <form onSubmit={(e) => forgotPass(e)} method="post">
               <div className="name__login">
-                <p>Email của bạn</p>
+                <p>
+                  {checkOtp === "checkOtp"
+                    ? "Mã xác nhận"
+                    : checkOtp === "pass"
+                    ? "Nhập mật khẩu mới"
+                    : "Email của bạn"}
+                </p>
                 <input
                   className={`${
                     checkInputEmail ? "comment__text--active" : ""
                   }`}
-                  type="text"
-                  placeholder="vidugmail.com"
+                  type={checkOtp === "pass" ? "password" : "text"}
                   onClick={() => setCheckInputEmail(!checkInputEmail)}
                   onBlur={() => setCheckInputEmail(false)}
                   value={email}

@@ -9,7 +9,13 @@ import { Popover, Badge } from "antd";
 import PopoverNoti from "./PopoverNoti";
 import axios from "axios";
 
-const Header = ({ cates, logo, notifications }: any) => {
+const Header = ({
+  cates,
+  logo,
+  notifications,
+  noti_count,
+  getNotification,
+}: any) => {
   const [toogleMenuCate, setToogleMenuCate] = useState(false);
   const [toogleMenuList, setToogleMenuList] = useState(false);
   const [toogleMenuMobile, setToogleMenuMobile] = useState(false);
@@ -39,6 +45,14 @@ const Header = ({ cates, logo, notifications }: any) => {
       setShowNoti(false);
     }
   }, [pathname]);
+
+  const changeIsView = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API}change_is_view`, {
+        id_user: user.user.id,
+      })
+      .then((res) => getNotification());
+  };
 
   const logout = () => {
     setToken("");
@@ -122,16 +136,23 @@ const Header = ({ cates, logo, notifications }: any) => {
           {showNoti && (
             <div className="bell">
               <Popover
-                content={<PopoverNoti notifications={notifications} />}
+                content={
+                  <PopoverNoti
+                    notifications={notifications}
+                    getNotification={getNotification}
+                  />
+                }
                 trigger="click"
               >
                 <Badge
-                  count={notifications && notifications.data.length}
+                  count={notifications && noti_count}
                   overflowCount={999}
+                  style={{ display: `${noti_count === 0 ? "none" : ""}` }}
                 >
                   <BellFilled
                     rev={undefined}
                     style={{ fontSize: "20px", cursor: "pointer" }}
+                    onClick={() => noti_count > 0 && changeIsView()}
                   />
                 </Badge>
               </Popover>

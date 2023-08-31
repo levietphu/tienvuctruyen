@@ -9,36 +9,10 @@ const AuthContextProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>();
   const [loaderUser, setLoaderUser] = useState<string>("loader");
   const [checkLogin, setCheckLogin] = useState<boolean>(false);
-  const [dataRegister, setDataRegister] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const [textLogin, setTextLogin] = useState({
-    email: "",
-    password: "",
-  });
-
   const [errorServer, setErrorServer] = useState<any>();
   const [reLogin, setReLogin] = useState<boolean>(false);
 
   const token = getCookie("token");
-
-  const register = async () => {
-    return await axios.post(`${process.env.REACT_APP_API}register`, {
-      name: dataRegister.name,
-      email: dataRegister.email,
-      password: dataRegister.password,
-    });
-  };
-
-  const login = async () => {
-    return await axios.post(`${process.env.REACT_APP_API}login`, {
-      email: textLogin.email,
-      password: textLogin.password,
-    });
-  };
 
   const getUser = async () => {
     await axios
@@ -65,14 +39,8 @@ const AuthContextProvider = ({ children }: any) => {
   const dataAuth: any = {
     errorServer,
     setErrorServer,
-    register,
-    dataRegister,
-    setDataRegister,
-    login,
-    setTextLogin,
     user,
     setUser,
-    textLogin,
     loaderUser,
     setLoaderUser,
     getUser,

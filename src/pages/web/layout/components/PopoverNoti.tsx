@@ -2,8 +2,16 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import "../styles/popover-noti.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Moment from "react-moment";
+import axios from "axios";
+import { memo } from "react";
 
-const PopoverNoti = ({ notifications }: any) => {
+const PopoverNoti = ({ notifications, getNotification }: any) => {
+  const changeIsRead = async (id: number) => {
+    await axios
+      .post(`${process.env.REACT_APP_API}change_is_read`, { id })
+      .then((res) => getNotification());
+  };
+
   return (
     <div className="popover-noti">
       <div className="popover-noti-header">Thông báo</div>
@@ -11,7 +19,16 @@ const PopoverNoti = ({ notifications }: any) => {
         {notifications &&
           notifications.data.map((value: any, index: number) => {
             return (
-              <div className="noti-item" key={index}>
+              <div
+                className="noti-item"
+                key={index}
+                style={{
+                  background: `${value.is_read === 1 ? "white" : "#e0dede"}`,
+                }}
+                onClick={() =>
+                  value.is_read === 0 && changeIsRead(value.id_repcipients)
+                }
+              >
                 <div className="noti-item-left center">
                   <FontAwesomeIcon className="icon-noti" icon={faCoins} />
                 </div>
@@ -36,4 +53,4 @@ const PopoverNoti = ({ notifications }: any) => {
   );
 };
 
-export default PopoverNoti;
+export default memo(PopoverNoti);

@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/AuthContextProvider";
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import axios from "axios";
 
 const Register = () => {
   const [checkInputName, setCheckInputName] = useState(false);
@@ -12,6 +13,11 @@ const Register = () => {
   const [checkInputEmail, setCheckInputEmail] = useState(false);
   const [checkRules, setCheckRules] = useState(false);
   const [loaderRegister, setLoaderRegister] = useState(false);
+  const [dataRegister, setDataRegister] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
@@ -19,15 +25,8 @@ const Register = () => {
     <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
   );
 
-  const {
-    errorServer,
-    register,
-    setDataRegister,
-    dataRegister,
-    setCheckLogin,
-    setErrorServer,
-    user,
-  }: any = useContext(AuthContext);
+  const { errorServer, setCheckLogin, setErrorServer, user }: any =
+    useContext(AuthContext);
 
   const clearChangePage = () => {
     setCheckInputEmail(false);
@@ -44,6 +43,7 @@ const Register = () => {
 
   useEffect(() => {
     document.title = "Tạo tài khoản Tiên Vực";
+    setCheckLogin(true);
     return () => clearChangePage();
   }, []);
 
@@ -63,13 +63,21 @@ const Register = () => {
     return () => clearTimeout(id);
   }, [errorServer]);
 
+  const register = async () => {
+    return await axios.post(`${process.env.REACT_APP_API}register`, {
+      name: dataRegister.name,
+      email: dataRegister.email,
+      password: dataRegister.password,
+    });
+  };
+
   const registerTienVuc = (e: any) => {
     e.preventDefault();
     setLoaderRegister(true);
     register()
       .then((res: any) => {
         navigate("/login");
-        setCheckLogin(true);
+
         setLoaderRegister(false);
       })
       .catch((err: any) => {
@@ -89,8 +97,9 @@ const Register = () => {
             <i className="fa-solid fa-clipboard-list"></i>
           </h1>
           <form
-            onSubmit={(e) => checkRules && registerTienVuc(e)}
-            method="post"
+            onSubmit={(e) =>
+              checkRules ? registerTienVuc(e) : e.preventDefault()
+            }
           >
             <div className="login__main">
               <div className="name__login">
