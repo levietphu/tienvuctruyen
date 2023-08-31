@@ -38,7 +38,7 @@ const ListChapter = () => {
       );
     } else {
       if (loaderUser !== "loader") {
-        callApi("", Math.ceil(Number(params.slugchapter?.split("-")[1])) / 20);
+        callApi("", Math.ceil(Number(params.slugchapter?.split("-")[1]) / 20));
       }
     }
     setLoader(true);

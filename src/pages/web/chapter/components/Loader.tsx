@@ -57,9 +57,9 @@ const Loader = () => {
         <div className="setting">
           <i className="fa-solid fa-gear"></i>
         </div>
-        <a href="#" className="change__story center">
-          <i className="fa-solid fa-book" style={{ color: "white" }}></i>
-        </a>
+        <div className="change__story center">
+          <i className="fa-solid fa-book"></i>
+        </div>
         <div className="list__chapter">
           <i className="fa-solid fa-list"></i>
         </div>
