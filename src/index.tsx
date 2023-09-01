@@ -1,9 +1,6 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import SettingContextProvider from "./context/SettingContextProvider";
 import reportWebVitals from "./reportWebVitals";
-import LayoutContextProvider from "./context/LayoutContextProvider";
 import AuthContextProvider from "./context/AuthContextProvider";
 import { Provider } from "react-redux";
 import { rootStore } from "./store/index";
@@ -15,11 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={rootStore}>
     <AuthContextProvider>
-      <LayoutContextProvider>
-        <SettingContextProvider>
-          <App />
-        </SettingContextProvider>
-      </LayoutContextProvider>
+      <App />
     </AuthContextProvider>
   </Provider>
 );

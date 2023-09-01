@@ -3,16 +3,18 @@ import "../styles/layout-cms.scss";
 import { useEffect } from "react";
 import Props from "../../../../ultis/typeChildren";
 import Header from "../../../web/layout/components/Header";
-import { LayoutContext } from "../../../../context/LayoutContextProvider";
 import { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import axios from "axios";
+import { useAppSelector } from "../../../../store/hookStore";
 
 const LayoutCms = ({ children }: Props) => {
   const [notifications, setNotifications] = useState<any>();
   const [noti_count, setNotiCount] = useState<number>();
 
-  const { dataLayout }: any = useContext(LayoutContext);
+  const { dataLayout, loading } = useAppSelector(
+    (state) => state.common.layout
+  );
   const { user }: any = useContext(AuthContext);
 
   const getNotification = useCallback(async (page = 1) => {
@@ -35,8 +37,8 @@ const LayoutCms = ({ children }: Props) => {
     <div className="container">
       <header>
         <Header
-          cates={dataLayout && dataLayout.cates}
-          logo={dataLayout && dataLayout.logo_header}
+          cates={!loading && dataLayout.cates}
+          logo={!loading && dataLayout.logo_header}
           notifications={notifications}
           noti_count={noti_count}
           getNotification={getNotification}

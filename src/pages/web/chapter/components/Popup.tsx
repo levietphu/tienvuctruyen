@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { SettingContext } from "../../../../context/SettingContextProvider";
+import { isTogglePopup } from "../../../../store/common/commonSlice";
+import { useAppDispatch } from "../../../../store/hookStore";
 
 const Popup = () => {
-  const { setTogglePopup }: any = useContext(SettingContext);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -10,7 +10,7 @@ const Popup = () => {
         <div className="popup__chapter--left"></div>
         <div
           className="popup__chapter--right"
-          onClick={() => setTogglePopup(false)}
+          onClick={() => dispatch(isTogglePopup(false))}
         ></div>
       </div>
     </>

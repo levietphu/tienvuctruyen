@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect, memo } from "react";
-import { SettingContext } from "../../../../context/SettingContextProvider";
 import { useParams, Link } from "react-router-dom";
 import Moment from "react-moment";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import axios from "axios";
+import { useAppSelector } from "../../../../store/hookStore";
 
 const ListChapter = () => {
-  const { togglePopup }: any = useContext(SettingContext);
+  const { togglePopup } = useAppSelector((state) => state.common.setting);
   const { user, loaderUser }: any = useContext(AuthContext);
 
   const [dataChapter, setDataChapter] = useState<any>();

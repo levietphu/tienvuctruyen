@@ -1,7 +1,12 @@
 import { createContext, useState, useEffect } from "react";
-import { AppContextInterface } from "./SettingContextProvider";
 import axios from "axios";
 import { getCookie } from "../ultis/getCookie";
+
+interface AppContextInterface {
+  name: string;
+  author: string;
+  url: string;
+}
 
 export const AuthContext = createContext<AppContextInterface | null>(null);
 

@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import MainLayout from "../../layout/view/MainLayout";
 import "../styles/chapter.scss";
-import { SettingContext } from "../../../../context/SettingContextProvider";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import ChapterVip from "../components/ChapterVip";
@@ -10,6 +9,12 @@ import { AuthContext } from "../../../../context/AuthContextProvider";
 import ListChapter from "../components/ListChapter";
 import Popup from "../components/Popup";
 import { Alert } from "antd";
+import { useAppDispatch, useAppSelector } from "../../../../store/hookStore";
+import {
+  changeTheme,
+  changeSize,
+  isTogglePopup,
+} from "../../../../store/common/commonSlice";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -21,8 +26,9 @@ const Chapterpage = () => {
   const [alertBookMark, setAlertBookMark] = useState<string>("");
   const [checkSuccess, setCheckSuccess] = useState<boolean>(true);
 
-  const { setTogglePopup, setTheme, theme, size, setSize, togglePopup }: any =
-    useContext(SettingContext);
+  const dispatch = useAppDispatch();
+  const { setting } = useAppSelector((state) => state.common);
+
   const { user, loaderUser }: any = useContext(AuthContext);
 
   const params = useParams();
@@ -176,8 +182,8 @@ const Chapterpage = () => {
                   <div
                     className="main__content"
                     style={{
-                      fontSize: `${size}rem`,
-                      lineHeight: `${(size * 100) / 75}rem`,
+                      fontSize: `${setting.size}rem`,
+                      lineHeight: `${(setting.size * 100) / 75}rem`,
                     }}
                     dangerouslySetInnerHTML={{
                       __html: dataChapter.chuong.content,
@@ -231,7 +237,9 @@ const Chapterpage = () => {
                   className="change__story center"
                   style={{
                     color: `${
-                      theme === "light" || theme === "book" ? "black" : "white"
+                      setting.theme === "light" || setting.theme === "book"
+                        ? "black"
+                        : "white"
                     }`,
                   }}
                 >
@@ -240,7 +248,7 @@ const Chapterpage = () => {
                 <div
                   className="list__chapter"
                   onClick={() => {
-                    setTogglePopup(true);
+                    dispatch(isTogglePopup(true));
                   }}
                 >
                   <i className="fa-solid fa-list"></i>
@@ -263,7 +271,7 @@ const Chapterpage = () => {
                   <Link
                     style={{
                       color: `${
-                        theme === "light" || theme === "book"
+                        setting.theme === "light" || setting.theme === "book"
                           ? "black"
                           : "white"
                       }`,
@@ -282,7 +290,7 @@ const Chapterpage = () => {
                   <Link
                     style={{
                       color: `${
-                        theme === "light" || theme === "book"
+                        setting.theme === "light" || setting.theme === "book"
                           ? "black"
                           : "white"
                       }`,
@@ -308,22 +316,24 @@ const Chapterpage = () => {
                   <div>
                     <i
                       className={`fa-solid fa-lightbulb light ${
-                        theme === "light" ? "active__theme" : ""
+                        setting.theme === "light" ? "active__theme" : ""
                       }`}
-                      onClick={() => setTheme("light")}
-                      style={{ color: `${theme === "dark" ? "black" : ""}` }}
+                      onClick={() => dispatch(changeTheme("light"))}
+                      style={{
+                        color: `${setting.theme === "dark" ? "black" : ""}`,
+                      }}
                     ></i>
                     <i
                       className={`fa-solid fa-moon ${
-                        theme === "dark" ? "active__theme" : ""
+                        setting.theme === "dark" ? "active__theme" : ""
                       }`}
-                      onClick={() => setTheme("dark")}
+                      onClick={() => dispatch(changeTheme("dark"))}
                     ></i>
                     <i
                       className={`fa-solid fa-book-open ${
-                        theme === "book" ? "active__theme" : ""
+                        setting.theme === "book" ? "active__theme" : ""
                       }`}
-                      onClick={() => setTheme("book")}
+                      onClick={() => dispatch(changeTheme("book"))}
                     ></i>
                   </div>
                 </div>
@@ -332,14 +342,14 @@ const Chapterpage = () => {
                   <div>
                     <div
                       className="fontsize__up"
-                      onClick={() => setSize(size + 0.1)}
+                      onClick={() => dispatch(changeSize(true))}
                     >
                       <i className="fa-solid fa-a"></i>
                       <i className="fa-solid fa-arrow-up"></i>
                     </div>
                     <div
                       className="fontsize__down"
-                      onClick={() => setSize(size - 0.1)}
+                      onClick={() => dispatch(changeSize(false))}
                     >
                       <i className="fa-solid fa-a"></i>
                       <i className="fa-solid fa-arrow-down"></i>
@@ -355,7 +365,7 @@ const Chapterpage = () => {
       </MainLayout>
       <ListChapter />
 
-      {togglePopup && <Popup />}
+      {setting.togglePopup && <Popup />}
     </>
   );
 };
