@@ -1,11 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import story from "../pages/cms/story/slice/storySlice";
-import home from "../pages/web/home/slice/homeSlice";
 import common from "./common/commonSlice";
 
 const rootReducer = combineReducers({
   story,
-  home,
   common,
 });
 

@@ -8,7 +8,13 @@ import PaginationPage from "../../pagination/PaginationPage";
 import ChapterItem from "./ChapterItem";
 import DonateItem from "./DonateItem";
 
-const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
+const ChapterStory = ({
+  callApiDonate,
+  story,
+  user,
+  donates,
+  totalDonate,
+}: any) => {
   const [chapterStory, setChapterStory] = useState<any>();
 
   const [keyword, setKeyword] = useState<string>("");
@@ -85,7 +91,7 @@ const ChapterStory = ({ callApiDonate, story, user, donates }: any) => {
             setCheckDonateOrChapter("donate");
           }}
         >
-          Ủng hộ<span>{donates && donates.total_donate}</span>
+          Ủng hộ<span>{totalDonate}</span>
         </div>
       </div>
       <div className="center__chapter">

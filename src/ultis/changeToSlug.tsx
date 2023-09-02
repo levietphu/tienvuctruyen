@@ -1,7 +1,7 @@
 export const changeToSlug = (name: string) => {
   //Lấy text từ thẻ input name
   if (name) {
-    var slug;
+    let slug;
     //Đổi chữ hoa thành chữ thường
     slug = name.toLowerCase();
 

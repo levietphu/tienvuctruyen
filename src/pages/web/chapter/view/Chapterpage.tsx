@@ -182,8 +182,8 @@ const Chapterpage = () => {
                   <div
                     className="main__content"
                     style={{
-                      fontSize: `${setting.size}rem`,
-                      lineHeight: `${(setting.size * 100) / 75}rem`,
+                      fontSize: `${setting.size}px`,
+                      lineHeight: `${(setting.size * 100) / 75}px`,
                     }}
                     dangerouslySetInnerHTML={{
                       __html: dataChapter.chuong.content,

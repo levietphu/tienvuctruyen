@@ -7,6 +7,7 @@ import Transalator from "./translator/view/Transalator";
 import Login from "./user/Login";
 import Register from "./user/Register";
 import ForgotPassword from "./user/ForgotPassword";
+import Author from "./author/view/Author";
 
 export const routesWeb: any[] = [
   { path: "/", index: true, name: "Home", component: <HomePage /> },
@@ -28,6 +29,12 @@ export const routesWeb: any[] = [
     index: true,
     name: "Translator",
     component: <Transalator />,
+  },
+  {
+    path: "/tac-gia/:slugauthor",
+    index: true,
+    name: "Author",
+    component: <Author />,
   },
   { path: "/login", index: true, name: "Login", component: <Login /> },
   { path: "/register", index: true, name: "Register", component: <Register /> },

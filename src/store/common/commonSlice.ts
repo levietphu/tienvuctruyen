@@ -25,7 +25,7 @@ export const commonSlice = createSlice({
   initialState: {
     setting: {
       theme: saveTheme || "light",
-      size: Number(saveSize) || 1.2,
+      size: Number(saveSize) || 20,
       togglePopup: false,
     },
     layout: {
@@ -48,9 +48,9 @@ export const commonSlice = createSlice({
     },
     changeSize: (state, action: PayloadAction<boolean>) => {
       if (action.payload) {
-        state.setting.size += 0.1;
+        state.setting.size += 1;
       } else {
-        state.setting.size -= 0.1;
+        state.setting.size -= 1;
       }
       localStorage.setItem("size", JSON.stringify(state.setting.size));
     },

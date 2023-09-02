@@ -21,6 +21,7 @@ const Story = () => {
   // data api
   const [story, setStory] = useState<any>();
   const [donates, setDonates] = useState<any[]>();
+  const [totalDonate, setTotalDonate] = useState<number>();
   const [loader, setLoader] = useState<boolean>(true);
   const [isModalDonateOpen, setIsModalDonateOpen] = useState(false);
   const [isModalChapterVipOpen, setIsModalChapterVipOpen] = useState(false);
@@ -58,6 +59,7 @@ const Story = () => {
       )
       .then((res) => {
         setDonates(res.data.donates);
+        setTotalDonate(res.data.totalDonate);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -207,19 +209,17 @@ const Story = () => {
               <h1 className="header__story--name">{story.name}</h1>
               <p className="header__story--author">
                 <span>tác giả: </span>{" "}
-                <span>
-                  {story.tacgia ? story.tacgia.name : "Chưa có thông tin"}
-                </span>
+                <Link to={`/tac-gia/${story.tacgia.slug}`}>
+                  {story.tacgia.name}
+                </Link>
               </p>
               <p className="header__story--translator">
                 <span>dịch giả: </span>{" "}
-                <Link to={`/dich-gia/${story.dichgia && story.dichgia.slug}`}>
+                <Link to={`/dich-gia/${story.dichgia.slug}`}>
                   <span className="person">
                     <i className="fa-solid fa-person"></i>
                   </span>{" "}
-                  <span>
-                    {story.dichgia ? story.dichgia.name : "chưa có thông tin"}
-                  </span>
+                  <span>{story.dichgia.name}</span>
                 </Link>
               </p>
               <div className="header__story--view">
@@ -290,6 +290,7 @@ const Story = () => {
               donates={donates}
               user={user}
               story={story}
+              totalDonate={totalDonate}
             />
             <CommentStory slug={params.slug} story={story} />
           </div>
