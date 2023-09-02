@@ -10,7 +10,7 @@ const ChapterItem = ({ params, index, value }: any) => {
       key={index}
     >
       <div className="center__chapter--left">
-        <p>
+        <p className="fix-line">
           <span className="number__chapter">{value.chapter_number}.</span>
           <span className="name__chapter"> {value.name_chapter}</span>
         </p>
