@@ -1,4 +1,4 @@
-import { Button, Image } from "antd";
+import { Button, Image, Spin } from "antd";
 import "../../../styles/bank-step2.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,7 @@ import coin from "../../../../../../assets/coin.svg";
 import { AuthContext } from "../../../../../../context/AuthContextProvider";
 import { useContext, useState } from "react";
 import axios from "axios";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const WalletStep2 = ({
   walletInfo,
@@ -16,11 +17,20 @@ const WalletStep2 = ({
 }: any) => {
   const { user }: any = useContext(AuthContext);
   const [walletFile, setWalletFile] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const antIcon = (
+    <LoadingOutlined rev={undefined} style={{ fontSize: 24 }} spin />
+  );
 
   const handleSuccess = async (data: any) => {
+    setLoading(true);
     await axios
       .post(`${process.env.REACT_APP_API}create_transaction`, data)
-      .then((res) => setCheckSuccess(true))
+      .then((res) => {
+        setCheckSuccess(true);
+        setLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -145,7 +155,7 @@ const WalletStep2 = ({
           disabled={walletFile ? false : true}
           onClick={createTransaction}
         >
-          Hoàn thành
+          {!loading ? "Hoàn thành" : <Spin indicator={antIcon} />}
         </Button>
       </div>
       <span className="copy" style={{ top: `${showCopy ? "30%" : "-1000px"}` }}>

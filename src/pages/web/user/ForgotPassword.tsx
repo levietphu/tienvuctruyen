@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ForgotPassword = () => {
   const [checkInputEmail, setCheckInputEmail] = useState(false);
@@ -15,6 +16,10 @@ const ForgotPassword = () => {
   const [idCheckUser, setIdCheckUser] = useState<any>();
 
   const { setCheckLogin }: any = useContext(AuthContext);
+
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 24 }} spin rev={undefined} />
+  );
 
   const navigate = useNavigate();
 
@@ -146,7 +151,15 @@ const ForgotPassword = () => {
               </div>
 
               <button type="submit" style={{ marginTop: "10px" }}>
-                {!loader ? "Tiếp tục" : <Spin />}
+                {!loader ? (
+                  "Tiếp tục"
+                ) : (
+                  <Spin
+                    style={{ color: "white" }}
+                    spinning
+                    indicator={antIcon}
+                  />
+                )}
               </button>
             </form>
           </div>

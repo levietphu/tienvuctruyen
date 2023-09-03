@@ -22,6 +22,7 @@ const Chapterpage = () => {
   const [dataChapter, setDataChapter] = useState<any>();
   const [loader, setLoader] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [idBookMark, setIdBookMark] = useState<number>();
 
   const [alertBookMark, setAlertBookMark] = useState<string>("");
   const [checkSuccess, setCheckSuccess] = useState<boolean>(true);
@@ -50,6 +51,22 @@ const Chapterpage = () => {
         slug_story: params.slugstory,
         slug: params.slugchapter,
         id_user: user ? user.user.id : "",
+      })
+      .then((res) => {
+        setAlertBookMark(res.data.message);
+        setIdBookMark(res.data.id);
+        if (res.data.status === 400) {
+          setCheckSuccess(false);
+        } else {
+          setCheckSuccess(true);
+        }
+      });
+  };
+
+  const callRemoveItemBookMark = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_API}remove_bookmark_item`, {
+        id: idBookMark,
       })
       .then((res) => {
         setAlertBookMark(res.data.message);
@@ -96,10 +113,14 @@ const Chapterpage = () => {
   }, [loader]);
 
   useEffect(() => {
-    if (bookMark) {
-      callAddBookMark();
+    if (loaderUser === "user") {
+      if (bookMark) {
+        callAddBookMark();
+      } else {
+        callRemoveItemBookMark();
+      }
     }
-  }, [bookMark]);
+  }, [bookMark, loaderUser]);
 
   useEffect(() => {
     if (alertBookMark) {
@@ -243,7 +264,7 @@ const Chapterpage = () => {
                     }`,
                   }}
                 >
-                  <i className="fa-solid fa-book"></i>
+                  <i className="fa-solid fa-book-open"></i>
                 </Link>
                 <div
                   className="list__chapter"

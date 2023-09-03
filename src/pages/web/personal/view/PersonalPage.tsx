@@ -38,7 +38,7 @@ const PersonalPage = () => {
               <div className="personal__left--list">
                 <NavLink
                   className={
-                    pathname === "/account"
+                    !pathname.includes("vipbuy") && !pathname.includes("coin")
                       ? "personal__item active__personal"
                       : "personal__item"
                   }
@@ -49,7 +49,7 @@ const PersonalPage = () => {
                 </NavLink>
                 <NavLink
                   className={
-                    pathname === "/account/vipbuy"
+                    pathname.includes("vipbuy")
                       ? "personal__item active__personal"
                       : "personal__item"
                   }
@@ -60,7 +60,7 @@ const PersonalPage = () => {
                 </NavLink>
                 <NavLink
                   className={
-                    pathname === "/account/coin"
+                    pathname.includes("coin")
                       ? "personal__item active__personal"
                       : "personal__item"
                   }
@@ -74,11 +74,11 @@ const PersonalPage = () => {
             <div className="personal__right">
               <div className="bookcase">
                 <h1>
-                  {pathname === "/account"
-                    ? "Tủ sách của bạn"
-                    : pathname === "/account/vipbuy"
+                  {pathname.includes("vipbuy")
                     ? "Truyện vip đã mua"
-                    : "Nạp xu"}
+                    : pathname.includes("coin")
+                    ? "Nạp xu"
+                    : "Tủ sách của bạn"}
                 </h1>
               </div>
               <Outlet />

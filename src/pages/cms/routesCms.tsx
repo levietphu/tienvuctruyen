@@ -128,6 +128,12 @@ const routesCms: any[] = [
     component: CreateStory,
   },
   {
+    path: "/profile/view",
+    index: true,
+    per: "profile-view",
+    component: CreateStory,
+  },
+  {
     path: "/story/edit/:id_story",
     index: true,
     per: "story-edit",

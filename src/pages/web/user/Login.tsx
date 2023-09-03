@@ -169,7 +169,15 @@ const Login = () => {
                 // onClick={() => loginTienVuc()}
                 style={{ marginTop: "10px" }}
               >
-                {!loaderLogin ? "Đăng nhập" : <Spin indicator={antIcon} />}
+                {!loaderLogin ? (
+                  "Đăng nhập"
+                ) : (
+                  <Spin
+                    spinning
+                    indicator={antIcon}
+                    style={{ color: "white" }}
+                  />
+                )}
               </button>
             </form>
           </div>
@@ -180,7 +188,7 @@ const Login = () => {
         </div>
       </div>
       <Alert
-        className="error_chapter"
+        className="error_user"
         message={error}
         type="error"
         showIcon

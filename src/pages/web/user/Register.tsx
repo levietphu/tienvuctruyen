@@ -201,7 +201,15 @@ const Register = () => {
                 type="submit"
                 className={`${checkRules ? "" : "forbiden"}`}
               >
-                {!loaderRegister ? "Đăng ký" : <Spin indicator={antIcon} />}
+                {!loaderRegister ? (
+                  "Đăng ký"
+                ) : (
+                  <Spin
+                    spinning
+                    indicator={antIcon}
+                    style={{ color: "white" }}
+                  />
+                )}
               </button>
             </div>
           </form>

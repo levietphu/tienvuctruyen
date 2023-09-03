@@ -7,10 +7,12 @@ const CateItem = ({ item, index }: any) => {
   return (
     <div className="item__story--newupdate">
       <div className="image__story mr-10">
-        <img
-          src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
-          alt="webtruyen"
-        />
+        <Link to={`/${item.slug}`}>
+          <img
+            src={`${process.env.REACT_APP_UPLOADS}${item.image}`}
+            alt="webtruyen"
+          />
+        </Link>
         {params.sluglist && params.sluglist === "truyen-vip" && (
           <div
             className="top__story"

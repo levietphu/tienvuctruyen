@@ -1,12 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useParams,
-} from "react-router-dom";
-import { Modal } from "antd";
+import { useContext } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { routesWeb } from "./routesWeb";
 import { RouteProps } from "../../store/common/interface";
 import PersonalPage from "./personal/view/PersonalPage";
@@ -39,7 +32,7 @@ const Web = () => {
           <Route path="" element={<BookCase />} />
           <Route path="vipbuy" element={<VipBuy />} />
           <Route path="coin" element={<Coin />} />
-          <Route path="*" element={<a>Not Found</a>} />
+          <Route path="*" element={<Navigate to="/404" />} />
         </Route>
       </Routes>
     </>

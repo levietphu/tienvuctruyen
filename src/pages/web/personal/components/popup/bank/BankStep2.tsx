@@ -1,11 +1,12 @@
-import { Button, Image } from "antd";
+import { Button, Image, Spin } from "antd";
 import "../../../styles/bank-step2.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import coin from "../../../../../../assets/coin.svg";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../../../../context/AuthContextProvider";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const BankStep2 = ({
   bankInfo,
@@ -14,9 +15,16 @@ const BankStep2 = ({
   showCopy,
   setCheckSuccess,
 }: any) => {
+  const [loading, setLoading] = useState(false);
+
   const { user }: any = useContext(AuthContext);
 
+  const antIcon = (
+    <LoadingOutlined rev={undefined} style={{ fontSize: 24 }} spin />
+  );
+
   const transferredMoney = () => {
+    setCheckSuccess(true);
     addTransaction({
       transaction_code: bankInfo.transitionCode,
       content: "Nộp " + bankInfo.value + "k " + bankInfo.name_bank,
@@ -30,7 +38,10 @@ const BankStep2 = ({
   const addTransaction = async (data: any) => {
     await axios
       .post(`${process.env.REACT_APP_API}create_transaction`, data)
-      .then((res) => setCheckSuccess(true))
+      .then((res) => {
+        setCheckSuccess(true);
+        setLoading(false);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -117,7 +128,7 @@ const BankStep2 = ({
           Quay lại
         </Button>
         <Button className="continue" size="large" onClick={transferredMoney}>
-          Tôi đã chuyển khoản
+          {!loading ? "Tôi đã chuyển khoản" : <Spin indicator={antIcon} />}
         </Button>
       </div>
       <span className="copy" style={{ top: `${showCopy ? "30%" : "-1000px"}` }}>

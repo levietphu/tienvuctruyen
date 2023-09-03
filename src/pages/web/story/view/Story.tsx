@@ -219,7 +219,9 @@ const Story = () => {
                   <span className="person">
                     <i className="fa-solid fa-person"></i>
                   </span>{" "}
-                  <span>{story.dichgia.name}</span>
+                  <span style={{ textTransform: "initial" }}>
+                    {story.dichgia.name}
+                  </span>
                 </Link>
               </p>
               <div className="header__story--view">

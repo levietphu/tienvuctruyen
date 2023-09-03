@@ -58,7 +58,7 @@ const Loader = () => {
           <i className="fa-solid fa-gear"></i>
         </div>
         <div className="change__story center">
-          <i className="fa-solid fa-book"></i>
+          <i className="fa-solid fa-book-open"></i>
         </div>
         <div className="list__chapter">
           <i className="fa-solid fa-list"></i>
