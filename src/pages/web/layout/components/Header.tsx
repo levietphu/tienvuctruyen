@@ -189,10 +189,10 @@ const Header = ({
                       <i className="fa-solid fa-user"></i>
                       <span>Trang cá nhân</span>
                     </Link>
-                    <button className="logout" onClick={logout}>
+                    <p className="person" onClick={logout}>
                       <i className="fa-solid fa-right-from-bracket"></i>
                       <span>Đăng xuất</span>
-                    </button>
+                    </p>
                   </div>
                 )}
               </>

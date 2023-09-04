@@ -26,12 +26,6 @@ const Author = () => {
     callApi();
   }, [params.slugauthor]);
 
-  useEffect(() => {
-    if (!loader && params.slugauthor) {
-      document.title = `Truyện dịch bởi ${params.slugauthor}`;
-    }
-  }, [loader]);
-
   return (
     <MainLayout>
       <div className="center">

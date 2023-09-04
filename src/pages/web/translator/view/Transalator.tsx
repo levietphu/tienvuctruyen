@@ -25,10 +25,8 @@ const Transalator = () => {
   }, [params.slugdichgia]);
 
   useEffect(() => {
-    if (!loader && params.slugdichgia) {
-      document.title = `Truyện dịch bởi ${params.slugdichgia}`;
-    }
-  }, [loader]);
+    document.title = `Truyện dịch bởi ${params.slugdichgia}`;
+  }, []);
 
   return (
     <MainLayout>
@@ -51,7 +49,7 @@ const Transalator = () => {
         </h1>
         <div className="drag__story">
           <div className="drag__story--slider">
-            {dataTran &&
+            {!loader &&
               dataTran.map((item: any) => {
                 return (
                   <div className="story__slider--item" key={item.id}>
