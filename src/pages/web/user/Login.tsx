@@ -74,11 +74,10 @@ const Login = () => {
       })
       .catch((err: any) => {
         setErrorServer(
-          err.response.status === 400
+          err.response.status === 400 || err.response.status === 500
             ? err.response.data.message
             : err.response.data.errors
         );
-        err.response.status === 500 && setError("Lỗi hệ thống");
         setLoaderLogin(false);
       });
   };
@@ -187,16 +186,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Alert
-        className="error_user"
-        message={error}
-        type="error"
-        showIcon
-        style={{
-          top: `${error ? "50%" : "-1000px"}`,
-          transition: `${error ? "0.8s" : "unset"}`,
-        }}
-      />
     </div>
   );
 };

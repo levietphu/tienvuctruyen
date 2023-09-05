@@ -77,11 +77,12 @@ const Register = () => {
     register()
       .then((res: any) => {
         navigate("/login");
-
         setLoaderRegister(false);
       })
       .catch((err: any) => {
         err.response.status === 422 && setErrorServer(err.response.data.errors);
+        err.response.status === 500 &&
+          setErrorServer(err.response.data.message);
         setLoaderRegister(false);
       });
   };
