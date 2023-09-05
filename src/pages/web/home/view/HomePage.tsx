@@ -62,7 +62,7 @@ const HomePage = () => {
         />
         <Search />
         <div className="story">
-          <h1 style={{ margin: "0.67em 0" }}>Truyện đề cử</h1>
+          <p className="text-title">Truyện đề cử</p>
           {!loaderHome && dataHome.recommendedStory ? (
             <DragStory data={dataHome.recommendedStory} />
           ) : (
@@ -70,7 +70,7 @@ const HomePage = () => {
           )}
         </div>
         <div className="story">
-          <h1 style={{ margin: "0.67em 0" }}>Truyện yêu thích mỗi tuần</h1>
+          <p className="text-title">Truyện yêu thích mỗi tuần</p>
           {!loaderHome ? (
             <DragStory data={dataHome.truyenhot_sort_week} />
           ) : (
@@ -78,7 +78,7 @@ const HomePage = () => {
           )}
         </div>
         <div className="story">
-          <h1 style={{ margin: "0.67em 0" }}>Bảng xếp hạng truyện vip</h1>
+          <p className="text-title">Bảng xếp hạng truyện vip</p>
           {!loaderHome ? (
             <DragStory data={dataHome.rankVip} vip={1} />
           ) : (
@@ -86,7 +86,7 @@ const HomePage = () => {
           )}
         </div>
         <div className="story">
-          <h1 style={{ margin: "0.67em 0" }}>Truyện hot mới ra lò</h1>
+          <p className="text-title">Truyện hot mới ra lò</p>
           {!loaderHome ? (
             <DragStory data={dataHome.hotStory} />
           ) : (
@@ -95,22 +95,14 @@ const HomePage = () => {
         </div>
         <div className="main__content">
           <div className="story__newupdate">
-            <Link
-              className="a-h1"
-              to="/danh-sach/truyen-moi"
-              style={{ margin: "0.67em 0" }}
-            >
+            <Link className="a-h1" to="/danh-sach/truyen-moi">
               Truyện mới cập nhật
             </Link>
             <NewUpdateStory data={dataHome && dataHome.newUpdateStory} />
           </div>
           <div className="story__full">
-            <Link
-              className="a-h1"
-              to="/danh-sach/truyen-full"
-              style={{ margin: "0.67em 0" }}
-            >
-              Truyện đã full
+            <Link className="a-h1" to="/danh-sach/truyen-full">
+              Truyện đã Full
             </Link>
             <FullStory data={dataHome && dataHome.fullStory} />
           </div>

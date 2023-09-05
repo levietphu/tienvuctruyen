@@ -177,18 +177,26 @@
   }
 }
 
-.a-h1 {
+.a-h1,
+.text-title {
   font-size: 2.25rem;
   color: #3c3c3c;
   font-weight: bold;
   display: inline-block;
-  @media screen and (max-width: 768px) {
+  margin-bottom: 1.5rem;
+  margin-top: 1.25rem;
+  @media screen and (max-width: 1023px) {
     font-size: 1.5rem;
   }
+}
+.text-title {
+  font-weight: bold;
+  color: black;
 }
 .a-h1:hover {
   color: black;
 }
+
 .drag__story {
   // overflow: hidden;
   height: 320px;
