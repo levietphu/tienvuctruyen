@@ -8,7 +8,7 @@ import FullStory from "../components/FullStory";
 import { useContext, useEffect, useState } from "react";
 import PopupFull from "../components/PopupFull";
 import DragLoader from "../components/DragLoader";
-import { Modal, notification } from "antd";
+import { Modal } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 

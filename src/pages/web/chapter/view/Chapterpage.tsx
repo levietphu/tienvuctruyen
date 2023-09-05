@@ -15,6 +15,7 @@ import {
   changeSize,
   isTogglePopup,
 } from "../../../../store/common/commonSlice";
+import { disableReactDevTools } from "../../../../ultis/disable";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -88,6 +89,7 @@ const Chapterpage = () => {
     }
     setLoader(true);
     window.scrollTo(0, 0);
+    disableReactDevTools();
     return () => setBookMark(false);
   }, [params.slugchapter, params.slugstory, loaderUser]);
 
