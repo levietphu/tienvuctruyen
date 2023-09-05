@@ -224,12 +224,6 @@
       margin-bottom: 10px;
 
       a {
-        width: 200px;
-        height: 300px;
-        @media screen and (max-width: 768px) {
-          width: 100px;
-          top: 150px;
-        }
         .pin {
           position: absolute;
           top: 10px;

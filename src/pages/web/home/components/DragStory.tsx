@@ -29,6 +29,14 @@ const DragStory = ({ data, vip }: any) => {
             slidesPerView: 3.3,
             spaceBetween: 15,
           },
+          425: {
+            slidesPerView: 3.7,
+            spaceBetween: 15,
+          },
+          540: {
+            slidesPerView: 4.7,
+            spaceBetween: 15,
+          },
           768: {
             slidesPerView: 6.5,
             spaceBetween: 50,
@@ -37,6 +45,7 @@ const DragStory = ({ data, vip }: any) => {
             slidesPerView: 3.5,
             spaceBetween: 20,
           },
+
           1024: {
             slidesPerView: 4,
             spaceBetween: 25,
