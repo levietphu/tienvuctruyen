@@ -132,7 +132,7 @@ const Header = ({
             )}
           </div>
         </div>
-        <div className="header__right center" ref={menuRefPerLog}>
+        <div className="header__right" ref={menuRefPerLog}>
           {showNoti && (
             <div className="bell">
               <Popover
@@ -181,7 +181,10 @@ const Header = ({
                   onClick={() => setTooglePersonalLogout(!tooglePersonalLogout)}
                 >
                   Hi,<strong>{user.user.name}</strong>{" "}
-                  <i className="fa-solid fa-angle-down"></i>
+                  <i
+                    className="fa-solid fa-angle-down"
+                    style={{ fontSize: "1rem" }}
+                  ></i>
                 </p>
                 {tooglePersonalLogout && (
                   <div className="personal__logout">
@@ -315,7 +318,10 @@ const Header = ({
                       >
                         Hi, <strong>{user.user.name}</strong>
                       </span>
-                      <i className="fa-solid fa-angle-down"></i>
+                      <i
+                        className="fa-solid fa-angle-down"
+                        style={{ fontSize: "1rem" }}
+                      ></i>
                     </>
                   )
                 )}
