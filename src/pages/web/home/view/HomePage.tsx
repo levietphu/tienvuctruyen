@@ -95,15 +95,19 @@ const HomePage = () => {
         </div>
         <div className="main__content">
           <div className="story__newupdate">
-            <Link className="a-h1" to="/danh-sach/truyen-moi">
-              Truyện mới cập nhật
-            </Link>
+            <h2>
+              <Link className="a-h1" to="/danh-sach/truyen-moi">
+                Truyện mới cập nhật
+              </Link>
+            </h2>
             <NewUpdateStory data={dataHome && dataHome.newUpdateStory} />
           </div>
           <div className="story__full">
-            <Link className="a-h1" to="/danh-sach/truyen-full">
-              Truyện đã Full
-            </Link>
+            <h2>
+              <Link className="a-h1" to="/danh-sach/truyen-full">
+                Truyện đã Full
+              </Link>
+            </h2>
             <FullStory data={dataHome && dataHome.fullStory} />
           </div>
         </div>

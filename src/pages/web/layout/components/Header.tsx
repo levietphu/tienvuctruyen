@@ -8,6 +8,7 @@ import { BellFilled } from "@ant-design/icons";
 import { Popover, Badge } from "antd";
 import PopoverNoti from "./PopoverNoti";
 import axios from "axios";
+import logoHeader from "../../../../assets/logo-header.png";
 
 const Header = ({
   cates,
@@ -67,13 +68,19 @@ const Header = ({
       <div className="screen-85 header">
         <div className="header__left">
           <div className="center">
-            <Link className="header__left--logo" to="/">
-              <img
-                src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
-                alt="webtruyen"
-              />
-              <span>tiên vực</span>
-            </Link>
+            <h1>
+              <Link className="header__left--logo" to="/">
+                <img
+                  src={
+                    logo
+                      ? `${process.env.REACT_APP_UPLOADS}Config${logo?.value}`
+                      : logoHeader
+                  }
+                  alt="webtruyen"
+                />
+                <span>tiên vực</span>
+              </Link>
+            </h1>
           </div>
           <div ref={cateRef}>
             <div

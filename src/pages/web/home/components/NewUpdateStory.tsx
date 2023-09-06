@@ -19,14 +19,17 @@ const NewUpdateStory = ({ data }: any) => {
 
               <div className="story__newupdate--right">
                 <div className="name__story mr-10">
-                  <Link className="mr-5" to={`/${item.slug}`}>
-                    <span>{item.name}</span>
-                  </Link>
-                  {item.vip === 1 && (
-                    <span className="cate btn__vip" style={{ margin: "0" }}>
-                      vip
-                    </span>
-                  )}
+                  <h3>
+                    <Link className="mr-5" to={`/${item.slug}`}>
+                      <span>{item.name}</span>
+                    </Link>
+
+                    {item.vip === 1 && (
+                      <span className="cate btn__vip" style={{ margin: "0" }}>
+                        vip
+                      </span>
+                    )}
+                  </h3>
                   <p>{item.tacgia?.name}</p>
                 </div>
                 <div className="cate__story mr-10">

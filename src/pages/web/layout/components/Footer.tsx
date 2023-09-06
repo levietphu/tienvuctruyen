@@ -2,31 +2,43 @@ import "../styles/footer.scss";
 import androi from "../../../../assets/google-play-badge.0dbdf26.png";
 import ios from "../../../../assets/app-store-badge.fba0f3f.png";
 import { memo } from "react";
+import logoFooter from "../../../../assets/logo-footer.png";
+import { Link } from "react-router-dom";
 
 const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
   return (
     <div className="footer">
       <div className="footer__logo center">
         <img
-          src={`${process.env.REACT_APP_UPLOADS}Config${logo?.value}`}
+          src={
+            logo
+              ? `${process.env.REACT_APP_UPLOADS}Config${logo?.value}`
+              : logoFooter
+          }
           alt="webtruyen"
         />
         <span>tiên vực</span>
       </div>
       <p>{catalog?.value}</p>
       <div className="footer__download center">
-        <a href={link_androi?.value} className="mr-5">
+        <Link
+          to={link_androi?.value}
+          className="mr-5"
+          title="link download androi"
+        >
           <img src={androi} alt="webtruyen" />
-        </a>
-        <a href={link_apple?.value}>
+        </Link>
+        <Link to={link_apple?.value} title="link download ios">
           <img src={ios} alt="webtruyen" />
-        </a>
+        </Link>
       </div>
       <div className="center mt-20 footer__support">
-        <a href="" className="mr-20">
+        <Link to="#" className="mr-20" title="support">
           liên hệ hỗ trợ
-        </a>
-        <a href="">quy định và chính sách</a>
+        </Link>
+        <Link to="#" title="quy định">
+          quy định và chính sách
+        </Link>
       </div>
     </div>
   );

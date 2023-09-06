@@ -36,22 +36,27 @@ const CateItem = ({ item, index }: any) => {
 
       <div className="story__newupdate--right">
         <div className="name__story mr-10">
-          <Link className="mr-5" to={`/${item.slug}`}>
-            <span>{item.name}</span>
-          </Link>
-          {item.vip === 1 && (
-            <span className="cate btn__vip" style={{ margin: "0" }}>
-              vip
-            </span>
-          )}
+          <h3>
+            <Link className="mr-5" to={`/${item.slug}`}>
+              <span>{item.name}</span>
+            </Link>
+
+            {item.vip === 1 && (
+              <span className="cate btn__vip" style={{ margin: "0" }}>
+                vip
+              </span>
+            )}
+          </h3>
           <p>{item.tacgia?.name}</p>
         </div>
         <div className="cate__story mr-10">
           {item.theloais.map((value: any) => {
             return (
-              <Link to={`/the-loai/${value.slug}`} key={value.id}>
-                {value.name}
-              </Link>
+              <h3>
+                <Link to={`/the-loai/${value.slug}`} key={value.id}>
+                  {value.name}
+                </Link>
+              </h3>
             );
           })}
         </div>

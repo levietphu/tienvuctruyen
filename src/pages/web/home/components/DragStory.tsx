@@ -97,11 +97,11 @@ const DragStory = ({ data, vip }: any) => {
                     />
                   </div>
                   <div className="hover__story">
-                    <p className="hover__story--name ml-10 mr-15">
+                    <h3 className="hover__story--name ml-10 mr-15">
                       {item.name.length > 35
                         ? item.name.slice(0, 35) + "...."
                         : item.name}
-                    </p>
+                    </h3>
                     <span className="ml-10 mr-15">
                       {item.nameTheloai ? item.nameTheloai : item.theloais.name}
                     </span>

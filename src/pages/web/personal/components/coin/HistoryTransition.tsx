@@ -34,7 +34,7 @@ const HistoryTransition = () => {
 
   return (
     <>
-      <h1>Lịch sử giao dịch</h1>
+      <div className="text-his">Lịch sử giao dịch</div>
       {!loader && transactionHistory.data.length !== 0 && (
         <>
           <div className="table">
