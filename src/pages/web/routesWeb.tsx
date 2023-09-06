@@ -45,6 +45,18 @@ export const routesWeb: any[] = [
     component: <ForgotPassword />,
   },
   { path: "/404", index: true, name: "NotFound", component: <NotFound /> },
+  {
+    path: "/support",
+    index: true,
+    name: "Support",
+    component: <span>Hỗ trợ</span>,
+  },
+  {
+    path: "/regulation",
+    index: true,
+    name: "Regulation",
+    component: <span>Quy định và chính sách</span>,
+  },
   { path: "/:slug", index: true, name: "Story", component: <Story /> },
   {
     path: "/:slugstory/:slugchapter",

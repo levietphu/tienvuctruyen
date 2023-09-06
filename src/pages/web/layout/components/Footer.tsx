@@ -21,22 +21,22 @@ const Footer = ({ catalog, logo, link_apple, link_androi }: any) => {
       </div>
       <p>{catalog?.value}</p>
       <div className="footer__download center">
-        <Link
-          to={link_androi?.value}
+        <a
+          href={link_androi.value}
           className="mr-5"
           title="link download androi"
         >
           <img src={androi} alt="webtruyen" />
-        </Link>
-        <Link to={link_apple?.value} title="link download ios">
+        </a>
+        <a href={link_apple?.value} title="link download ios">
           <img src={ios} alt="webtruyen" />
-        </Link>
+        </a>
       </div>
       <div className="center mt-20 footer__support">
-        <Link to="#" className="mr-20" title="support">
+        <Link to="/support" className="mr-20" title="support">
           liên hệ hỗ trợ
         </Link>
-        <Link to="#" title="quy định">
+        <Link to="/regulation" title="quy định">
           quy định và chính sách
         </Link>
       </div>
