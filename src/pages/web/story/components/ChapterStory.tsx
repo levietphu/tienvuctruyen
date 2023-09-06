@@ -106,8 +106,10 @@ const ChapterStory = ({
             {orderby === "asc" ? (
               <button
                 onClick={() => {
-                  setOrderby("desc");
-                  !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  if (chapterStory && chapterStory.data.length > 0) {
+                    setOrderby("desc");
+                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  }
                 }}
               >
                 <i className="fa-solid fa-arrow-up-9-1"></i>
@@ -115,8 +117,10 @@ const ChapterStory = ({
             ) : (
               <button
                 onClick={() => {
-                  setOrderby("asc");
-                  !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  if (chapterStory && chapterStory.data.length > 0) {
+                    setOrderby("asc");
+                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                  }
                 }}
               >
                 <i className="fa-solid fa-arrow-down-1-9"></i>
@@ -140,8 +144,10 @@ const ChapterStory = ({
                   onBlur={() => setCheckInput(false)}
                   value={keyword}
                   onChange={(e) => {
-                    setKeyword(e.target.value);
-                    !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                    if (chapterStory && chapterStory.data.length > 0) {
+                      setKeyword(e.target.value);
+                      !checkKeywordOrderby && setCheckKeywordOrderby(true);
+                    }
                   }}
                 />
               </div>
