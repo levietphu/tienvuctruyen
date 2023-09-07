@@ -27,7 +27,6 @@ const CommentStory = ({ story, slug }: any) => {
             ...comment,
             data: comment.data.concat(res.data.comments_story.data),
           });
-          callApiCommentChidren();
         } else if (!comment) {
           setComment(res.data.comments_story);
         } else if (content || replyContent) {
@@ -35,14 +34,12 @@ const CommentStory = ({ story, slug }: any) => {
             ...comment,
             data: res.data.comments_story.data.concat(comment.data),
           });
-          callApiCommentChidren();
         }
         if (res.data.comments_story.last_page >= currentPage) {
           setCurrentPage(currentPage + 1);
         }
         setLastPage(res.data.comments_story.last_page);
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   const callApiCommentChidren = async () => {
@@ -50,14 +47,8 @@ const CommentStory = ({ story, slug }: any) => {
       .get(`${process.env.REACT_APP_API}get_chidren_comment?slug=${slug}`)
       .then((res) => {
         setCommentChidren(res.data.children_comments);
-      })
-      .catch((err) => console.log(err));
+      });
   };
-
-  useEffect(() => {
-    callApiComment();
-    callApiCommentChidren();
-  }, []);
 
   const postComment = async (id_parent: number) => {
     await axios({
@@ -71,23 +62,25 @@ const CommentStory = ({ story, slug }: any) => {
         id_user: user.user.id,
         id_parent: id_parent,
       },
-    })
-      .then((res) => {
-        if (!id_parent) {
-          callApiComment();
-        } else {
-          callApiCommentChidren();
-        }
-      })
-      .catch((err) => console.log(err));
+    }).then((res) => {
+      if (!id_parent) {
+        setComment({ ...comment, data: [res.data.comment, ...comment.data] });
+      } else {
+        setCommentChidren([...commentChidren, res.data.comment]);
+      }
+    });
   };
 
+  useEffect(() => {
+    callApiComment();
+    callApiCommentChidren();
+  }, []);
+
   const handleComment = (word: string, id_parent: number) => {
+    postComment(id_parent);
     if (word === "comment") {
-      postComment(id_parent);
       setContent("");
     } else {
-      postComment(id_parent);
       setReplyContent("");
     }
   };
@@ -213,7 +206,7 @@ const CommentStory = ({ story, slug }: any) => {
                       className="fa-solid fa-paper-plane"
                       style={{ opacity: "1" }}
                       onClick={() =>
-                        user && replyContent && handleComment("reply", value.id)
+                        replyContent && handleComment("reply", value.id)
                       }
                     ></i>
                   </div>
