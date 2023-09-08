@@ -50,12 +50,10 @@ const CateItem = ({ item, index }: any) => {
           <p>{item.tacgia?.name}</p>
         </div>
         <div className="cate__story mr-10">
-          {item.theloais.map((value: any) => {
+          {item.theloais.map((value: any, index: number) => {
             return (
-              <h3>
-                <Link to={`/the-loai/${value.slug}`} key={value.id}>
-                  {value.name}
-                </Link>
+              <h3 key={index}>
+                <Link to={`/the-loai/${value.slug}`}>{value.name}</Link>
               </h3>
             );
           })}

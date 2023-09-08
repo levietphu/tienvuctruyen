@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import setToken from "../../../ultis/setToken";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Alert } from "antd";
+import { Spin } from "antd";
 import axios from "axios";
 
 const Login = () => {
@@ -48,17 +48,14 @@ const Login = () => {
     user && navigate("/");
   }, [user]);
 
-  const login = async () => {
-    return await axios.post(`${process.env.REACT_APP_API}login`, {
-      email: textLogin.email,
-      password: textLogin.password,
-    });
-  };
-
-  const loginTienVuc = (e: any) => {
+  const loginTienVuc = async (e: any) => {
     setLoaderLogin(true);
     e.preventDefault();
-    login()
+    await axios
+      .post(`${process.env.REACT_APP_API}login`, {
+        email: textLogin.email,
+        password: textLogin.password,
+      })
       .then((res: any) => {
         // lần đầu đăng nhập cần gắn token vào header
         setToken(res.data.data.token);

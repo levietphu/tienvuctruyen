@@ -8,6 +8,7 @@ import image from "../../../../assets/mascot-02.235fd60.png";
 import PaginationPage from "../../pagination/PaginationPage";
 import LoaderCate from "../components/LoaderCate";
 import CateItem from "../components/CateItem";
+import callApi from "../../../../ultis/callApi";
 
 const CatePage = () => {
   const [dataCate, setDataCate] = useState<any>();
@@ -16,32 +17,32 @@ const CatePage = () => {
 
   const params = useParams();
 
-  const callApi = async (page: number) => {
+  const getCate = async (page: number) => {
     if (params.slugcate) {
-      await axios
-        .get(
-          `${process.env.REACT_APP_API}cate?slug=${params.slugcate}&page=${page}`
-        )
-        .then((res) => {
-          setDataCate(res.data.data.items);
-          setLoader(false);
-          setNameCate(res.data.data.name);
-        });
+      await callApi(
+        "get",
+        "",
+        `cate?slug=${params.slugcate}&page=${page}`
+      ).then((res: any) => {
+        setDataCate(res.data.data.items);
+        setLoader(false);
+        setNameCate(res.data.data.name);
+      });
     } else {
-      await axios
-        .get(
-          `${process.env.REACT_APP_API}list?slug=${params.sluglist}&page=${page}`
-        )
-        .then((res) => {
-          setDataCate(res.data.data.items);
-          setLoader(false);
-        });
+      await callApi(
+        "get",
+        "",
+        `list?slug=${params.sluglist}&page=${page}`
+      ).then((res: any) => {
+        setDataCate(res.data.data.items);
+        setLoader(false);
+      });
     }
   };
 
   useEffect(() => {
     if (params.slugcate || params.sluglist) {
-      callApi(1);
+      getCate(1);
       setLoader(true);
       window.scrollTo({
         top: 0,
@@ -84,7 +85,7 @@ const CatePage = () => {
               <>
                 <div className="list__story--newupdate">
                   {dataCate.data.map((item: any, index: any) => {
-                    return <CateItem key={index} item={item} index={index} />;
+                    return <CateItem key={item.id} item={item} index={index} />;
                   })}
                 </div>
                 {(params.slugcate || params.sluglist) &&
@@ -92,7 +93,7 @@ const CatePage = () => {
                     <PaginationPage
                       data={dataCate}
                       check="cate"
-                      callApiPagination={callApi}
+                      callApiPagination={getCate}
                     />
                   )}
               </>

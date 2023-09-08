@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import "../../../styles/card-step2.scss";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { AuthContext } from "../../../../../../context/AuthContextProvider";
+import callApi from "../../../../../../ultis/callApi";
 
 const CardStep2 = ({ cardInfo, setCardInfoItem, setCheckSuccess }: any) => {
   const [checkInputSerial, setCheckInputSerial] = useState<boolean>(false);
@@ -15,10 +15,9 @@ const CardStep2 = ({ cardInfo, setCardInfoItem, setCheckSuccess }: any) => {
   const { user }: any = useContext(AuthContext);
 
   const addTransaction = async (data: any) => {
-    await axios
-      .post(`${process.env.REACT_APP_API}create_transaction`, data)
-      .then((res) => setCheckSuccess(true))
-      .catch((err) => console.log(err));
+    await callApi("post", data, "create_transaction").then((res) =>
+      setCheckSuccess(true)
+    );
   };
 
   const createTransaction = () => {

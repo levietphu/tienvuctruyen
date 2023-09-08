@@ -3,10 +3,10 @@ import "../../../styles/bank-step2.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import coin from "../../../../../../assets/coin.svg";
-import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../../../../context/AuthContextProvider";
 import { LoadingOutlined } from "@ant-design/icons";
+import callApi from "../../../../../../ultis/callApi";
 
 const BankStep2 = ({
   bankInfo,
@@ -36,13 +36,10 @@ const BankStep2 = ({
   };
 
   const addTransaction = async (data: any) => {
-    await axios
-      .post(`${process.env.REACT_APP_API}create_transaction`, data)
-      .then((res) => {
-        setCheckSuccess(true);
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
+    await callApi("post", data, "create_transaction").then((res) => {
+      setCheckSuccess(true);
+      setLoading(false);
+    });
   };
 
   return (

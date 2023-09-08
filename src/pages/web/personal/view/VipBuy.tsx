@@ -9,7 +9,7 @@ const VipBuy = () => {
     <div className="drag__story">
       <div className="drag__story--slider">
         {user.vipbuy.length !== 0 ? (
-          user.vipbuy.map((item: any, index: any) => {
+          user.vipbuy.map((item: any) => {
             return (
               <div className="story__slider--item" key={item.id}>
                 <Link to={`/${item.truyen.slug}`}>

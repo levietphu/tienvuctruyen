@@ -7,7 +7,6 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import axios from "axios";
 import CommentStory from "../components/CommentStory";
 import ChapterStory from "../components/ChapterStory";
 import Loader from "../components/Loader";
@@ -16,6 +15,7 @@ import { DownOutlined, UpOutlined, CrownFilled } from "@ant-design/icons";
 import { Alert, Modal } from "antd";
 import ModalDonate from "../components/ModalDonate";
 import ModalChapterVip from "../components/ModalChapterVip";
+import callApi from "../../../../ultis/callApi";
 
 const Story = () => {
   // data api
@@ -43,35 +43,34 @@ const Story = () => {
     navigate("/404");
   }
 
-  const callApi = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}get_story?slug=${params.slug}`)
-      .then((res) => {
+  const getStory = async () => {
+    await callApi("get", "", `get_story?slug=${params.slug}`).then(
+      (res: any) => {
         setStory(res.data.data.items);
         setLoader(false);
-      });
+      }
+    );
   };
 
-  const callApiDonate = useCallback(async (pageDonate = 1) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}donate?page=${pageDonate}&slug=${params.slug}`
-      )
-      .then((res) => {
-        setDonates(res.data.donates);
-        setTotalDonate(res.data.totalDonate);
-      })
-      .catch((err) => console.log(err));
+  const getDonate = useCallback(async (pageDonate = 1) => {
+    await callApi(
+      "get",
+      "",
+      `donate?page=${pageDonate}&slug=${params.slug}`
+    ).then((res: any) => {
+      setDonates(res.data.donates);
+      setTotalDonate(res.data.totalDonate);
+    });
   }, []);
 
   const addViewStory = async () => {
-    await axios.get(`${process.env.REACT_APP_API}addview?slug=${params.slug}`);
+    await callApi("post", { slug: params.slug }, `addview`);
   };
 
   useEffect(() => {
-    callApi();
+    getStory();
     setLoader(true);
-    callApiDonate();
+    getDonate();
     if (searchParams.get("buy")) {
       setIsModalChapterVipOpen(true);
     }
@@ -288,7 +287,7 @@ const Story = () => {
           </div>
           <div className="main__story">
             <ChapterStory
-              callApiDonate={callApiDonate}
+              getDonate={getDonate}
               donates={donates}
               user={user}
               story={story}
@@ -305,7 +304,7 @@ const Story = () => {
             <ModalDonate
               id_truyen={story.id}
               setIsModalDonateOpen={setIsModalDonateOpen}
-              callApiDonate={callApiDonate}
+              getDonate={getDonate}
               setShowMessageDonate={setShowMessageDonate}
             />
           </Modal>

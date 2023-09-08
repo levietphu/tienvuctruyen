@@ -10,7 +10,7 @@ import axios from "axios";
 const { TextArea } = Input;
 
 const ModalDonate = ({
-  callApiDonate,
+  getDonate,
   id_truyen,
   setIsModalDonateOpen,
   setShowMessageDonate,
@@ -28,7 +28,7 @@ const ModalDonate = ({
       method: "POST",
       url: `${process.env.REACT_APP_API}add_donate`,
       headers: {
-        "Content-Type": "application/json",
+        accept: "application/json",
       },
       data: {
         coin_donate: dataDonate.coin_donate,
@@ -38,7 +38,7 @@ const ModalDonate = ({
       },
     })
       .then((res) => {
-        callApiDonate();
+        getDonate();
         handleCancel();
         setRemainingCoins(res.data.remaining_coins);
         setShowMessageDonate("Cảm ơn bạn đã ủng hộ dịch giả");

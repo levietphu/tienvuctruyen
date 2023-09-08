@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import { useOutSide } from "../../../../hookCustom/useOutSide";
-import axios from "axios";
 import SearchLoader from "./SearchLoader";
+import callApi from "../../../../ultis/callApi";
 
 const Search = () => {
   const [dataSearch, setDataSearch] = useState<any[]>([]);
@@ -13,12 +13,10 @@ const Search = () => {
   const Ref = useOutSide(() => setCheck(false));
 
   const search = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}search?keyword=${keyword}`)
-      .then((res) => {
-        setDataSearch(res.data.data.items);
-        setLoaderSearch(false);
-      });
+    await callApi("get", "", `search?keyword=${keyword}`).then((res: any) => {
+      setDataSearch(res.data.data.items);
+      setLoaderSearch(false);
+    });
   };
 
   useEffect(() => {

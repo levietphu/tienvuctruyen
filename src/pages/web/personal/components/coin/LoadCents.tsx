@@ -7,6 +7,7 @@ import BankStep2 from "../popup/bank/BankStep2";
 import WalletStep2 from "../popup/wallet/WalletStep2";
 import CardStep2 from "../popup/card/CardStep2";
 import PaymentRequestSuccess from "../popup/PaymentRequestSuccess";
+import callApi from "../../../../../ultis/callApi";
 
 const LoadCents = () => {
   const [bankInfo, setBankInfo] = useState<any[]>([]);
@@ -23,13 +24,11 @@ const LoadCents = () => {
   const [transitionCode, setTransitionCode] = useState<string>("");
 
   const callBankInfo = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}load_cent_info`)
-      .then((res) => {
-        setBankInfo(res.data.bank_info);
-        setwalletInfo(res.data.wallet_info);
-        setCard(res.data.card);
-      });
+    await callApi("get", "", "load_cent_info").then((res: any) => {
+      setBankInfo(res.data.bank_info);
+      setwalletInfo(res.data.wallet_info);
+      setCard(res.data.card);
+    });
   };
 
   const getTransitionCode = () => {

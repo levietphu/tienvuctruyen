@@ -2,8 +2,8 @@ import { useContext, useState, useEffect, memo } from "react";
 import { useParams, Link } from "react-router-dom";
 import Moment from "react-moment";
 import { AuthContext } from "../../../../context/AuthContextProvider";
-import axios from "axios";
 import { useAppSelector } from "../../../../store/hookStore";
+import callApi from "../../../../ultis/callApi";
 
 const ListChapter = () => {
   const { togglePopup } = useAppSelector((state) => state.common.setting);
@@ -19,26 +19,29 @@ const ListChapter = () => {
 
   const params = useParams();
 
-  const callApi = async (id_user: string, page: number) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slugstory}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
-      )
-      .then((res) => {
-        setDataChapter(res.data.chapter);
-        setLoader(false);
-      });
+  const getListChapter = async (id_user: string, page: number) => {
+    await callApi(
+      "get",
+      "",
+      `get_chapter_story?slug=${params.slugstory}&id_user=${id_user}&page=${page}&keyword=${keyword}&orderby=${orderby}`
+    ).then((res: any) => {
+      setDataChapter(res.data.chapter);
+      setLoader(false);
+    });
   };
 
   useEffect(() => {
     if (user) {
-      callApi(
+      getListChapter(
         user.user.id,
         Math.ceil(Number(params.slugchapter?.split("-")[1]) / 20)
       );
     } else {
       if (loaderUser !== "loader") {
-        callApi("", Math.ceil(Number(params.slugchapter?.split("-")[1]) / 20));
+        getListChapter(
+          "",
+          Math.ceil(Number(params.slugchapter?.split("-")[1]) / 20)
+        );
       }
     }
     setLoader(true);
@@ -47,12 +50,12 @@ const ListChapter = () => {
   useEffect(() => {
     if (togglePopup && checkKeywordOrderby) {
       if (user) {
-        let id = setTimeout(() => callApi(user.user.id, 1), 600);
+        let id = setTimeout(() => getListChapter(user.user.id, 1), 600);
 
         return () => clearTimeout(id);
       } else {
         if (loaderUser !== "loader") {
-          let id = setTimeout(() => callApi("", 1), 600);
+          let id = setTimeout(() => getListChapter("", 1), 600);
 
           return () => clearTimeout(id);
         }
@@ -63,10 +66,10 @@ const ListChapter = () => {
   useEffect(() => {
     if (togglePopup && checkKeywordOrderby) {
       if (user) {
-        callApi(user.user.id, 1);
+        getListChapter(user.user.id, 1);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", 1);
+          getListChapter("", 1);
         }
       }
     }
@@ -75,18 +78,18 @@ const ListChapter = () => {
   const changePageChapter = (word: string) => {
     if (word === "next") {
       if (user) {
-        callApi(user.user.id, dataChapter.current_page + 1);
+        getListChapter(user.user.id, dataChapter.current_page + 1);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", dataChapter.current_page + 1);
+          getListChapter("", dataChapter.current_page + 1);
         }
       }
     } else {
       if (user) {
-        callApi(user.user.id, dataChapter.current_page - 1);
+        getListChapter(user.user.id, dataChapter.current_page - 1);
       } else {
         if (loaderUser !== "loader") {
-          callApi("", dataChapter.current_page - 1);
+          getListChapter("", dataChapter.current_page - 1);
         }
       }
     }

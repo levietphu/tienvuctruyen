@@ -7,9 +7,10 @@ import coin from "../../../../assets/coin.svg";
 import PaginationPage from "../../pagination/PaginationPage";
 import ChapterItem from "./ChapterItem";
 import DonateItem from "./DonateItem";
+import callApi from "../../../../ultis/callApi";
 
 const ChapterStory = ({
-  callApiDonate,
+  getDonate,
   story,
   user,
   donates,
@@ -27,33 +28,33 @@ const ChapterStory = ({
 
   const params = useParams();
 
-  const callApiChapter = useCallback(
+  const getChapter = useCallback(
     async (id_user: string, page: number) => {
-      await axios
-        .get(
-          `${process.env.REACT_APP_API}get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
-        )
-        .then((res) => setChapterStory(res.data.chapter));
+      await callApi(
+        "get",
+        "",
+        `get_chapter_story?slug=${params.slug}&page=${page}&keyword=${keyword}&orderby=${orderby}&id_user=${id_user}`
+      ).then((res: any) => setChapterStory(res.data.chapter));
     },
     [keyword, orderby]
   );
 
   useEffect(() => {
     if (user) {
-      callApiChapter(user.user.id, 1);
+      getChapter(user.user.id, 1);
     } else {
-      callApiChapter("", 1);
+      getChapter("", 1);
     }
   }, []);
 
   useEffect(() => {
     if (checkKeywordOrderby) {
       if (user) {
-        let id = setTimeout(() => callApiChapter(user.user.id, 1), 600);
+        let id = setTimeout(() => getChapter(user.user.id, 1), 600);
 
         return () => clearTimeout(id);
       } else {
-        let id = setTimeout(() => callApiChapter("", 1), 600);
+        let id = setTimeout(() => getChapter("", 1), 600);
 
         return () => clearTimeout(id);
       }
@@ -63,9 +64,9 @@ const ChapterStory = ({
   useEffect(() => {
     if (checkKeywordOrderby) {
       if (user) {
-        callApiChapter(user.user.id, 1);
+        getChapter(user.user.id, 1);
       } else {
-        callApiChapter("", 1);
+        getChapter("", 1);
       }
     }
   }, [orderby]);
@@ -103,11 +104,11 @@ const ChapterStory = ({
           tabIndex={checkDonateOrChapter === "chapter" ? 0 : -1}
         >
           <div className="sort__search">
-            {orderby === "asc" ? (
+            {orderby === "desc" ? (
               <button
                 onClick={() => {
                   if (chapterStory && chapterStory.data.length > 0) {
-                    setOrderby("desc");
+                    setOrderby("asc");
                     !checkKeywordOrderby && setCheckKeywordOrderby(true);
                   }
                 }}
@@ -118,7 +119,7 @@ const ChapterStory = ({
               <button
                 onClick={() => {
                   if (chapterStory && chapterStory.data.length > 0) {
-                    setOrderby("asc");
+                    setOrderby("desc");
                     !checkKeywordOrderby && setCheckKeywordOrderby(true);
                   }
                 }}
@@ -168,7 +169,7 @@ const ChapterStory = ({
           </div>
           <PaginationPage
             data={chapterStory}
-            callApiPagination={callApiChapter}
+            callApiPagination={getChapter}
             check="chapter"
           />
         </div>
@@ -198,7 +199,7 @@ const ChapterStory = ({
               <PaginationPage
                 check="donate"
                 data={donates}
-                callApiPagination={callApiDonate}
+                callApiPagination={getDonate}
               />
             </div>
           ) : (

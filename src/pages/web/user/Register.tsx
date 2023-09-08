@@ -63,18 +63,15 @@ const Register = () => {
     return () => clearTimeout(id);
   }, [errorServer]);
 
-  const register = async () => {
-    return await axios.post(`${process.env.REACT_APP_API}register`, {
-      name: dataRegister.name,
-      email: dataRegister.email,
-      password: dataRegister.password,
-    });
-  };
-
-  const registerTienVuc = (e: any) => {
+  const registerTienVuc = async (e: any) => {
     e.preventDefault();
     setLoaderRegister(true);
-    register()
+    await axios
+      .post(`${process.env.REACT_APP_API}register`, {
+        name: dataRegister.name,
+        email: dataRegister.email,
+        password: dataRegister.password,
+      })
       .then((res: any) => {
         navigate("/login");
         setLoaderRegister(false);

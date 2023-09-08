@@ -1,4 +1,3 @@
-import axios from "axios";
 import coin from "../../../../../assets/coin.svg";
 import "../../styles/historytran.scss";
 import { useContext, useEffect, useState } from "react";
@@ -6,7 +5,7 @@ import { AuthContext } from "../../../../../context/AuthContextProvider";
 import Pagination from "../../../pagination/PaginationPage";
 import Moment from "react-moment";
 import "moment/locale/vi";
-import { Skeleton } from "antd";
+import callApi from "../../../../../ultis/callApi";
 
 const HistoryTransition = () => {
   const [transactionHistory, setTransactionHistory] = useState<any>();
@@ -15,17 +14,14 @@ const HistoryTransition = () => {
   const { user }: any = useContext(AuthContext);
 
   const getTransaction = async (page = 1) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}show_transaction?id_user=${user.user.id}&page=${page}`
-      )
-      .then((res) => {
-        setTransactionHistory(res.data.transaction_history);
-        setLoader(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await callApi(
+      "get",
+      "",
+      `show_transaction?id_user=${user.user.id}&page=${page}`
+    ).then((res: any) => {
+      setTransactionHistory(res.data.transaction_history);
+      setLoader(false);
+    });
   };
 
   useEffect(() => {

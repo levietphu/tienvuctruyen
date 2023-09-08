@@ -6,6 +6,7 @@ import { memo, useContext, useState } from "react";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import callApi from "../../../../ultis/callApi";
 
 type FieldType = {
   toChapter: number;
@@ -48,23 +49,14 @@ const ModalChapterVip = ({
       });
   };
 
-  const paymentConfirm = async () => {
-    await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API}buy_many_chapters`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: dataBuyChapterClick,
-    })
-      .then((res) => {
+  const paymentConfirm = () => {
+    callApi("post", dataBuyChapterClick, "buy_many_chapters").then(
+      (res: any) => {
         handleCancel();
         setRemainingCoin(res.data.remaining_coins);
         setShowMessage("Mua chương vip thành công");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    );
   };
 
   const onFinish = (values: any) => {

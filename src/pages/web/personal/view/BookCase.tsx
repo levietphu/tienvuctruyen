@@ -2,19 +2,15 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import { useContext } from "react";
 import image from "../../../../assets/mascot-02.235fd60.png";
-import axios from "axios";
+import callApi from "../../../../ultis/callApi";
 
 const BookCase = () => {
   const { user, getUser }: any = useContext(AuthContext);
 
   const deleteBookMark = async (id_story: number) => {
-    await axios
-      .post(`${process.env.REACT_APP_API}remove_bookmark`, {
-        id_story: id_story,
-      })
-      .then((res) => {
-        getUser();
-      });
+    await callApi("post", { id_story }, "remove_bookmark").then((res) => {
+      getUser();
+    });
   };
 
   return (

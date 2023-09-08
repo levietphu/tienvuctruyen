@@ -5,8 +5,8 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import coin from "../../../../../../assets/coin.svg";
 import { AuthContext } from "../../../../../../context/AuthContextProvider";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
+import callApi from "../../../../../../ultis/callApi";
 
 const WalletStep2 = ({
   walletInfo,
@@ -25,13 +25,10 @@ const WalletStep2 = ({
 
   const handleSuccess = async (data: any) => {
     setLoading(true);
-    await axios
-      .post(`${process.env.REACT_APP_API}create_transaction`, data)
-      .then((res) => {
-        setCheckSuccess(true);
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
+    await callApi("post", data, "create_transaction").then((res) => {
+      setCheckSuccess(true);
+      setLoading(false);
+    });
   };
 
   const createTransaction = () => {

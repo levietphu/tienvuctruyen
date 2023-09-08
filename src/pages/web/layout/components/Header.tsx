@@ -7,8 +7,8 @@ import setToken from "../../../../ultis/setToken";
 import { BellFilled } from "@ant-design/icons";
 import { Popover, Badge } from "antd";
 import PopoverNoti from "./PopoverNoti";
-import axios from "axios";
 import logoHeader from "../../../../assets/logo-header.png";
+import callApi from "../../../../ultis/callApi";
 
 const Header = ({
   cates,
@@ -48,11 +48,9 @@ const Header = ({
   }, [pathname]);
 
   const changeIsView = async () => {
-    await axios
-      .post(`${process.env.REACT_APP_API}change_is_view`, {
-        id_user: user.user.id,
-      })
-      .then((res) => getNotification());
+    await callApi("post", { id_user: user.user.id }, "change_is_view").then(
+      (res: any) => getNotification()
+    );
   };
 
   const logout = () => {

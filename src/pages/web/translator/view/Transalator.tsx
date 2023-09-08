@@ -1,9 +1,9 @@
 import MainLayout from "../../layout/view/MainLayout";
 import "../styles/translator.scss";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import callApi from "../../../../ultis/callApi";
 
 const Transalator = () => {
   const [dataTran, setDataTran] = useState<any>();
@@ -11,17 +11,17 @@ const Transalator = () => {
 
   const params = useParams();
 
-  const callApi = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}translator?slug=${params.slugdichgia}`)
-      .then((res) => {
+  const getTranslator = async () => {
+    await callApi("get", "", `translator?slug=${params.slugdichgia}`).then(
+      (res: any) => {
         setDataTran(res.data.data.items);
         setLoader(false);
-      });
+      }
+    );
   };
 
   useEffect(() => {
-    callApi();
+    getTranslator();
   }, [params.slugdichgia]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Transalator = () => {
         <h1>
           Truyện dịch bởi <span>{params.slugdichgia}</span>
         </h1>
-        <div className="drag__story">
+        <div className="drag__story" style={{ marginTop: "15px" }}>
           <div className="drag__story--slider">
             {!loader &&
               dataTran.map((item: any) => {

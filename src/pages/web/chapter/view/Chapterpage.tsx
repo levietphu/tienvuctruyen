@@ -1,7 +1,6 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import MainLayout from "../../layout/view/MainLayout";
 import "../styles/chapter.scss";
-import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import ChapterVip from "../components/ChapterVip";
 import Loader from "../components/Loader";
@@ -16,6 +15,7 @@ import {
   isTogglePopup,
 } from "../../../../store/common/commonSlice";
 import { disableReactDevTools } from "../../../../ultis/disable";
+import callApi from "../../../../ultis/callApi";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -35,56 +35,68 @@ const Chapterpage = () => {
 
   const params = useParams();
 
-  const callApi = async (id_user: string) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}`
-      )
-      .then((res) => {
+  const getChapter = useCallback(
+    async (id_user: string) => {
+      await callApi(
+        "get",
+        "",
+        `view_chapter?slug_story=${params.slugstory}&slug=${params.slugchapter}&id_user=${id_user}`
+      ).then((res: any) => {
         setDataChapter(res.data.data.items);
         setLoader(false);
       });
-  };
+    },
+    [params.slugchapter, params.slugstory]
+  );
 
   const callAddBookMark = async () => {
-    await axios
-      .post(`${process.env.REACT_APP_API}add_bookmark`, {
+    await callApi(
+      "post",
+      {
         slug_story: params.slugstory,
         slug: params.slugchapter,
-        id_user: user ? user.user.id : "",
-      })
-      .then((res) => {
-        setAlertBookMark(res.data.message);
-        setIdBookMark(res.data.id);
-        if (res.data.status === 400) {
-          setCheckSuccess(false);
-        } else {
-          setCheckSuccess(true);
-        }
-      });
+        id_user: user.user.id,
+      },
+      "add_bookmark"
+    ).then((res: any) => {
+      setAlertBookMark(res.data.message);
+      setIdBookMark(res.data.id);
+      if (res.data.status === 400) {
+        setCheckSuccess(false);
+      } else {
+        setCheckSuccess(true);
+      }
+    });
   };
 
   const callRemoveItemBookMark = async () => {
-    await axios
-      .post(`${process.env.REACT_APP_API}remove_bookmark_item`, {
-        id: idBookMark,
-      })
-      .then((res) => {
+    await callApi("post", { id: idBookMark }, "remove_bookmark_item").then(
+      (res: any) => {
         setAlertBookMark(res.data.message);
         if (res.data.status === 400) {
           setCheckSuccess(false);
         } else {
           setCheckSuccess(true);
         }
-      });
+      }
+    );
+  };
+
+  const handleBookMark = () => {
+    setBookMark(!bookMark);
+    if (!bookMark) {
+      callAddBookMark();
+    } else {
+      callRemoveItemBookMark();
+    }
   };
 
   useEffect(() => {
     if (user) {
-      callApi(user.user.id);
+      getChapter(user.user.id);
     } else {
       if (loaderUser !== "loader") {
-        callApi("");
+        getChapter("");
       }
     }
     setLoader(true);
@@ -113,16 +125,6 @@ const Chapterpage = () => {
         dataChapter.truyen.name;
     }
   }, [loader]);
-
-  useEffect(() => {
-    if (loaderUser === "user") {
-      if (bookMark) {
-        callAddBookMark();
-      } else {
-        callRemoveItemBookMark();
-      }
-    }
-  }, [bookMark, loaderUser]);
 
   useEffect(() => {
     if (alertBookMark) {
@@ -216,7 +218,7 @@ const Chapterpage = () => {
                   <ChapterVip
                     coin={dataChapter.chuong.coin}
                     setError={setError}
-                    callApi={callApi}
+                    callApi={getChapter}
                   />
                 )}
               </div>
@@ -276,10 +278,7 @@ const Chapterpage = () => {
                 >
                   <i className="fa-solid fa-list"></i>
                 </div>
-                <div
-                  className="tick__chapter"
-                  onClick={() => setBookMark(!bookMark)}
-                >
+                <div className="tick__chapter" onClick={() => handleBookMark()}>
                   {bookMark ? (
                     <i className="fa-solid fa-bookmark"></i>
                   ) : (

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContextProvider";
 import Moment from "react-moment";
 import "moment/locale/vi";
-import axios from "axios";
+import callApi from "../../../../ultis/callApi";
 
 const CommentStory = ({ story, slug }: any) => {
   const [comment, setComment] = useState<any[]>([]);
@@ -16,47 +16,46 @@ const CommentStory = ({ story, slug }: any) => {
   const [totalComment, setTotalComment] = useState<number>(0);
   const [startOffset, setStartOffset] = useState<number>(0);
 
+  const limit = 3;
+
   const { user }: any = useContext(AuthContext);
 
   const callApiComment = async (offset = 0) => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API}get_comment?slug=${slug}&offset=${offset}`
-      )
-      .then((res) => {
+    await callApi("get", "", `get_comment?slug=${slug}&offset=${offset}`).then(
+      (res: any) => {
         if (comment.length > 0) {
           setComment(comment.concat(res.data.comments_story));
-          setStartOffset(startOffset + 3);
+          setStartOffset(startOffset + limit);
         } else {
           setComment(res.data.comments_story);
         }
         setTotalComment(
-          totalComment ? totalComment - 3 : res.data.total_comment
+          totalComment ? totalComment - limit : res.data.total_comment
         );
-      });
+      }
+    );
   };
 
   const callApiCommentChidren = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}get_chidren_comment?slug=${slug}`)
-      .then((res) => {
+    await callApi("get", "", `get_chidren_comment?slug=${slug}`).then(
+      (res: any) => {
         setCommentChidren(res.data.children_comments);
-      });
+      }
+    );
   };
 
   const postComment = async (id_parent: number) => {
-    await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API}post_comment`,
-      headers: { accept: "application/json" },
-      data: {
+    await callApi(
+      "post",
+      {
         content: content,
         reply_content: replyContent,
         slug: slug,
         id_user: user.user.id,
         id_parent: id_parent,
       },
-    }).then((res) => {
+      "post_comment"
+    ).then((res: any) => {
       if (!id_parent) {
         setComment([res.data.comment, ...comment]);
         setStartOffset(startOffset + 1);
@@ -217,7 +216,7 @@ const CommentStory = ({ story, slug }: any) => {
           <div className="center">
             <span
               className="view-more-comment"
-              onClick={() => callApiComment(startOffset + 3)}
+              onClick={() => callApiComment(startOffset + limit)}
             >
               Xem thêm {totalComment} bình luận
             </span>

@@ -5,12 +5,12 @@ import Search from "../components/Search";
 import DragStory from "../components/DragStory";
 import NewUpdateStory from "../components/NewUpdateStory";
 import FullStory from "../components/FullStory";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PopupFull from "../components/PopupFull";
 import DragLoader from "../components/DragLoader";
 import { Modal } from "antd";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import callApi from "../../../../ultis/callApi";
 
 const HomePage = () => {
   const [dataHome, setDataHome] = useState<any>();
@@ -18,25 +18,25 @@ const HomePage = () => {
   const [checkPopupHome, setCheckPopupHome] = useState<boolean>(true);
   const [open, setOpen] = useState(false);
 
-  const callApi = async () => {
-    await axios.get(`${process.env.REACT_APP_API}home`).then((res) => {
+  const getHome = async () => {
+    await callApi("get", "", "home").then((res: any) => {
       setDataHome(res.data.data.items);
       setLoaderHome(false);
     });
   };
 
   useEffect(() => {
-    callApi();
+    getHome();
     document.title = "Truyện dịch online - Đọc truyện dịch mới nhất | Tiên Vực";
   }, []);
 
-  // useEffect(() => {
-  //   if (checkPopupHome) {
-  //     showModal();
-  //   } else {
-  //     handleCancel();
-  //   }
-  // }, [checkPopupHome]);
+  useEffect(() => {
+    if (checkPopupHome) {
+      showModal();
+    } else {
+      handleCancel();
+    }
+  }, [checkPopupHome]);
 
   const showModal = () => {
     setOpen(true);
@@ -112,9 +112,9 @@ const HomePage = () => {
           </div>
         </div>
       </MainLayout>{" "}
-      {/* <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
+      <Modal open={open} onOk={handleOk} onCancel={handleCancel}>
         <PopupFull setCheckPopupHome={setCheckPopupHome} />
-      </Modal> */}
+      </Modal>
     </>
   );
 };

@@ -1,4 +1,3 @@
-import React from "react";
 import MainLayout from "../../layout/view/MainLayout";
 import "../styles/notfound.scss";
 import notFound from "../../../../assets/notfound.png";

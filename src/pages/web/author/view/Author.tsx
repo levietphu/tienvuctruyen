@@ -1,9 +1,9 @@
 import MainLayout from "../../layout/view/MainLayout";
 import "../styles/translator.scss";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import callApi from "../../../../ultis/callApi";
 
 const Author = () => {
   const [dataAuthor, setDataAuthor] = useState<any>();
@@ -12,18 +12,18 @@ const Author = () => {
 
   const params = useParams();
 
-  const callApi = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API}author?slug=${params.slugauthor}`)
-      .then((res) => {
+  const getAuthor = async () => {
+    await callApi("get", "", `author?slug=${params.slugauthor}`).then(
+      (res: any) => {
         setDataAuthor(res.data.author);
         setLoader(false);
         setNameAuthor(res.data.name_author);
-      });
+      }
+    );
   };
 
   useEffect(() => {
-    callApi();
+    getAuthor();
   }, [params.slugauthor]);
 
   return (
@@ -45,7 +45,7 @@ const Author = () => {
         <h1>
           Truyện được viết bởi <span>{!loader && nameAuthor}</span>
         </h1>
-        <div className="drag__story">
+        <div className="drag__story" style={{ marginTop: "15px" }}>
           <div className="drag__story--slider">
             {!loader &&
               dataAuthor.map((item: any) => {

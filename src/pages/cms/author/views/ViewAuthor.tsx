@@ -351,7 +351,6 @@ const ViewAuthor: React.FC = () => {
             </div>
           </Form>
         </Modal>
-
         <Table
           columns={columns}
           dataSource={dataAuthor}
