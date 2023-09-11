@@ -7,17 +7,8 @@ export const getApiLayout = createAsyncThunk("layout", async () => {
   return res.data.data;
 });
 
-const value = localStorage.getItem("theme");
-const value2 = localStorage.getItem("size");
-
-let saveTheme: any;
-let saveSize: any;
-if (typeof value === "string") {
-  saveTheme = JSON.parse(value);
-}
-if (typeof value2 === "string") {
-  saveSize = JSON.parse(value2);
-}
+const saveTheme = JSON.parse(localStorage.getItem("theme") || "");
+const saveSize = JSON.parse(localStorage.getItem("size") || "");
 
 export const commonSlice = createSlice({
   name: "common",
