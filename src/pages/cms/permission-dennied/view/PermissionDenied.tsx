@@ -13,11 +13,11 @@ const PermissionDenied = () => {
           <img src={error403} alt="webtruyen" />
         </div>
         <div>
-          <h3
+          <p
             style={{ textAlign: "center", fontSize: "28px", color: "#357376" }}
           >
             We are Sorry...
-          </h3>
+          </p>
           <p style={{ textAlign: "center", color: "#357376" }}>
             The page you're trying to access has restricted access.
           </p>

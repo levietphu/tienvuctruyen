@@ -7,16 +7,29 @@ export const getApiLayout = createAsyncThunk("layout", async () => {
   return res.data.data;
 });
 
-const saveTheme = JSON.parse(localStorage.getItem("theme") || "");
-const saveSize = JSON.parse(localStorage.getItem("size") || "");
+const value1 = localStorage.getItem("theme");
+const value2 = localStorage.getItem("size");
+
+let saveTheme: string;
+let saveSize: string;
+if (typeof value1 === "string") {
+  saveTheme = JSON.parse(value1);
+} else {
+  saveTheme = "light";
+}
+if (typeof value2 === "string") {
+  saveSize = JSON.parse(value2);
+} else {
+  saveSize = "light";
+}
 
 export const commonSlice = createSlice({
   name: "common",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState: {
     setting: {
-      theme: saveTheme ? saveTheme : "light",
-      size: saveSize ? Number(saveSize) : 20,
+      theme: saveTheme,
+      size: Number(saveSize),
       togglePopup: false,
     },
     layout: {
