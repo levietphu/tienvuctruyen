@@ -15,8 +15,8 @@ export const commonSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState: {
     setting: {
-      theme: saveTheme || "light",
-      size: Number(saveSize) || 20,
+      theme: saveTheme ? saveTheme : "light",
+      size: saveSize ? Number(saveSize) : 20,
       togglePopup: false,
     },
     layout: {
