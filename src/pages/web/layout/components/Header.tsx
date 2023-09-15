@@ -291,6 +291,7 @@ const Header = ({
                   background: `${tooglePersonalLogoutMoblie ? "#eeeeee" : ""}`,
                 }}
                 onClick={() =>
+                  loaderUser === "user" &&
                   setTooglePersonalLogoutMolie(!tooglePersonalLogoutMoblie)
                 }
               >
