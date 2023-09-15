@@ -230,7 +230,9 @@ const Header = ({
             <div ref={cateRefMobile}>
               <div
                 className="header__right--cate"
-                onClick={() => setToogleMenuMobileCate(!toogleMenuMobileCate)}
+                onClick={() =>
+                  cates && setToogleMenuMobileCate(!toogleMenuMobileCate)
+                }
               >
                 <span
                   style={{ color: `${toogleMenuMobileCate ? "#357376" : ""}` }}
