@@ -11,7 +11,7 @@ const value1 = localStorage.getItem("theme");
 const value2 = localStorage.getItem("size");
 
 let saveTheme: string;
-let saveSize: string;
+let saveSize: number;
 if (typeof value1 === "string") {
   saveTheme = JSON.parse(value1);
 } else {
@@ -21,7 +21,7 @@ if (typeof value1 === "string") {
 if (typeof value2 === "string") {
   saveSize = JSON.parse(value2);
 } else {
-  saveSize = "20";
+  saveSize = 20;
   localStorage.setItem("size", JSON.stringify(saveSize));
 }
 
