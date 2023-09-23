@@ -16,11 +16,13 @@ if (typeof value1 === "string") {
   saveTheme = JSON.parse(value1);
 } else {
   saveTheme = "light";
+  localStorage.setItem("theme", saveTheme);
 }
 if (typeof value2 === "string") {
   saveSize = JSON.parse(value2);
 } else {
   saveSize = "20";
+  localStorage.setItem("size", saveSize);
 }
 
 export const commonSlice = createSlice({
@@ -28,8 +30,8 @@ export const commonSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState: {
     setting: {
-      theme: value1 ? saveTheme : "light",
-      size: value2 ? Number(saveSize) : 20,
+      theme: saveTheme || "light",
+      size: Number(saveSize) || 20,
       togglePopup: false,
     },
     layout: {
