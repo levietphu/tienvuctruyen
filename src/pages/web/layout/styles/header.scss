@@ -160,8 +160,7 @@ header {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   li {
-    width: calc(500px / 3);
-    height: 30px;
+    padding: 8px 15px;
     a {
       color: #484848;
     }
@@ -174,13 +173,10 @@ header {
   flex-wrap: wrap;
   width: 500px;
   left: 290px;
-  display: flex;
-  padding-left: 20px;
-  padding-top: 10px;
+  display: grid;
+  grid-template-columns: auto auto auto;
 }
-.menu__list {
-  padding: 10px 0 0 20px;
-}
+
 .header__right--menucate {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
