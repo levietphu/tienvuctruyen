@@ -80,7 +80,7 @@ const Header = ({
               </Link>
             </h1>
           </div>
-          <div ref={cateRef}>
+          <div ref={cateRef} style={{ position: "relative" }}>
             <div
               className="header__left--cate"
               onClick={() => setToogleMenuCate(!toogleMenuCate)}
@@ -107,7 +107,7 @@ const Header = ({
               </ul>
             )}
           </div>
-          <div ref={listRef}>
+          <div ref={listRef} style={{ position: "relative" }}>
             <div
               className="header__left--list"
               onClick={() => setToogleMenuList(!toogleMenuList)}

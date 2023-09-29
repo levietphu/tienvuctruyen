@@ -151,7 +151,8 @@ header {
 .menu__cate,
 .menu__list {
   position: absolute;
-  top: 46px;
+  top: 28px;
+  left: 0;
   background: #fdfbfb;
   border-radius: 5px;
   padding: 0;
@@ -172,7 +173,7 @@ header {
 .menu__cate {
   flex-wrap: wrap;
   width: 500px;
-  left: 290px;
+  left: 25px;
   display: grid;
   grid-template-columns: auto auto auto;
 }
