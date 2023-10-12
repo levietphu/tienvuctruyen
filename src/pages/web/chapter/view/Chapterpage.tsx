@@ -16,6 +16,7 @@ import {
 } from "../../../../store/common/commonSlice";
 import { disableReactDevTools } from "../../../../ultis/disable";
 import callApi from "../../../../ultis/callApi";
+import axios from "axios";
 
 const Chapterpage = () => {
   const [toggleSetting, setToggleSetting] = useState<boolean>(true);
@@ -135,6 +136,24 @@ const Chapterpage = () => {
     }
   }, [alertBookMark]);
 
+  const handlePlay = () => {
+    axios({
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      url: `https://api.fpt.ai/hmi/tts/v5`,
+      data: {
+        api_key: "Tdw70xoYqmHfpaPw2RCKO00YDa154IFR",
+        voice: "banmai",
+        speed: 0,
+        format: "mp3",
+      },
+    })
+      .then((res) => {
+        // res.data.play();
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <MainLayout>
@@ -187,7 +206,7 @@ const Chapterpage = () => {
                       Chương trước
                     </Link>
                   )}
-
+                  <button onClick={handlePlay}>đọc </button>
                   {!dataChapter.slug_next ? (
                     <span className="next__chapter forbidden__chapter">
                       Chương sau
